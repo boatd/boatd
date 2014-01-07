@@ -1,5 +1,5 @@
 from boatd import boat
 
-boat.set_rudder(0)
+boat.do_hardware(0)
 
 print boat.heading()
