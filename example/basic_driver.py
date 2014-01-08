@@ -1,8 +1,8 @@
-import boatd
+some_hardware = {}
 
-some_hardware = object()
-
-@boatd.do_hardware
+@boatd.do_something
 def do_hardware(amount):
-    some_hardware.something = amount
+    some_hardware['something'] = amount
     return amount
+
+print(do_hardware(4))
