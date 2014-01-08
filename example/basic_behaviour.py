@@ -1,3 +1,3 @@
-boat.do_hardware(0)
+boat.do_hardware(2)
 
-print boat.heading()
+print(boat.heading())
