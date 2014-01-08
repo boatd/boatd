@@ -10,11 +10,8 @@ class Boat(object):
     def __init__(self):
         pass
 
-    def do_hardware(self, n):
-        print(n)
-
-    def heading(self):
-        return 3.4
+    def __getattr__(self, name):
+        return lambda *args: print('called:', name)
 
 def module_name(path):
     return os.path.splitext(os.path.split(path)[-1])[0]
@@ -24,7 +21,7 @@ def inject_import(filename, inject):
     module = imp.new_module(name)
     vars(module).update(inject)
     with open(filename) as f:
-        exec f.read() in vars(module)
+        exec(f.read(), vars(module))
     sys.modules[name] = module
     return module
 
