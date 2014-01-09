@@ -6,17 +6,7 @@ import os
 from functools import wraps
 
 from .decorators import *
-
-class Boat(object):
-    def __init__(self, driver):
-        self.driver = driver
-
-    def __getattr__(self, name):
-        func = vars(self.driver).get(name)
-        if func is None:
-            raise AttributeError
-        else:
-            return func
+from .boat import Boat
 
 def inject_import(name, filename, inject):
     module = imp.new_module(name)
