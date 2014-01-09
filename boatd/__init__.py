@@ -13,7 +13,6 @@ def inject_import(name, filename, inject):
     vars(module).update(inject)
     with open(filename) as f:
         exec(f.read(), vars(module))
-    sys.modules[name] = module
     return module
 
 class Driver(object):
