@@ -31,9 +31,9 @@ def log(message):
 def do_something(func):
     @wraps(func)
     def inner(*args, **kwargs):
-        r = func(*args, **kwargs)
-        log('did something and got {}'.format(r))
-        return r
+        return_value = func(*args, **kwargs)
+        log('did something and got {}'.format(return_value))
+        return return_value
     return inner
 
 def main():
