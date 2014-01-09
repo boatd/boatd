@@ -23,16 +23,28 @@ class Driver(object):
                                     {'boatd': boatd})
         self.path = driver_path
 
+class Behaviour(object):
+    def __init__(self, behaviour_path, boat):
+        self.boat = boat
+        self.path = behaviour_path
+
+    def run(self):
+        return inject_import('behaviour',
+                              self.path,
+                              {'boat': self.boat})
+
 def main():
     if len(sys.argv) > 1:
         conf = Config.from_file(sys.argv[1])
     else:
         conf = Config.from_file('boatd-config.json')
 
-    boatd = imp.new_module('boatd')
-    vars(boatd).update(globals())
-    driver = Driver(conf.driver, boatd)
+    this = imp.new_module('boatd')
+    vars(this).update(globals())
+    driver = Driver(conf.driver, this)
 
-    behaviour = inject_import('behaviour',
-                              conf.behaviour,
-                              {'boat': Boat(driver)})
+    behaviour = Behaviour(conf.behaviour, Boat(driver))
+
+    for b in ['example/basic_behaviour.py', 'example/b2.py', 'example/b3.py']:
+        behaviour.path = b
+        behaviour.run()
