@@ -1,0 +1,4 @@
+{
+    "driver": "example/basic_driver.py",
+    "behaviour": "example/basic_behaviour.py"
+}
