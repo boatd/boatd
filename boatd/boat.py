@@ -3,11 +3,11 @@ class Boat(object):
         self.driver = driver
 
     def __getattr__(self, name):
-        func = vars(self.driver).get(name)
+        func = vars(self.driver.module).get(name)
         if func is None:
             raise AttributeError(
                     "'{}' driver has no attribute '{}'".format(
-                        self.driver.__file__,
+                        self.driver.path,
                         name)
             )
         else:
