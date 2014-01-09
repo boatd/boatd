@@ -11,7 +11,11 @@ class Boat(object):
         self.driver = driver
 
     def __getattr__(self, name):
-        return vars(driver).get(name)
+        f = vars(driver).get(name)
+        if f is None:
+            raise AttributeError
+        else:
+            return f
 
 def module_name(path):
     return os.path.splitext(os.path.split(path)[-1])[0]
