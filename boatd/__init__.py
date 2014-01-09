@@ -11,14 +11,11 @@ class Boat(object):
         self.driver = driver
 
     def __getattr__(self, name):
-        f = vars(self.driver).get(name)
-        if f is None:
+        func = vars(self.driver).get(name)
+        if func is None:
             raise AttributeError
         else:
-            return f
-
-def module_name(path):
-    return os.path.splitext(os.path.split(path)[-1])[0]
+            return func
 
 def inject_import(name, filename, inject):
     module = imp.new_module(name)
