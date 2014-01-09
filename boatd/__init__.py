@@ -1,12 +1,12 @@
 from __future__ import print_function
 
 import imp
-import sys
 import os
 from functools import wraps
 
 from .decorators import *
 from .boat import Boat
+from .config import Config
 
 def inject_import(name, filename, inject):
     module = imp.new_module(name)
@@ -23,15 +23,12 @@ class Driver(object):
         self.path = driver_path
 
 def main():
-    assert len(sys.argv) > 2
-    driver_path = sys.argv[1]
+    conf = Config.from_file('boatd-config.json')
 
     boatd = imp.new_module('boatd')
     vars(boatd).update(globals())
-    driver = Driver(driver_path, boatd)
-
-    behaviour_path = sys.argv[2]
+    driver = Driver(conf.driver, boatd)
 
     behaviour = inject_import('behaviour',
-                              behaviour_path,
+                              conf.behaviour,
                               {'boat': Boat(driver)})
