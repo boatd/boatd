@@ -3,8 +3,9 @@ from __future__ import print_function
 import imp
 import sys
 import os
-import time
 from functools import wraps
+
+from .decorators import *
 
 class Boat(object):
     def __init__(self, driver):
@@ -24,17 +25,6 @@ def inject_import(name, filename, inject):
         exec(f.read(), vars(module))
     sys.modules[name] = module
     return module
-
-def log(message):
-    print(time.strftime('[%H:%M:%S]'), message)
-
-def do_something(func):
-    @wraps(func)
-    def inner(*args, **kwargs):
-        return_value = func(*args, **kwargs)
-        log('did something and got {}'.format(return_value))
-        return return_value
-    return inner
 
 def main():
     assert len(sys.argv) > 2
