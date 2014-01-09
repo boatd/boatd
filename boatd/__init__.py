@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import imp
+import sys
 import os
 from functools import wraps
 
@@ -23,7 +24,10 @@ class Driver(object):
         self.path = driver_path
 
 def main():
-    conf = Config.from_file('boatd-config.json')
+    if len(sys.argv) > 1:
+        conf = Config.from_file(sys.argv[1])
+    else:
+        conf = Config.from_file('boatd-config.json')
 
     boatd = imp.new_module('boatd')
     vars(boatd).update(globals())
