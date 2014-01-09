@@ -20,7 +20,7 @@ class Boat(object):
 def module_name(path):
     return os.path.splitext(os.path.split(path)[-1])[0]
 
-def inject_import(filename, inject, name):
+def inject_import(name, filename, inject):
     module = imp.new_module(name)
     vars(module).update(inject)
     with open(filename) as f:
@@ -44,7 +44,9 @@ def main():
     boatd = imp.new_module('boatd')
     vars(boatd).update(globals())
     drive_path = sys.argv[1]
-    driver = inject_import(drive_path, {'boatd': boatd}, 'driver')
+    driver = inject_import('driver', drive_path, {'boatd': boatd})
 
     behaviour_path = sys.argv[2]
-    behaviour = inject_import(behaviour_path, {'boat': Boat(driver)}, 'behaviour')
+    behaviour = inject_import('behaviour',
+                              behaviour_path,
+                              {'boat': Boat(driver)})
