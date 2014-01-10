@@ -1,7 +1,13 @@
 boatd
 =====
 
-Sailing boat daemon
+Robotic sailing boat daemon
+
+Terminology
+-----------
+
+  - `Behaviour` - performs a set of actions to make the boat do a particular task
+  - `Driver` - causes hardware to do interesting things based on actions
 
 Todo
 ----
