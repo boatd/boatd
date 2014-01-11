@@ -25,7 +25,7 @@ class Config(object):
 
     def __init__(self, d):
         self.__dict__.update(d)
-        for k, i in self.__dict__.iteritems():
+        for k, i in self.__dict__.items():
             if isinstance(i, dict):
                 self.__dict__[k] = Config(i)
 
