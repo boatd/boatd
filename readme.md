@@ -1,7 +1,7 @@
-boatd
-=====
+boatd - sailing boat daemon
+===========================
 
-Robotic sailing boat daemon
+Experimental robotic sailing boat daemon.
 
 Terminology
 -----------
