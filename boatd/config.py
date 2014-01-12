@@ -31,5 +31,6 @@ class Config(object):
 
     @classmethod
     def from_file(cls, filename):
+        '''Return a Config object from a json filename'''
         with open(filename) as f:
             return cls(json.load(f))
