@@ -1,5 +1,6 @@
 import json
 
+
 class Config(object):
     '''
     Allow for more natural access to the member values of a dictionary. For

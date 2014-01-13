@@ -8,9 +8,9 @@ class Boat(object):
         func = vars(self.driver.module).get(name)
         if func is None:
             raise AttributeError(
-                    "'{}' driver has no attribute '{}'".format(
-                        self.driver.path,
-                        name)
+                "'{}' driver has no attribute '{}'".format(
+                    self.driver.path,
+                    name)
             )
         else:
             return func

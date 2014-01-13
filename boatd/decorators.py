@@ -2,14 +2,17 @@ from functools import wraps
 
 from . import logging
 
+
 def maybe_run(func, *args, **kwargs):
     if func is not None:
         return func(*args, **kwargs)
     else:
         return None
 
+
 def build_decorator(before_func=None,
-                    after_func=None):
+                    after_func=None,
+                    level=logging.NORMAL):
     def dec(func):
         @wraps(func)
         def inner(*args, **kwargs):
@@ -21,10 +24,11 @@ def build_decorator(before_func=None,
     return dec
 
 do_something = build_decorator(
-                   after_func=lambda x: logging.log('did something and got {}'.format(x))
-               )
+    after_func=lambda x: logging.log(
+        'did something and got {}'.format(x))
+)
 
 heading = build_decorator(
-            lambda: logging.log('requested heading'),
-            lambda x: logging.log('got heading: {}'.format(x))
-          )
+    lambda: logging.log('requested heading'),
+    lambda x: logging.log('got heading: {}'.format(x))
+)
