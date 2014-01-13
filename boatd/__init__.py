@@ -2,8 +2,6 @@ from __future__ import print_function
 
 import imp
 import sys
-import os
-from functools import wraps
 
 from .decorators import *
 from .boat import Boat
