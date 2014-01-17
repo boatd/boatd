@@ -43,7 +43,7 @@ Debian based systems:
 Todo
 ----
 
-  - Behaviour loading
+  - ~~Behaviour loading~~
   - Driver loading
   - Core boatd function decorators
   - Logging
