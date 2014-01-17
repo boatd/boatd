@@ -9,6 +9,22 @@ Terminology
   - `Behaviour` - performs a set of actions to make the boat do a particular task
   - `Driver` - causes hardware to do interesting things based on actions
 
+```
+           boatd
+             |
+        -----------
+       |           |
+     driver     behaviour
+       |
+  boat hardware
+```
+
+Dependencies
+------------
+
+    $ sudo apt-get install python-yaml
+
+
 Todo
 ----
 
