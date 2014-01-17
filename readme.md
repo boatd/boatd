@@ -3,11 +3,20 @@ boatd - sailing boat daemon
 
 Experimental robotic sailing boat daemon.
 
-Terminology
+General architecture
 -----------
 
-  - `Behaviour` - performs a set of actions to make the boat do a particular task
-  - `Driver` - causes hardware to do interesting things based on actions
+Boatd runs as the manager for a boat control system, granting graceful
+startup, telemetry, logging and a built in simulator.
+
+There are two main components of a system written using `boatd`:
+
+  - the __driver__ interfaces with the particular set of hardware in the boat.
+
+  - the __behaviour__ performs a set of actions to make the boat do a
+    particular task. The API available for these scripts is supposed to be
+    declarative, with the idea that for any boat with a driver written, any
+    behavour script will work.
 
 ```
            boatd
@@ -21,6 +30,8 @@ Terminology
 
 Dependencies
 ------------
+
+Debian based systems:
 
     $ sudo apt-get install python-yaml
 
