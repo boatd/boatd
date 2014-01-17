@@ -6,8 +6,8 @@ Experimental robotic sailing boat daemon.
 General architecture
 -----------
 
-Boatd runs as the manager for a boat control system, granting graceful
-startup, telemetry, logging and a built in simulator.
+Boatd is designed to be the manager for a boat control system, granting
+graceful startup, telemetry, logging and a built in simulator.
 
 There are two main components of a system written using `boatd`:
 
