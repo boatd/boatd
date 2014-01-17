@@ -31,9 +31,13 @@ There are two main components of a system written using `boatd`:
 Dependencies
 ------------
 
+With pip:
+
+    $ pip install -r requirements.txt
+
 Debian based systems:
 
-    $ sudo apt-get install python-yaml
+    $ apt-get install python-yaml
 
 
 Todo
