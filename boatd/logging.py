@@ -2,8 +2,8 @@ from __future__ import print_function
 
 import time
 
-NORMAL, SUCCESS, WARN, ERROR = range(4)
+VERBOSE, NORMAL, WARN, ERROR = range(4)
 
 
-def log(message):
+def log(message, level=NORMAL):
     print(time.strftime('[%H:%M:%S]'), message)
