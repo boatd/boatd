@@ -1,3 +1,4 @@
+from math import pi
 from functools import wraps
 
 from . import logging
@@ -34,7 +35,7 @@ do_something = build_decorator(
 )
 
 heading = build_decorator(
-    lambda: logging.log('requested heading'),
-    lambda x: logging.log('got heading: {}'.format(x)),
-    constrain=(0, 360)
+    lambda: logging.log('requested heading', logging.VERBOSE),
+    lambda x: logging.log('heading: {}'.format(x)),
+    constrain=(0, 2*pi)
 )

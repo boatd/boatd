@@ -7,4 +7,4 @@ def do_hardware(amount):
 
 @boatd.heading
 def heading():
-    return 368
+    return 2.43
