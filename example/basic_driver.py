@@ -8,3 +8,7 @@ def do_hardware(amount):
 @boatd.heading
 def heading():
     return 2.43
+
+@boatd.wind
+def get_wind():
+    return 0.42
