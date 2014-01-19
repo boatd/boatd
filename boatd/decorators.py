@@ -12,6 +12,7 @@ def maybe_run(func, *args, **kwargs):
 
 def build_decorator(before_func=None,
                     after_func=None,
+                    constrain=None,
                     level=logging.NORMAL):
     def dec(func):
         @wraps(func)
@@ -19,6 +20,11 @@ def build_decorator(before_func=None,
             maybe_run(before_func)
             return_value = func(*args, **kwargs)
             maybe_run(after_func, return_value)
+
+            if constrain is not None:
+                lower, upper = constrain
+                if not lower <= return_value <= upper:
+                    raise ValueError
             return return_value
         return inner
     return dec
@@ -30,5 +36,6 @@ do_something = build_decorator(
 
 heading = build_decorator(
     lambda: logging.log('requested heading'),
-    lambda x: logging.log('got heading: {}'.format(x))
+    lambda x: logging.log('got heading: {}'.format(x)),
+    constrain=(0, 360)
 )
