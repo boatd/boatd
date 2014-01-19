@@ -12,8 +12,7 @@ def maybe_run(func, *args, **kwargs):
 
 def build_decorator(before_func=None,
                     after_func=None,
-                    constrain=None,
-                    level=logging.NORMAL):
+                    constrain=None):
     def dec(func):
         @wraps(func)
         def inner(*args, **kwargs):
