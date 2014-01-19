@@ -4,3 +4,7 @@ some_hardware = {}
 def do_hardware(amount):
     some_hardware['something'] = amount
     return amount * 2
+
+@boatd.heading
+def heading():
+    return 368
