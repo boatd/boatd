@@ -39,3 +39,9 @@ heading = build_decorator(
     lambda x: logging.log('heading: {}'.format(x)),
     constrain=(0, 2*pi)
 )
+
+wind = build_decorator(
+    lambda: logging.log('requested wind', logging.VERBOSE),
+    lambda x: logging.log('wind: {}'.format(x)),
+    constrain=(0, 2*pi)
+)
