@@ -24,7 +24,11 @@ def build_decorator(before_func=None,
             if constrain is not None:
                 lower, upper = constrain
                 if not lower <= return_value <= upper:
-                    raise ValueError
+                    logging.log('{} is out of bounds ({} < {} < {})'.format(
+                        inner.__name__,
+                        lower,
+                        return_value,
+                        upper), level=logging.WARN)
             return return_value
         return inner
     return dec
