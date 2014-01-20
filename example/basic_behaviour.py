@@ -1,6 +1,6 @@
 import time
-boat.do_hardware(2)
 
-for i in range(10):
+for i in range(5):
     boat.heading()
     boat.get_wind()
+    boat.position()

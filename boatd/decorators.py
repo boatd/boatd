@@ -40,11 +40,6 @@ def build_decorator(before_func=None,
         return inner
     return dec
 
-do_something = build_decorator(
-    after_func=lambda x: logging.log(
-        'did something and got {}'.format(x))
-)
-
 heading = build_decorator(
     lambda: logging.log('requested heading', logging.VERBOSE),
     lambda x: logging.log('heading: {}'.format(x)),
