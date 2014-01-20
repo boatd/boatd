@@ -56,3 +56,10 @@ wind = build_decorator(
     lambda x: logging.log('wind: {}'.format(x)),
     constrain=(0, 2*pi)
 )
+
+position = build_decorator(
+    lambda: logging.log('requested position', logging.VERBOSE),
+    lambda x: logging.log('position: {}, {}'.format(x[0], x[1])),
+    constrain=lambda x:
+        all(isinstance(v, (int, long, float)) for v in [x[0], x[1]])
+)
