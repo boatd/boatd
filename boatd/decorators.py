@@ -23,8 +23,8 @@ def build_decorator(before_func=None,
 
             if constrain is not None:
                 if hasattr(constrain, '__call__'):
-                    if constrain(return_value):
-                        logging.log('{} is out of bounds "{}"'.format(
+                    if not constrain(return_value):
+                        logging.log('{} is invalid with the value "{}"'.format(
                             inner.__name__,
                             return_value), level=logging.WARN)
 
