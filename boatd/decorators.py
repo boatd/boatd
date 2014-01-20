@@ -22,13 +22,20 @@ def build_decorator(before_func=None,
             maybe_run(after_func, return_value)
 
             if constrain is not None:
-                lower, upper = constrain
-                if not lower <= return_value <= upper:
-                    logging.log('{} is out of bounds ({} < {} < {})'.format(
-                        inner.__name__,
-                        lower,
-                        return_value,
-                        upper), level=logging.WARN)
+                if hasattr(constrain, '__call__'):
+                    if constrain(return_value):
+                        logging.log('{} is out of bounds "{}"'.format(
+                            inner.__name__,
+                            return_value), level=logging.WARN)
+
+                else:
+                    lower, upper = constrain
+                    if not lower <= return_value <= upper:
+                        logging.log('{} is out of bounds ({} < {} < {})'.format(
+                            inner.__name__,
+                            lower,
+                            return_value,
+                            upper), level=logging.WARN)
             return return_value
         return inner
     return dec
