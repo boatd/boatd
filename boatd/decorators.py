@@ -13,11 +13,16 @@ def maybe_run(func, *args, **kwargs):
 
 def build_decorator(before_func=None,
                     after_func=None,
-                    constrain=None):
+                    constrain=None,
+                    setter=False):
     def dec(func):
         @wraps(func)
         def inner(*args, **kwargs):
-            maybe_run(before_func)
+            if setter:
+                maybe_run(before_func, *args, **kwargs)
+            else:
+                maybe_run(before_func)
+
             return_value = func(*args, **kwargs)
             maybe_run(after_func, return_value)
 
