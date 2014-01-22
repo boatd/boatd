@@ -11,6 +11,32 @@ def maybe_run(func, *args, **kwargs):
         return None
 
 
+def constrain_value(constrain, value, funcname):
+    if hasattr(constrain, '__call__'):
+        if not constrain(value):
+            logging.log('{} is invalid with the value "{}"'.format(
+                funcname,
+                value), level=logging.WARN)
+            return False
+        else:
+            return True
+
+    elif value is not None:
+        if hasattr(value, '__len__'):
+            if len(value) == 1:
+                value = value[0]
+
+        lower, upper = constrain
+        if not lower <= value <= upper:
+            logging.log('{} is out of bounds ({} < {} < {})'.format(
+                funcname,
+                lower,
+                value,
+                upper), level=logging.WARN)
+            return False
+        else:
+            return True
+
 def build_decorator(before_func=None,
                     after_func=None,
                     constrain=None,
