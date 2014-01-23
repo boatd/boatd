@@ -40,12 +40,15 @@ def constrain_value(constrain, value, funcname):
 def build_decorator(before_func=None,
                     after_func=None,
                     constrain=None,
-                    setter=False):
+                    input_constrain=None):
     def dec(func):
         @wraps(func)
         def inner(*args, **kwargs):
-            if setter:
-                maybe_run(before_func, *args, **kwargs)
+            if input_constrain is not None:
+                if constrain_value(input_constrain,
+                                   args,
+                                   '{} input'.format(inner.__name__)):
+                    maybe_run(before_func, *args, **kwargs)
             else:
                 maybe_run(before_func)
 
