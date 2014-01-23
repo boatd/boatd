@@ -79,3 +79,9 @@ position = build_decorator(
     constrain=lambda x:
         all(isinstance(v, (int, long, float)) for v in [x[0], x[1]])
 )
+
+rudder = build_decorator(
+    lambda x: logging.log('setting rudder to {}'.format(x)),
+    lambda x: logging.log('rudder position set', logging.VERBOSE),
+    input_constrain=(-pi, pi)
+)
