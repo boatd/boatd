@@ -11,3 +11,11 @@ def get_wind():
 @boatd.position
 def position():
     return (2.343443, None)
+
+@boatd.rudder
+def rudder(theta):
+    return theta
+
+@boatd.sail
+def sail(theta):
+    return theta

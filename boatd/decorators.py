@@ -85,3 +85,9 @@ rudder = build_decorator(
     lambda x: logging.log('rudder position set', logging.VERBOSE),
     input_constrain=(-pi, pi)
 )
+
+sail = build_decorator(
+    lambda x: logging.log('setting sail to {}'.format(x)),
+    lambda x: logging.log('sail position set', logging.VERBOSE),
+    input_constrain=(-pi, pi)
+)
