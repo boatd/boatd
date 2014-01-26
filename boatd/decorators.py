@@ -49,6 +49,8 @@ def build_decorator(before_func=None,
                                    args,
                                    '{} input'.format(inner.__name__)):
                     maybe_run(before_func, *args, **kwargs)
+                else:
+                    return None
             else:
                 maybe_run(before_func)
 
@@ -57,6 +59,9 @@ def build_decorator(before_func=None,
 
             if constrain is not None:
                 constrain_value(constrain, return_value, inner.__name__)
+            else:
+                return None
+
             return return_value
         return inner
     return dec
