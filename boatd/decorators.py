@@ -37,6 +37,7 @@ def constrain_value(constrain, value, funcname):
         else:
             return True
 
+
 def build_decorator(before_func=None,
                     after_func=None,
                     constrain=None,
