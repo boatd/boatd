@@ -17,9 +17,6 @@ def constrain_value(constrain, value, funcname):
             logging.log('{} is invalid with the value "{}"'.format(
                 funcname,
                 value), level=logging.WARN)
-            return False
-        else:
-            return True
 
     elif value is not None:
         if hasattr(value, '__len__'):
@@ -33,9 +30,6 @@ def constrain_value(constrain, value, funcname):
                 lower,
                 value,
                 upper), level=logging.WARN)
-            return False
-        else:
-            return True
 
 
 def build_decorator(before_func=None,
@@ -46,12 +40,11 @@ def build_decorator(before_func=None,
         @wraps(func)
         def inner(*args, **kwargs):
             if input_constrain is not None:
-                if constrain_value(input_constrain,
+                constrain_value(input_constrain,
                                    args,
-                                   '{} input'.format(inner.__name__)):
-                    maybe_run(before_func, *args, **kwargs)
-                else:
-                    return None
+                                   '{} input'.format(inner.__name__))
+                maybe_run(before_func, *args, **kwargs)
+
             else:
                 maybe_run(before_func)
 
@@ -60,8 +53,6 @@ def build_decorator(before_func=None,
 
             if constrain is not None:
                 constrain_value(constrain, return_value, inner.__name__)
-            else:
-                return None
 
             return return_value
         return inner
