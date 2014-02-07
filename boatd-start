@@ -1,20 +1,8 @@
 #!/usr/bin/env python
 
-from twisted.web.server import Site
-from twisted.web.resource import Resource
 from twisted.internet import reactor
 
-class Root(Resource):
-    def render_GET(self, request):
-        return 'sup, boat'
+import boatd.api
 
-class Boatd(Resource):
-    def getChild(self, name, request):
-        uri = request.uri
-        print uri
-        return Root()
-
-root = Boatd()
-factory = Site(root)
-reactor.listenTCP(6969, factory)
+reactor.listenTCP(6969, boatd.api.factory)
 reactor.run()
