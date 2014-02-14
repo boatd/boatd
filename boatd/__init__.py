@@ -41,9 +41,8 @@ def main():
     else:
         conf = Config.from_yaml('boatd-config.yaml')
 
-    this = imp.new_module('boatd')
-    vars(this).update(globals())
-    driver = Driver(conf.driver, this)
+    boat = Boat()
+    driver = Driver(conf.driver, boat)
 
-    behaviour = Behaviour(conf.behaviour, Boat(driver))
+    behaviour = Behaviour(conf.behaviour, boat)
     behaviour.run()
