@@ -35,18 +35,16 @@ Install virtualenv and pip
 
     $ sudo easy_install virtualenv pip
 
+Now setup the virtual environment and install the dependencies
+
     $ mkdir env
     $ virtualenv env
-
-
-With pip:
-
+    $ source env/bin/activate
     $ pip install -r requirements.txt
 
-Debian based systems:
+Debian based systems for system-wide installation:
 
-    $ apt-get install python-yaml
-
+    $ apt-get install python-yaml python-twisted
 
 Todo
 ----
