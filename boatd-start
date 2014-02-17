@@ -1,8 +1,4 @@
-#!/usr/bin/env python
+#!/bin/bash -i
 
-from twisted.internet import reactor
-
-import boatd.api
-
-reactor.listenTCP(6969, boatd.api.factory)
-reactor.run()
+source env/bin/activate
+python -m boatd.api
