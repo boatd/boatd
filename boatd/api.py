@@ -1,6 +1,5 @@
 from twisted.web.server import Site
 from twisted.web.resource import Resource
-from twisted.internet import reactor
 
 class Root(Resource):
     def render_GET(self, request):
@@ -14,3 +13,10 @@ class Boatd(Resource):
 
 root = Boatd()
 factory = Site(root)
+
+if __name__ == '__main__':
+    from twisted.internet import reactor
+    print 'starting on port 6969'
+
+    reactor.listenTCP(6969, factory)
+    reactor.run()
