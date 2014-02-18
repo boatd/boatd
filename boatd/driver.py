@@ -1,19 +1,27 @@
 from functools import wraps
 
+from . import logging
+
 class Driver(object):
     def __init__(self):
-        print('Initialising driver')
+        logging.log('Initialising driver')
 
         self.handlers = {}
 
-    def function(self, f, name):
-        @wraps(f)
-        def dec(*args, **kwargs):
-            print 'inner func'
+    def handler(self, name):
+        def wrapper(f):
+            def dec(*args, **kwargs):
+                return f(*args, **kwargs)
+            self.handlers[name] = dec
+            return dec
+        return wrapper
 
-            return f()
-        self.handlers[name] = dec
-        return dec
-
-    def heading(self, f):
-        return self.function(f, 'heading')
+    def heading(self, func):
+        @self.handler('heading')
+        @wraps(func)
+        def decorator():
+            logging.log('requested heading', logging.VERBOSE)
+            head = func()
+            logging.log('heading: {}'.format(head))
+            return head
+        return decorator
