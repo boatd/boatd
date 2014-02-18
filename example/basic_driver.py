@@ -1,21 +1,24 @@
+from boatd import Driver
+driver = Driver()
+
 some_hardware = {}
 
-@boatd.heading
+@driver.heading
 def heading():
     return 2.43
 
-@boatd.wind
+@driver.wind
 def get_wind():
     return 8.42
 
-@boatd.position
+@driver.position
 def position():
     return (2.343443, None)
 
-@boatd.rudder
+@driver.rudder
 def rudder(theta):
     return theta
 
-@boatd.sail
+@driver.sail
 def sail(theta):
     return theta
