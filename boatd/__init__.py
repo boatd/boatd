@@ -43,7 +43,7 @@ def main():
     finally:
         found_module[0].close()
 
-    boat = Boat()
+    boat = Boat(driver_module.driver)
 
     behaviour = Behaviour(conf.behaviour, boat)
     behaviour.run()
