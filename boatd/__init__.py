@@ -3,9 +3,11 @@ from __future__ import print_function
 import imp
 import os
 import sys
+import traceback
 
 from .boat import Boat
 from .config import Config
+from .driver import Driver
 
 
 def inject_import(name, filename, inject):
@@ -38,8 +40,8 @@ def main():
     try:
         found_module = imp.find_module(module_name, [directory])
         driver_module = imp.load_module('driver_module', *found_module)
-    except Exception, e:
-        print(e)
+    except:
+        print(traceback.format_exc())
     finally:
         found_module[0].close()
 
