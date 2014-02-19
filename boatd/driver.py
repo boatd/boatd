@@ -2,6 +2,7 @@ from functools import wraps
 
 from . import logging
 
+
 class Driver(object):
     def __init__(self):
         logging.log('Initialising driver')

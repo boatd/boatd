@@ -6,7 +6,6 @@ import sys
 
 from .boat import Boat
 from .config import Config
-from .driver import Driver
 
 
 def inject_import(name, filename, inject):
@@ -26,6 +25,7 @@ class Behaviour(object):
         return inject_import('behaviour',
                              self.path,
                              {'boat': self.boat})
+
 
 def main():
     if len(sys.argv) > 1:
