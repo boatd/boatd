@@ -5,6 +5,9 @@ except ImportError:
 
 
 class BoatdRequestHandler(BaseHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        BaseHTTPRequestHandler.__init__(self, *args, **kwargs)
+
     def do_GET(self, *args, **kwargs):
         print('Requested', self.path)
         self.send_response(200)
