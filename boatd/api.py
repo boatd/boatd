@@ -3,9 +3,9 @@ try:
 except ImportError:
     from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 
-import os
 import logging
 import json
+
 
 class BoatdHTTPServer(HTTPServer):
     def __init__(self, boat,
@@ -39,6 +39,10 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
         logging.log('REST request {}'.format(self.path), level=logging.VERBOSE)
 
 if __name__ == '__main__':
-    httpd = BoatdHTTPServer(object(), ('', 2222),
+    class BoatMock(object):
+        def __init__(self):
+            self.heading = 24.23
+
+    httpd = BoatdHTTPServer(BoatMock(), ('', 2222),
         BoatdRequestHandler)
     httpd.serve_forever()
