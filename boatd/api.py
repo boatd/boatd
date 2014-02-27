@@ -5,6 +5,7 @@ except ImportError:
 
 import os
 import logging
+import json
 
 class BoatdHTTPServer(HTTPServer):
     def __init__(self, boat,
@@ -29,7 +30,8 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-Type', 'application/JSON')
             self.end_headers()
-            self.request.sendall(self.server.handles.get(self.path)().encode())
+            json_content = self.server.handles.get(self.path)()
+            self.request.sendall(json.dumps(json_content).encode())
         else:
             print('fail')
 
