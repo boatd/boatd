@@ -13,14 +13,25 @@ class BoatdHTTPServer(HTTPServer):
         HTTPServer.__init__(self, server_address, RequestHandlerClass, bind_and_activate)
         self.boat = boat
 
+        self.handles = {
+            '/heading': self.boat_heading
+        }
+
+    def boat_heading(self):
+        return {'heading': self.boat.heading}
+
+
 class BoatdRequestHandler(BaseHTTPRequestHandler):
     server_version = 'boatd/0.1'
 
     def do_GET(self, *args, **kwargs):
-        self.send_response(200)
-        self.send_header('Content-Type', 'application/JSON')
-        self.end_headers()
-        self.request.sendall('hi there {}\n'.format(self.server.boat).encode())
+        if self.path in self.server.handles:
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/JSON')
+            self.end_headers()
+            self.request.sendall(self.server.handles.get(self.path)().encode())
+        else:
+            print('fail')
 
     def log_request(self, code='-', size='-'):
         logging.log('REST request {}'.format(self.path), level=logging.VERBOSE)
