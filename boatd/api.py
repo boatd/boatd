@@ -15,11 +15,15 @@ class BoatdHTTPServer(HTTPServer):
         self.boat = boat
 
         self.handles = {
+            '/': self.boatd_info,
             '/heading': self.boat_heading
         }
 
     def boat_heading(self):
         return {'heading': self.boat.heading}
+
+    def boatd_info(self):
+        return {'boatd': {'version': 0.1}}
 
 
 class BoatdRequestHandler(BaseHTTPRequestHandler):
