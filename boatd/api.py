@@ -35,6 +35,11 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
         else:
             print('fail')
 
+    def do_POST(self):
+        length = int(self.headers.getheader('content-length'))
+        data = json.loads(self.rfile.read(length))
+        print(data)
+
     def log_request(self, code='-', size='-'):
         logging.log('REST request {}'.format(self.path), level=logging.VERBOSE)
 
