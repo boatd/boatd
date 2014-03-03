@@ -20,10 +20,14 @@ class BoatdHTTPServer(HTTPServer):
         }
 
     def boat_heading(self):
-        return {'heading': self.boat.heading}
+        return {'heading': self.boat.heading()}
 
     def boatd_info(self):
         return {'boatd': {'version': 0.1}}
+
+    def boat_function(self, function_string):
+        json_content = self.handles.get(function_string)()
+        return json.dumps(json_content).encode()
 
 
 class BoatdRequestHandler(BaseHTTPRequestHandler):
@@ -34,8 +38,7 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-Type', 'application/JSON')
             self.end_headers()
-            json_content = self.server.handles.get(self.path)()
-            self.request.sendall(json.dumps(json_content).encode())
+            self.request.sendall(self.server.boat_function(self.path))
         else:
             print('fail')
 
