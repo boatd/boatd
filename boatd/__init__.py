@@ -8,6 +8,7 @@ import traceback
 from .boat import Boat
 from .config import Config
 from .driver import Driver
+from .api import BoatdHTTPServer, BoatdRequestHandler
 
 
 def inject_import(name, filename, inject):
@@ -47,5 +48,5 @@ def main():
 
     boat = Boat(driver_module.driver)
 
-    behaviour = Behaviour(conf.behaviour, boat)
-    behaviour.run()
+    httpd = BoatdHTTPServer(boat, ('', 2222), BoatdRequestHandler)
+    httpd.serve_forever()
