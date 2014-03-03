@@ -11,6 +11,7 @@ class Driver(object):
 
     def handler(self, name):
         def wrapper(f):
+            @wraps(f)
             def dec(*args, **kwargs):
                 return f(*args, **kwargs)
             self.handlers[name] = dec
