@@ -26,6 +26,7 @@ class BoatdHTTPServer(HTTPServer):
         return {'boatd': {'version': 0.1}}
 
     def boat_function(self, function_string):
+        '''Return the encoded json response from an endpoint string.'''
         json_content = self.handles.get(function_string)()
         return json.dumps(json_content).encode()
 
@@ -34,6 +35,7 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
     server_version = 'boatd/0.1'
 
     def do_GET(self, *args, **kwargs):
+        '''Handle a GET request to the server'''
         if self.path in self.server.handles:
             self.send_response(200)
             self.send_header('Content-Type', 'application/JSON')
@@ -43,6 +45,7 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
             print('fail')
 
     def do_POST(self):
+        '''Handle a POST request to the server'''
         length = int(self.headers.getheader('content-length'))
         data = json.loads(self.rfile.read(length))
         print(data)
