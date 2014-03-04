@@ -42,7 +42,7 @@ def main():
     elif ext == '.json':
         conf = Config.from_json(conf_file)
 
-    directory, name = os.path.split(conf.driver)
+    directory, name = os.path.split(conf.scripts.driver)
     module_name = os.path.splitext(name)[0]
     try:
         found_module = imp.find_module(module_name, [directory])
@@ -54,5 +54,5 @@ def main():
 
     boat = Boat(driver_module.driver)
 
-    httpd = BoatdHTTPServer(boat, ('', 2222), BoatdRequestHandler)
+    httpd = BoatdHTTPServer(boat, ('', conf.boatd.port), BoatdRequestHandler)
     httpd.serve_forever()

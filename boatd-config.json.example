@@ -1,4 +1,10 @@
 {
-    "driver": "example/basic_driver.py",
-    "behaviour": "example/basic_behaviour.py"
+    "boatd": {
+        "port": 2222
+    },
+
+    "scripts": {
+        "behaviour": "example/basic_behaviour.py",
+        "driver": "example/basic_driver.py"
+    }
 }

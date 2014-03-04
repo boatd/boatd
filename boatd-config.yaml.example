@@ -1,2 +1,6 @@
-behaviour: example/basic_behaviour.py
-driver: example/basic_driver.py
+boatd:
+    port: 2222
+
+scripts:
+    behaviour: example/basic_behaviour.py
+    driver: example/basic_driver.py
