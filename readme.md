@@ -44,7 +44,7 @@ Now setup the virtual environment and install the dependencies
 
 Debian based systems for system-wide installation:
 
-    $ apt-get install python-yaml python-twisted
+    $ apt-get install python-yaml
 
 Todo
 ----
