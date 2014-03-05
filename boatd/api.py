@@ -36,6 +36,11 @@ class BoatdHTTPServer(HTTPServer):
         json_content = self.handles.get(function_string)()
         return json.dumps(json_content).encode()
 
+    def driver_function(self, function_string):
+        obj_path = function_string.split('/')[1:]
+        json_content = {obj_path[-1]: get_deep_attr(self.boat, obj_path)()}
+        return json.dumps(json_content).encode()
+
 
 class BoatdRequestHandler(BaseHTTPRequestHandler):
     server_version = 'boatd/0.1'
@@ -51,7 +56,7 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
         if self.path in self.server.handles:
             self.send_json(self.server.boat_function(self.path))
         else:
-            print('fail')
+            self.send_json((self.server.driver_function(self.path)))
 
     def do_POST(self):
         '''Handle a POST request to the server'''
