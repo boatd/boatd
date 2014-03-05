@@ -34,13 +34,16 @@ class BoatdHTTPServer(HTTPServer):
 class BoatdRequestHandler(BaseHTTPRequestHandler):
     server_version = 'boatd/0.1'
 
+    def send_json(self, content):
+        self.send_response(200)
+        self.send_header('Content-Type', 'application/JSON')
+        self.end_headers()
+        self.request.sendall(content)
+
     def do_GET(self, *args, **kwargs):
         '''Handle a GET request to the server'''
         if self.path in self.server.handles:
-            self.send_response(200)
-            self.send_header('Content-Type', 'application/JSON')
-            self.end_headers()
-            self.request.sendall(self.server.boat_function(self.path))
+            self.send_json(self.server.boat_function(self.path))
         else:
             print('fail')
 
