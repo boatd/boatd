@@ -6,6 +6,12 @@ except ImportError:
 import logging
 import json
 
+def get_deep_attr(obj, path):
+    if len(path) > 1:
+        attr, path = path[0], path[1:]
+        return get_deep_attr(getattr(obj, attr), path)
+    else:
+        return getattr(obj, path[0])
 
 class BoatdHTTPServer(HTTPServer):
     def __init__(self, boat,
