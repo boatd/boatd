@@ -40,7 +40,7 @@ class BoatdHTTPServer(HTTPServer):
         return json.dumps(json_content).encode()
 
     def driver_function(self, function_string):
-        obj_path = function_string.split('/')[1:]
+        obj_path = [p for p in function_string.split('/') if p]
         json_content = {"result": get_deep_attr(self.boat, obj_path)()}
         return json.dumps(json_content).encode()
 
