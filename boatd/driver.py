@@ -15,6 +15,7 @@ class Driver(object):
             def dec(*args, **kwargs):
                 return f(*args, **kwargs)
             self.handlers[name] = dec
+            logging.log('loaded function {} as "{}"'.format(f.__name__, name))
             return dec
         return wrapper
 
