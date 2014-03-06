@@ -1,9 +1,7 @@
 #!/bin/bash
 
-./boatd-start &
+./boatd-start test/config.yaml &
 boatd_pid=$!
-
-echo "boatd started"
 
 sleep 1
 
