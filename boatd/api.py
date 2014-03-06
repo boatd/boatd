@@ -26,6 +26,7 @@ class BoatdHTTPServer(HTTPServer):
         HTTPServer.__init__(self, server_address, RequestHandlerClass,
                             bind_and_activate)
         self.boat = boat
+        self.running = True
 
         self.handles = {
             '/': self.boatd_info,
@@ -43,7 +44,13 @@ class BoatdHTTPServer(HTTPServer):
         return {'boatd': {'version': 0.1}}
 
     def boatd_post(self, content):
-        print(content)
+        response = {}
+        if 'quit' in content:
+            if content.get('quit'):
+                self.running = False
+                response['quit'] = True
+
+        return response
 
     def boat_post_function(self, name, content):
         return self.post_handles.get(name)(content)
@@ -88,7 +95,8 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
         length = int(self.headers.getheader('content-length'))
         data = json.loads(self.rfile.read(length))
         if self.path in self.server.post_handles:
-            self.server.boat_post_function(self.path, data)
+            response_data = self.server.boat_post_function(self.path, data)
+            self.send_json(json.dumps(response_data).encode())
 
     def log_request(self, code='-', size='-'):
         '''Log the request stdout.'''
