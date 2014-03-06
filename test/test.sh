@@ -9,8 +9,14 @@ echo
 echo "        TESTING GET..."
 echo
 
-curl -v localhost:2222/heading && echo
+curl -i localhost:2222/heading && echo
 
-curl localhost:2222/pony && echo
+curl -i localhost:2222/pony && echo
 
-kill $boatd_pid
+echo
+echo "        TESTING POST..."
+echo
+
+curl -i -X POST -H "Content-Type: application/json" -d '{"quit": true}' http://localhost:2222
+
+echo kill $boatd_pid
