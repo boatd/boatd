@@ -32,11 +32,21 @@ class BoatdHTTPServer(HTTPServer):
             '/heading': self.boat_heading
         }
 
+        self.post_handles = {
+            '/': self.boatd_post,
+        }
+
     def boat_heading(self):
         return {'heading': self.boat.heading()}
 
     def boatd_info(self):
         return {'boatd': {'version': 0.1}}
+
+    def boatd_post(self, content):
+        print(content)
+
+    def boat_post_function(self, name, content):
+        return self.post_handles.get(name)(content)
 
     def boat_function(self, function_string):
         '''Return the encoded json response from an endpoint string.'''
@@ -77,7 +87,8 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
         '''Handle a POST request to the server.'''
         length = int(self.headers.getheader('content-length'))
         data = json.loads(self.rfile.read(length))
-        print(data)
+        if self.path in self.server.post_handles:
+            self.server.boat_post_function(self.path, data)
 
     def log_request(self, code='-', size='-'):
         '''Log the request stdout.'''
