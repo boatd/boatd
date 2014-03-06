@@ -16,6 +16,10 @@ def get_deep_attr(obj, path):
 
 
 class BoatdHTTPServer(HTTPServer):
+    '''
+    The main REST server for boatd. Listens for requests on port server_address
+    and handles each request with RequestHandlerClass.
+    '''
     def __init__(self, boat,
                  server_address, RequestHandlerClass, bind_and_activate=True):
 
@@ -40,12 +44,20 @@ class BoatdHTTPServer(HTTPServer):
         return json.dumps(json_content).encode()
 
     def driver_function(self, function_string):
+        '''
+        Return the json response from the string describing the path to the
+        attribute.
+        '''
         obj_path = [p for p in function_string.split('/') if p]
         json_content = {"result": get_deep_attr(self.boat, obj_path)()}
         return json.dumps(json_content).encode()
 
 
 class BoatdRequestHandler(BaseHTTPRequestHandler):
+    '''
+    Handle a single HTTP request. Returns JSON content using data from the rest
+    of boatd.
+    '''
     server_version = 'boatd/0.1'
 
     def send_json(self, content):
@@ -55,19 +67,20 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
         self.request.sendall(content)
 
     def do_GET(self, *args, **kwargs):
-        '''Handle a GET request to the server'''
+        '''Handle a GET request to the server.'''
         if self.path in self.server.handles:
             self.send_json(self.server.boat_function(self.path))
         else:
             self.send_json((self.server.driver_function(self.path)))
 
     def do_POST(self):
-        '''Handle a POST request to the server'''
+        '''Handle a POST request to the server.'''
         length = int(self.headers.getheader('content-length'))
         data = json.loads(self.rfile.read(length))
         print(data)
 
     def log_request(self, code='-', size='-'):
+        '''Log the request stdout.'''
         logging.log('REST request {}'.format(self.path), level=logging.VERBOSE)
 
 if __name__ == '__main__':
