@@ -36,4 +36,5 @@ def main():
     boat = Boat(driver_module.driver)
 
     httpd = BoatdHTTPServer(boat, ('', conf.boatd.port), BoatdRequestHandler)
-    httpd.serve_forever()
+    while httpd.running:
+        httpd.handle_request()
