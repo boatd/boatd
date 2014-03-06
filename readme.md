@@ -46,6 +46,10 @@ Debian based systems for system-wide installation:
 
     $ apt-get install python-yaml
 
+Test to see if things are working by running the test script:
+
+    $ ./test/test.sh
+
 Todo
 ----
 
