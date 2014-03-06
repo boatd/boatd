@@ -24,9 +24,10 @@ def main():
         conf = Config.from_json(conf_file)
 
     directory, name = os.path.split(conf.scripts.driver)
+    conf_directory, _ = os.path.split(conf_file)
     module_name = os.path.splitext(name)[0]
     try:
-        found_module = imp.find_module(module_name, [directory])
+        found_module = imp.find_module(module_name, [directory, conf_directory])
         driver_module = imp.load_module('driver_module', *found_module)
     except:
         print(traceback.format_exc())
