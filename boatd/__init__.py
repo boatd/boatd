@@ -11,25 +11,6 @@ from .driver import Driver
 from .api import BoatdHTTPServer, BoatdRequestHandler
 
 
-def inject_import(name, filename, inject):
-    module = imp.new_module(name)
-    vars(module).update(inject)
-    with open(filename) as f:
-        exec(f.read(), vars(module))
-    return module
-
-
-class Behaviour(object):
-    def __init__(self, behaviour_path, boat):
-        self.boat = boat
-        self.path = behaviour_path
-
-    def run(self):
-        return inject_import('behaviour',
-                             self.path,
-                             {'boat': self.boat})
-
-
 def main():
     if len(sys.argv) > 1:
         conf_file = sys.argv[1]
