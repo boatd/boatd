@@ -5,6 +5,7 @@ import os
 import sys
 import traceback
 
+from . import logging
 from .boat import Boat
 from .config import Config
 from .driver import Driver
@@ -30,6 +31,7 @@ def main():
         found_module = imp.find_module(module_name, [directory, conf_directory])
         driver_module = imp.load_module('driver_module', *found_module)
     except:
+        logging.log('exception raised in driver module:', logging.WARN)
         print(traceback.format_exc())
     finally:
         found_module[0].close()
