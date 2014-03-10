@@ -11,8 +11,7 @@ from .config import Config
 from .driver import Driver
 from .api import BoatdHTTPServer, BoatdRequestHandler
 
-
-def main():
+def load_conf():
     if len(sys.argv) > 1:
         conf_file = sys.argv[1]
     else:
@@ -24,8 +23,13 @@ def main():
     elif ext == '.json':
         conf = Config.from_json(conf_file)
 
+    conf.filename = conf_file
+
+    return conf
+
+def load_driver(conf):
     directory, name = os.path.split(conf.scripts.driver)
-    conf_directory, _ = os.path.split(conf_file)
+    conf_directory, _ = os.path.split(conf.filename)
     module_name = os.path.splitext(name)[0]
     try:
         found_module = imp.find_module(module_name, [directory, conf_directory])
@@ -36,7 +40,12 @@ def main():
     finally:
         found_module[0].close()
 
-    boat = Boat(driver_module.driver)
+    return driver_module.driver
+
+def run():
+    conf = load_conf()
+    driver = load_driver(conf)
+    boat = Boat(driver)
 
     httpd = BoatdHTTPServer(boat, ('', conf.boatd.port), BoatdRequestHandler)
     while httpd.running:
