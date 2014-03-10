@@ -1,0 +1,9 @@
+{
+    "boatd": {
+        "port": 2222
+    },
+    
+    "scripts": {
+        "driver": "driver.py"
+    }
+}
