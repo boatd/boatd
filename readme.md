@@ -1,4 +1,4 @@
-boatd - sailing boat daemon
+boatd - sailing boat daemon [![BuildStatus](https://travis-ci.org/boatd/boatd.png?branch=master)](https://travis-ci.org/boatd/boatd)
 ===========================
 
 Experimental robotic sailing boat daemon.
