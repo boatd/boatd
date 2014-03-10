@@ -19,14 +19,14 @@ def load_conf():
     '''
     if len(sys.argv) > 1:
         conf_file = sys.argv[1]
-    else:
-        conf_file = 'boatd-config.yaml'
 
     _, ext = os.path.splitext(conf_file)
     if ext == '.yaml':
         conf = Config.from_yaml(conf_file)
     elif ext == '.json':
         conf = Config.from_json(conf_file)
+    else:
+        conf = Config.from_yaml('boatd-config.yaml')
 
     conf.filename = conf_file
 
