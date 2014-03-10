@@ -5,7 +5,20 @@ class TestConfig(object):
     def setup(self):
         self.directory, _ = os.path.split(__file__)
         self.yaml_file = os.path.join(self.directory, 'config.yaml')
+        self.json_file = os.path.join(self.directory, 'config.json')
 
     def test_load_yaml(self):
         config = boatd.Config.from_yaml(self.yaml_file)
         assert config.boatd
+
+    def test_load_json(self):
+        config = boatd.Config.from_json(self.json_file)
+        assert config.boatd
+
+    def test_port(self):
+        config = boatd.Config.from_yaml(self.yaml_file)
+        assert config.boatd.port == 2222
+
+    def test_driver(self):
+        config = boatd.Config.from_yaml(self.yaml_file)
+        assert config.scripts.driver == 'driver.py'
