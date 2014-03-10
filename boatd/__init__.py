@@ -11,7 +11,12 @@ from .config import Config
 from .driver import Driver
 from .api import BoatdHTTPServer, BoatdRequestHandler
 
+
 def load_conf():
+    '''
+    Return the configuration object. Reads from the first argument by default,
+    otherwise falls back to 'boatd-config.yaml'.
+    '''
     if len(sys.argv) > 1:
         conf_file = sys.argv[1]
     else:
@@ -27,7 +32,12 @@ def load_conf():
 
     return conf
 
+
 def load_driver(conf):
+    '''
+    Return the driver module from the filename specified in the configuration
+    file with key configuration.scripts.driver.
+    '''
     directory, name = os.path.split(conf.scripts.driver)
     conf_directory, _ = os.path.split(conf.filename)
     module_name = os.path.splitext(name)[0]
@@ -42,7 +52,9 @@ def load_driver(conf):
 
     return driver_module.driver
 
+
 def run():
+    '''Run the main server.'''
     conf = load_conf()
     driver = load_driver(conf)
     boat = Boat(driver)
