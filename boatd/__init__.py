@@ -19,6 +19,8 @@ def load_conf():
     '''
     if len(sys.argv) > 1:
         conf_file = sys.argv[1]
+    else:
+        conf_file = ''
 
     _, ext = os.path.splitext(conf_file)
     if ext == '.yaml':
