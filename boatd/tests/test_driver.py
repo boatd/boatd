@@ -22,3 +22,17 @@ class TestDriver(object):
 
     def test_loading_driver(self):
         assert boatd.load_driver(self.mock_config)
+
+    def test_pony_exists(self):
+        driver = boatd.load_driver(self.mock_config)
+        assert driver.handlers.get('pony')
+
+    def test_pony_runs(self):
+        driver = boatd.load_driver(self.mock_config)
+        pony = driver.handlers.get('pony')
+        assert pony() == 'magic'
+
+    def test_heading(self):
+        driver = boatd.load_driver(self.mock_config)
+        heading = driver.handlers.get('heading')
+        assert heading() == 2.43
