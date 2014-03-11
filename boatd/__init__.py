@@ -41,10 +41,16 @@ def load_driver(conf):
     file with key configuration.scripts.driver.
     '''
     directory, name = os.path.split(conf.scripts.driver)
-    conf_directory, _ = os.path.split(conf.filename)
+
+    if hasattr(conf, 'filename'):
+        conf_directory, _ = os.path.split(conf.filename)
+        search_dirs = [directory, conf_directory]
+    else:
+        search_dirs = [directory]
+
     module_name = os.path.splitext(name)[0]
     try:
-        found_module = imp.find_module(module_name, [directory, conf_directory])
+        found_module = imp.find_module(module_name, search_dirs)
         driver_module = imp.load_module('driver_module', *found_module)
     except:
         logging.log('exception raised in driver module:', logging.WARN)
