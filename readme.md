@@ -46,9 +46,23 @@ Debian based systems for system-wide installation:
 
     $ apt-get install python-yaml
 
-Test to see if things are working by running the test script:
 
-    $ ./test/test.sh
+Testing
+-------
+
+To run tests, install nose
+
+    $ pip install nose
+
+and run `nosetests`. If all the tests pass, the output should be similar to:
+
+    $ nosetests 
+    ..........
+    ----------------------------------------------------------------------
+    Ran 10 tests in 0.118s
+
+    OK
+
 
 Todo
 ----
