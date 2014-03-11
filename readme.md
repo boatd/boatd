@@ -31,6 +31,8 @@ There are two main components of a system written using `boatd`:
 Installing dependencies
 -----------------------
 
+Boatd is tested on Python 2.7, 3.2 and 3.3.
+
 ### Locally with virtualenv
 
 Install virtualenv and pip
