@@ -46,3 +46,20 @@ class TestDriver(object):
 
         func = driver.handlers.get('test_handler_decorators')
         assert func() == 'test passed'
+
+    def test_empty_hardware(self):
+        driver = boatd.load_driver(self.mock_config)
+        assert len(driver.some_hardware) == 0
+
+    def test_set_rudder(self):
+        driver = boatd.load_driver(self.mock_config)
+        rudder = driver.handlers.get('rudder')
+        rudder(10)
+        assert driver.some_hardware.get('rudder') == 10
+
+    def test_set_rudder_multiple(self):
+        driver = boatd.load_driver(self.mock_config)
+        rudder = driver.handlers.get('rudder')
+        rudder(20)
+        rudder(-10)
+        assert driver.some_hardware.get('rudder') == -10

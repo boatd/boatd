@@ -9,6 +9,7 @@ class Driver(object):
         logging.log('Initialising driver')
 
         self.heading = self.handler('heading')
+        self.rudder = self.handler('rudder')
 
         self.handlers = {}
 

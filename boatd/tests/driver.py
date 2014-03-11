@@ -1,12 +1,16 @@
 import boatd
 driver = boatd.Driver()
 
-some_hardware = {}
+driver.some_hardware = {}
 
 @driver.heading
 def heading():
     return 2.43
 
+@driver.rudder
+def move_rudder(angle):
+    driver.some_hardware['rudder'] = angle
+
 @driver.handler('pony')
-def something():
+def horse():
     return 'magic'
