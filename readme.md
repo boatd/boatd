@@ -28,8 +28,10 @@ There are two main components of a system written using `boatd`:
   boat hardware
 ```
 
-Installing
-----------
+Installing dependencies
+-----------------------
+
+### Locally with virtualenv
 
 Install virtualenv and pip
 
@@ -42,7 +44,9 @@ Now setup the virtual environment and install the dependencies
     $ source env/bin/activate
     $ pip install -r requirements.txt
 
-Debian based systems for system-wide installation:
+### System-wide on Debian
+
+On any Debian based distribution:
 
     $ apt-get install python-yaml
 
