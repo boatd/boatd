@@ -51,3 +51,8 @@ class TestAPI(object):
         content = urlopen('http://localhost:{}/pony'.format(self.port)).read()
         d = json.loads(content.decode("utf-8"))
         assert d.get('result') == 'magic'
+
+    def test_request_heading(self):
+        content = urlopen('http://localhost:{}/heading'.format(self.port)).read()
+        d = json.loads(content.decode("utf-8"))
+        assert d.get('heading') == 45
