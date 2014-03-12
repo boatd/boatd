@@ -5,13 +5,15 @@ except ImportError:
 
 import threading
 import socket
+import json
 
 import boatd
 
 
 class MockBoat(object):
     def __init__(self):
-        self.heading = 45
+        self.heading = lambda: 45
+        self.pony = lambda: 'magic'
 
 
 class TestAPI(object):
@@ -39,3 +41,13 @@ class TestAPI(object):
 
     def test_GET(self):
         assert urlopen('http://localhost:{}'.format(self.port)).read()
+
+    def test_valid_json(self):
+        content = urlopen('http://localhost:{}'.format(self.port)).read()
+        d = json.loads(content.decode("utf-8"))
+        assert 'boatd' in d
+
+    def test_request_pony(self):
+        content = urlopen('http://localhost:{}/pony'.format(self.port)).read()
+        d = json.loads(content.decode("utf-8"))
+        assert d.get('result') == 'magic'
