@@ -1,3 +1,5 @@
+import threading
+
 import boatd
 
 class MockBoat(object):
@@ -6,4 +8,11 @@ class MockBoat(object):
 
 class TestAPI(object):
     def setup(self):
-        pass
+        httpd = boatd.BoatdHTTPServer(MockBoat(), ('', 2222),
+                    boatd.BoatdRequestHandler)
+        self.http_thread = threading.Thread(target=httpd.handle_request)
+        self.http_thread.daemon = True
+        self.http_thread.start()
+
+    def test_thread(self):
+        assert self.http_thread.is_alive()
