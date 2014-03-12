@@ -27,6 +27,7 @@ class TestAPI(object):
                                               boatd.BoatdRequestHandler)
                 break
             except socket.error:
+                print('errored')
                 self.port += 1
 
         self.http_thread = threading.Thread(target=httpd.handle_request)
@@ -37,4 +38,4 @@ class TestAPI(object):
         assert self.http_thread.is_alive()
 
     def test_GET(self):
-        assert urlopen('http://localhost:2222').read()
+        assert urlopen('http://localhost:{}'.format(self.port)).read()
