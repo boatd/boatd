@@ -3,7 +3,7 @@ try:
 except ImportError:
     from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 
-import logging
+from . import logging
 import json
 
 
