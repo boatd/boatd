@@ -1,7 +1,9 @@
 try:
     from urllib.request import urlopen
+    from urllib.request import HTTPError
 except ImportError:
     from urllib2 import urlopen
+    from urllib2 import HTTPError
 
 import threading
 import socket
@@ -57,6 +59,18 @@ class TestAPI(object):
         d = json.loads(content.decode("utf-8"))
         assert d.get('result') == 'magic'
 
+    def test_request_nested(self):
+        content = urlopen(self._url('/nest/thing')).read()
+        d = json.loads(content.decode("utf-8"))
+        assert d.get('result') == 'well hello there'
+
+    def test_request_nonexistant(self):
+        try:
+            urlopen(self._url('/does_not_exist'))
+            assert '404 code returned' == True
+        except HTTPError as e:
+            assert e.code == 404
+
     def test_request_heading(self):
         content = urlopen(self._url('/heading')).read()
         d = json.loads(content.decode("utf-8"))
@@ -65,3 +79,7 @@ class TestAPI(object):
     def test_content_type(self):
         m = urlopen(self._url('/heading')).info()
         assert m['content-type'] == 'application/JSON'
+
+    def test_response_code(self):
+        code = urlopen(self._url('/heading')).getcode()
+        assert code == 200
