@@ -77,8 +77,8 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
     '''
     server_version = 'boatd/0.1'
 
-    def send_json(self, content):
-        self.send_response(200)
+    def send_json(self, content, code=200):
+        self.send_response(code)
         self.send_header('Content-Type', 'application/JSON')
         self.end_headers()
         self.request.sendall(content)
@@ -86,9 +86,20 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self, *args, **kwargs):
         '''Handle a GET request to the server.'''
         if self.path in self.server.handles:
-            self.send_json(self.server.boat_function(self.path))
+            try:
+                func_response = self.server.boat_function(self.path)
+                code = 200
+            except AttributeError:
+                func_response = '{}'
+                code = 404
         else:
-            self.send_json((self.server.driver_function(self.path)))
+            try:
+                func_response = self.server.driver_function(self.path)
+                code = 200
+            except AttributeError:
+                func_response = '{}'
+                code = 404
+        self.send_json(func_response, code)
 
     def do_POST(self):
         '''Handle a POST request to the server.'''
