@@ -29,7 +29,6 @@ class TestAPI(object):
                                               boatd.BoatdRequestHandler)
                 break
             except socket.error:
-                print('errored')
                 self.port += 1
 
         self.http_thread = threading.Thread(target=httpd.handle_request)
@@ -56,3 +55,7 @@ class TestAPI(object):
         content = urlopen('http://localhost:{}/heading'.format(self.port)).read()
         d = json.loads(content.decode("utf-8"))
         assert d.get('heading') == 45
+
+    def test_content_type(self):
+        m = urlopen('http://localhost:{}/heading'.format(self.port)).info()
+        assert m['content-type'] == 'application/JSON'
