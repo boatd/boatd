@@ -58,7 +58,7 @@ class BoatdHTTPServer(HTTPServer):
     def boat_function(self, function_string):
         '''Return the encoded json response from an endpoint string.'''
         json_content = self.handles.get(function_string)()
-        return json.dumps(json_content).encode()
+        return json.dumps(json_content)
 
     def driver_function(self, function_string):
         '''
@@ -67,7 +67,7 @@ class BoatdHTTPServer(HTTPServer):
         '''
         obj_path = [p for p in function_string.split('/') if p]
         json_content = {"result": get_deep_attr(self.boat, obj_path)()}
-        return json.dumps(json_content).encode()
+        return json.dumps(json_content)
 
 
 class BoatdRequestHandler(BaseHTTPRequestHandler):
@@ -81,24 +81,22 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
         self.send_response(code)
         self.send_header('Content-Type', 'application/JSON')
         self.end_headers()
-        self.request.sendall(content)
+        self.request.sendall(content.encode())
 
     def do_GET(self, *args, **kwargs):
         '''Handle a GET request to the server.'''
         if self.path in self.server.handles:
-            try:
-                func_response = self.server.boat_function(self.path)
-                code = 200
-            except AttributeError:
-                func_response = '{}'
-                code = 404
+            handler_func = self.server.boat_function
         else:
-            try:
-                func_response = self.server.driver_function(self.path)
-                code = 200
-            except AttributeError:
-                func_response = '{}'
-                code = 404
+            handler_func = self.server.driver_function
+
+        try:
+            func_response = handler_func(self.path)
+            code = 200
+        except AttributeError:
+            func_response = '{}'
+            code = 404
+
         self.send_json(func_response, code)
 
     def do_POST(self):
