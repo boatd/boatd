@@ -13,9 +13,18 @@ import boatd
 
 
 class MockBoat(object):
+    class NestedClass(object):
+        def __init__(self):
+            self.thing = lambda: 'well hello there'
+
     def __init__(self):
+        self.nest = self.NestedClass()
         self.heading = lambda: 45
         self.pony = lambda: 'magic'
+        self.rudder_angle = 20
+
+    def rudder(r):
+        self.rudder_angle = r
 
 
 class TestAPI(object):
