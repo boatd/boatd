@@ -52,9 +52,10 @@ def load_driver(conf):
     try:
         found_module = imp.find_module(module_name, search_dirs)
         driver_module = imp.load_module('driver_module', *found_module)
-    except:
+    except Exception as e:
         logging.log('exception raised in driver module:', logging.WARN)
         print(traceback.format_exc())
+        raise e
     finally:
         found_module[0].close()
 
