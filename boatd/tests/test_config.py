@@ -22,3 +22,8 @@ class TestConfig(object):
     def test_driver(self):
         config = boatd.Config.from_yaml(self.yaml_file)
         assert config.scripts.driver == 'driver.py'
+
+    def test_set_attr(self):
+        config = boatd.Config.from_yaml(self.yaml_file)
+        config.scripts.driver = 'new_driver.py'
+        assert config.scripts.driver == 'new_driver.py'
