@@ -63,3 +63,15 @@ class TestDriver(object):
         rudder(20)
         rudder(-10)
         assert driver.some_hardware.get('rudder') == -10
+
+    def test_bad_driver(self):
+        self.mock_config.scripts.driver = os.path.join(self.directory,
+                                                       'bad_driver.py')
+        try:
+            driver = boatd.load_driver(self.mock_config)
+        except SyntaxError:
+            pass
+        except Exception as e:
+            assert False, 'An exception other than SyntaxError was raised: {}'.format(e)
+        else:
+            assert False, 'No exception was raised'
