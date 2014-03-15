@@ -25,20 +25,21 @@ class MockBoat(object):
         self.pony = lambda: 'magic'
         self.rudder_angle = 20
 
-    def rudder(r):
+    def rudder(self, r):
         self.rudder_angle = r
 
 
 class TestAPI(object):
-    TEST_PORTS = 10
+    TEST_PORTS = 20
 
     def __init__(self):
         self.port = 2222
 
     def setup(self):
+        self.boat = MockBoat()
         for _ in range(self.TEST_PORTS):
             try:
-                self.httpd = boatd.BoatdHTTPServer(MockBoat(), ('', self.port),
+                self.httpd = boatd.BoatdHTTPServer(self.boat, ('', self.port),
                                                    boatd.BoatdRequestHandler)
                 break
             except socket.error:
@@ -54,10 +55,15 @@ class TestAPI(object):
     def _url(self, endpoint):
         return self._base_url() + endpoint
 
-    def _post_string(self, string):
+    def _post_string(self, string, endpoint=None):
+        if endpoint is not None:
+            url = self._base_url() + endpoint
+        else:
+            url = self._base_url()
+
         post_data = string.encode('utf-8')
         headers = {'Content-Type': 'application/json'}
-        request = Request(self._base_url(), post_data, headers)
+        request = Request(url, post_data, headers)
         return urlopen(request)
 
     def test_thread(self):
@@ -91,7 +97,7 @@ class TestAPI(object):
     def test_request_heading(self):
         content = urlopen(self._url('/heading')).read()
         d = json.loads(content.decode("utf-8"))
-        assert d.get('heading') == 45
+        assert d.get('result') == 45
 
     def test_content_type(self):
         m = urlopen(self._url('/heading')).info()
@@ -106,3 +112,10 @@ class TestAPI(object):
         status = json.loads(status_json.decode("utf-8"))
         assert status['quit'] == True
         assert self.httpd.running == False
+
+    def test_set_rudder(self):
+        assert self.boat.rudder_angle == 20
+        content = json.dumps({'value': 32})
+        request = self._post_string(content, endpoint='/rudder')
+        status = json.loads(request.read().decode("utf-8"))
+        assert self.boat.rudder_angle == 32

@@ -29,16 +29,12 @@ class BoatdHTTPServer(HTTPServer):
         self.running = True
 
         self.handles = {
-            '/': self.boatd_info,
-            '/heading': self.boat_heading
+            '/': self.boatd_info
         }
 
         self.post_handles = {
             '/': self.boatd_post,
         }
-
-    def boat_heading(self):
-        return {'heading': self.boat.heading()}
 
     def boatd_info(self):
         return {'boatd': {'version': 0.1}}
@@ -53,20 +49,27 @@ class BoatdHTTPServer(HTTPServer):
         return response
 
     def boat_post_function(self, name, content):
-        return self.post_handles.get(name)(content)
+        f = self.post_handles.get(name)
+        if f is not None:
+            return f(content)
+        else:
+            return self.driver_function(name, args=[content['value']])
 
     def boat_function(self, function_string):
         '''Return the encoded json response from an endpoint string.'''
         json_content = self.handles.get(function_string)()
         return json.dumps(json_content)
 
-    def driver_function(self, function_string):
+    def driver_function(self, function_string, args=None):
         '''
         Return the json response from the string describing the path to the
         attribute.
         '''
+        if args is None:
+            args = []
+
         obj_path = [p for p in function_string.split('/') if p]
-        json_content = {"result": get_deep_attr(self.boat, obj_path)()}
+        json_content = {"result": get_deep_attr(self.boat, obj_path)(*args)}
         return json.dumps(json_content)
 
 
@@ -103,9 +106,8 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
         '''Handle a POST request to the server.'''
         length = int(self.headers.get('content-length'))
         data = json.loads(self.rfile.read(length).decode('utf-8'))
-        if self.path in self.server.post_handles:
-            response_data = self.server.boat_post_function(self.path, data)
-            self.send_json(json.dumps(response_data))
+        response_data = self.server.boat_post_function(self.path, data)
+        self.send_json(json.dumps(response_data))
 
     def log_request(self, code='-', size='-'):
         '''Log the request stdout.'''
