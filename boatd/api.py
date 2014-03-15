@@ -112,12 +112,3 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
     def log_request(self, code='-', size='-'):
         '''Log the request stdout.'''
         logging.log('REST request {}'.format(self.path), level=logging.VERBOSE)
-
-if __name__ == '__main__':
-    class BoatMock(object):
-        def __init__(self):
-            self.heading = 24.23
-
-    httpd = BoatdHTTPServer(BoatMock(), ('', 2222),
-                            BoatdRequestHandler)
-    httpd.serve_forever()
