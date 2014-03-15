@@ -1,9 +1,11 @@
 try:
     from urllib.request import urlopen
     from urllib.request import HTTPError
+    from urllib.request import Request
 except ImportError:
     from urllib2 import urlopen
     from urllib2 import HTTPError
+    from urllib2 import Request
 
 import threading
 import socket
@@ -36,13 +38,13 @@ class TestAPI(object):
     def setup(self):
         for _ in range(self.TEST_PORTS):
             try:
-                httpd = boatd.BoatdHTTPServer(MockBoat(), ('', self.port),
-                                              boatd.BoatdRequestHandler)
+                self.httpd = boatd.BoatdHTTPServer(MockBoat(), ('', self.port),
+                                                   boatd.BoatdRequestHandler)
                 break
             except socket.error:
                 self.port += 1
 
-        self.http_thread = threading.Thread(target=httpd.handle_request)
+        self.http_thread = threading.Thread(target=self.httpd.handle_request)
         self.http_thread.daemon = True
         self.http_thread.start()
 
@@ -51,6 +53,12 @@ class TestAPI(object):
 
     def _url(self, endpoint):
         return self._base_url() + endpoint
+
+    def _post_string(self, string):
+        post_data = string.encode('utf-8')
+        headers = {'Content-Type': 'application/json'}
+        request = Request(self._base_url(), post_data, headers)
+        return urlopen(request)
 
     def test_thread(self):
         assert self.http_thread.is_alive()
@@ -92,3 +100,9 @@ class TestAPI(object):
     def test_response_code(self):
         code = urlopen(self._url('/heading')).getcode()
         assert code == 200
+
+    def test_quit(self):
+        status_json = self._post_string(json.dumps({'quit': True})).read()
+        status = json.loads(status_json)
+        assert status['quit'] == True
+        assert self.httpd.running == False
