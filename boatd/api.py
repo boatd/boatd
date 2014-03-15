@@ -101,11 +101,11 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         '''Handle a POST request to the server.'''
-        length = int(self.headers.getheader('content-length'))
-        data = json.loads(self.rfile.read(length))
+        length = int(self.headers.get('content-length'))
+        data = json.loads(self.rfile.read(length).decode('utf-8'))
         if self.path in self.server.post_handles:
             response_data = self.server.boat_post_function(self.path, data)
-            self.send_json(json.dumps(response_data).encode())
+            self.send_json(json.dumps(response_data))
 
     def log_request(self, code='-', size='-'):
         '''Log the request stdout.'''

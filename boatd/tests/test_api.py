@@ -103,6 +103,6 @@ class TestAPI(object):
 
     def test_quit(self):
         status_json = self._post_string(json.dumps({'quit': True})).read()
-        status = json.loads(status_json)
+        status = json.loads(status_json.decode("utf-8"))
         assert status['quit'] == True
         assert self.httpd.running == False
