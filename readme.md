@@ -68,7 +68,7 @@ and run `nosetests`. If all the tests pass, the output should be similar to:
     $ nosetests 
     ..........
     ----------------------------------------------------------------------
-    Ran 10 tests in 0.118s
+    Ran 30 tests in 0.118s
 
     OK
 
