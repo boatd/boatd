@@ -69,7 +69,11 @@ class BoatdHTTPServer(HTTPServer):
             args = []
 
         obj_path = [p for p in function_string.split('/') if p]
-        json_content = {"result": get_deep_attr(self.boat, obj_path)(*args)}
+        attr = get_deep_attr(self.boat, obj_path)
+        if attr is not None:
+            json_content = {"result": attr(*args)}
+        else:
+            raise AttributeError
         return json.dumps(json_content)
 
 
@@ -97,10 +101,13 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
             func_response = handler_func(self.path)
             code = 200
         except AttributeError:
-            func_response = '{}'
+            func_response = "404 - attribute not found"
             code = 404
 
-        self.send_json(func_response, code)
+        if func_response is not None:
+            self.send_json(func_response, code)
+        else:
+            self.send_json("404", code)
 
     def do_POST(self):
         '''Handle a POST request to the server.'''
