@@ -70,4 +70,8 @@ def run():
 
     httpd = BoatdHTTPServer(boat, ('', conf.boatd.port), BoatdRequestHandler)
     while httpd.running:
-        httpd.handle_request()
+        try:
+            httpd.handle_request()
+        except (KeyboardInterrupt, SystemExit):
+            logging.log('Quitting...')
+            sys.exit()
