@@ -42,9 +42,9 @@ class BoatdHTTPServer(HTTPServer):
 
     def boat_attr(self):
         return {
-            "heading": self.boat.heading(),
-            "wind": self.boat.wind(),
-            "position": self.boat.position()
+            'heading' self.boat.heading(),
+            'wind' self.boat.wind(),
+            'position' self.boat.position()
         }
 
     def boatd_post(self, content):
