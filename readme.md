@@ -72,17 +72,13 @@ and run `nosetests`. If all the tests pass, the output should be similar to:
 
     OK
 
+Drivers
+-------
 
-Todo
-----
+Drivers should implement the following functions:
 
-  - ~~Behaviour loading~~
-  - Driver loading
-  - Core boatd function decorators
-  - Logging
-  - Event system
-  - API
-  - Halisim driver
-  - Other language support
-  - init system integration
-  - Remote behaviour loading
+  * `heading`
+  * `wind`
+  * `position`
+  * `rudder`
+  * `sail`
