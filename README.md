@@ -75,6 +75,13 @@ and run `nosetests`. If all the tests pass, the output should be similar to:
 Drivers
 -------
 
+### Driver basics
+
+Boatd drivers are implemented as a simple python module. When certain things
+are requested by a behaviour script, boatd runs one of the functions in the
+driver to find out things about the current state of the boat, or to set
+actuators to different positions.
+
 Drivers should implement the following basic functions:
 
   - `heading()` - Return the heading of the boat in degrees, relative to the
@@ -100,3 +107,18 @@ driver = boatd.Driver()
 def get_heading():
     return some_compass.bearing()
 ```
+
+### Custom handlers
+
+If the behaviour script needs to run some other function in the driver, a
+handler can be registered using `driver.handler(name)`
+
+For example:
+
+```python
+@driver.handler('pony')
+def example_handler():
+    return something
+```
+
+This can then be used as any other function in a behaviour client.
