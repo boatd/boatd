@@ -119,3 +119,11 @@ class TestAPI(object):
         request = self._post_string(content, endpoint='/rudder')
         status = json.loads(request.read().decode("utf-8"))
         assert self.boat.rudder_angle == 32
+
+    def test_reject_bad_json(self):
+        content = '''{"value: something bad}'''
+        try:
+            code = self._post_string(content, endpoint='/rudder').getcode()
+            assert '400 code returned' == True
+        except HTTPError as e:
+            assert e.code == 400
