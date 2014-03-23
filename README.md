@@ -98,13 +98,22 @@ Drivers should implement the following basic functions:
 
   - `heading()` - Return the heading of the boat in degrees, relative to the
     world.
+    - Returns: `0`-`360`
   - `wind()` - Return the direction the wind is blowing, relative to the world.
+    - Returns: `0`-`360`
   - `position()` - Return a tuple containing the current latitude and longitude
     of the boat, in that order.
+    - Returns: (`-90`-`+90`, `-180`-`+180`)
   - `rudder(angle)` - Set the boat's rudder to `angle`  degrees relative to the
     boat.
+    - Arguments:
+      - `angle`: Float, `-90`-`+90`
+    - Returns: True if successful
   - `sail(angle)` - Similarly to `rudder`, set the sail to `angle` degrees
     relative to the boat.
+    - Arguments:
+      - `angle`: Float, `-90`-`+90`
+    - Returns: True if successful
 
 These functions can have any name, but are marked for use and registered with
 boatd using decorators.
