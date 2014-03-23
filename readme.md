@@ -77,8 +77,12 @@ Drivers
 
 Drivers should implement the following functions:
 
-  * `heading`
-  * `wind`
-  * `position`
-  * `rudder`
-  * `sail`
+  - `heading()` - Return the heading of the boat in degrees, relative to the
+    world.
+  - `wind()` - Return the direction the wind is blowing, relative to the world.
+  - `position()` - Return a tuple containing the current latitude and longitude
+    of the boat, in that order.
+  - `rudder(angle)` - Set the boat's rudder to `angle`  degrees relative to the
+    boat.
+  - `sail(angle)` - Similarly to `rudder`, set the sail to `angle` degrees
+    relative to the boat.
