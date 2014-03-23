@@ -75,7 +75,7 @@ and run `nosetests`. If all the tests pass, the output should be similar to:
 Drivers
 -------
 
-Drivers should implement the following functions:
+Drivers should implement the following basic functions:
 
   - `heading()` - Return the heading of the boat in degrees, relative to the
     world.
@@ -86,3 +86,17 @@ Drivers should implement the following functions:
     boat.
   - `sail(angle)` - Similarly to `rudder`, set the sail to `angle` degrees
     relative to the boat.
+
+These functions can have any name, but are marked for use and registered with
+boatd using decorators.
+
+Example, only implementing `heading`:
+
+```python
+import boatd
+driver = boatd.Driver()
+
+@driver.heading
+def get_heading():
+    return some_compass.bearing()
+```
