@@ -40,7 +40,8 @@ def load_driver(conf):
     Return the driver module from the filename specified in the configuration
     file with key configuration.scripts.driver.
     '''
-    directory, name = os.path.split(conf.scripts.driver)
+    expanded_path = os.path.expanduser(conf.scripts.driver)
+    directory, name = os.path.split(expanded_path)
 
     if hasattr(conf, 'filename'):
         conf_directory, _ = os.path.split(conf.filename)
