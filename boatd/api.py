@@ -66,7 +66,7 @@ class BoatdHTTPServer(HTTPServer):
     def boat_function(self, function_string):
         '''Return the encoded json response from an endpoint string.'''
         json_content = self.handles.get(function_string)()
-        return json.dumps(json_content)
+        return json_content
 
     def driver_function(self, function_string, args=None):
         '''
@@ -82,7 +82,7 @@ class BoatdHTTPServer(HTTPServer):
             json_content = {"result": attr(*args)}
         else:
             raise AttributeError
-        return json.dumps(json_content)
+        return json_content
 
 
 class BoatdRequestHandler(BaseHTTPRequestHandler):
@@ -113,7 +113,7 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
             code = 404
 
         if func_response is not None:
-            self.send_json(func_response, code)
+            self.send_json(json.dumps(func_response), code)
         else:
             self.send_json("404", code)
 
