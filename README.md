@@ -12,7 +12,7 @@ General architecture
 Boatd is designed to be the manager for a boat control system, granting
 graceful startup, telemetry, logging and a built in simulator.
 
-There are two main components of a system written using `boatd`:
+There are two main components of a system written using boatd:
 
   - the __driver__ interfaces with the particular set of hardware in the boat.
 
@@ -90,10 +90,9 @@ Drivers
 
 ### Driver basics
 
-Boatd drivers are implemented as a simple python module. When certain things
-are requested by a behaviour script, boatd runs one of the functions in the
-driver to find out things about the current state of the boat, or to set
-actuators to different positions.
+Boatd drivers are implemented as a simple python module. When a behaviour
+script requires information about the current state of the boat or needs to
+send a command to some hardware, boatd runs one of the functions in the driver.
 
 Drivers should implement the following basic functions:
 
