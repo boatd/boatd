@@ -97,7 +97,6 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
         self.send_header('Content-Type', 'application/JSON')
         self.end_headers()
         self.request.sendall(content.encode())
-        self.server.socket.close()
 
     def do_GET(self, *args, **kwargs):
         '''Handle a GET request to the server.'''
