@@ -40,20 +40,26 @@ Boatd is tested on Python 2.7, 3.2 and 3.3.
 
 Install virtualenv and pip
 
-    $ sudo easy_install virtualenv pip
+```bash
+$ sudo easy_install virtualenv pip
+```
 
 Now setup the virtual environment and install the dependencies
 
-    $ mkdir env
-    $ virtualenv env
-    $ source env/bin/activate
-    $ pip install -r requirements.txt
+```bash
+$ mkdir env
+$ virtualenv env
+$ source env/bin/activate
+$ pip install -r requirements.txt
+```
 
 ### System-wide on Debian
 
 On any Debian based distribution:
 
-    $ apt-get install python-yaml
+```bash
+$ apt-get install python-yaml
+```
 
 
 Testing
@@ -61,16 +67,23 @@ Testing
 
 To run tests, install nose
 
-    $ pip install nose
+```bash
+$ pip install nose
+```
 
 and run `nosetests`. If all the tests pass, the output should be similar to:
 
-    $ nosetests 
-    ..........
-    ----------------------------------------------------------------------
-    Ran 30 tests in 0.118s
+```bash
+$ nosetests 
+..........
+----------------------------------------------------------------------
+Ran 30 tests in 0.118s
 
-    OK
+OK
+```
+
+The current test results from the head of the `master` branch can be found
+[here](https://travis-ci.org/boatd/boatd).
 
 Drivers
 -------
