@@ -22,6 +22,8 @@ class MockBoat(object):
     def __init__(self):
         self.nest = self.NestedClass()
         self.heading = lambda: 45
+        self.wind = lambda: 23.12
+        self.position = lambda: (2.2312, -23.2323)
         self.pony = lambda: 'magic'
         self.rudder_angle = 20
 
@@ -81,6 +83,11 @@ class TestAPI(object):
         content = urlopen(self._url('/pony')).read()
         d = json.loads(content.decode("utf-8"))
         assert d.get('result') == 'magic'
+
+    def test_request_boat(self):
+        content = urlopen(self._url('/boat')).read()
+        d = json.loads(content.decode("utf-8"))
+        assert all([attr in d for attr in ['heading', 'wind', 'position']])
 
     def test_request_nested(self):
         content = urlopen(self._url('/nest/thing')).read()
