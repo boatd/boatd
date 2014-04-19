@@ -78,7 +78,7 @@ class BoatdHTTPServer(HTTPServer):
 
         obj_path = [p for p in function_string.split('/') if p]
         attr = get_deep_attr(self.boat, obj_path)
-        if attr is not None:
+        if callable(attr):
             json_content = {"result": attr(*args)}
         else:
             raise AttributeError
