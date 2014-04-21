@@ -1,8 +1,17 @@
 from __future__ import print_function
 
+import os
 import time
 
 from .color import color
+
+class GpxLogger(object):
+    def __init__(self, boat, base_filename):
+        self.log_dir, self.log_name = os.path.split(base_filename)
+
+        if not os.path.exists(self.log_dir):
+            os.makedirs(self.log_dir)
+
 
 VERBOSE, NORMAL, WARN, ERROR = range(4)
 
