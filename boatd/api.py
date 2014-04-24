@@ -44,7 +44,8 @@ class BoatdHTTPServer(HTTPServer):
         return {
             'heading': self.boat.heading(),
             'wind': self.boat.wind(),
-            'position': self.boat.position()
+            'position': self.boat.position(),
+            'active': self.boat.active
         }
 
     def boatd_post(self, content):
