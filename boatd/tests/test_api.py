@@ -20,6 +20,7 @@ class MockBoat(object):
             self.thing = lambda: 'well hello there'
 
     def __init__(self):
+        self.active = False
         self.nest = self.NestedClass()
         self.heading = lambda: 45
         self.wind = lambda: 23.12
