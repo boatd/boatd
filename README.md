@@ -36,24 +36,13 @@ Installing dependencies
 
 Boatd is tested on Python 2.7, 3.2 and 3.3.
 
-### Locally with virtualenv
-
-Install virtualenv and pip
+### pip
 
 ```bash
-$ sudo easy_install virtualenv pip
-```
-
-Now setup the virtual environment and install the dependencies
-
-```bash
-$ mkdir env
-$ virtualenv env
-$ source env/bin/activate
 $ pip install -r requirements.txt
 ```
 
-### System-wide on Debian
+### Debian
 
 On any Debian based distribution:
 
@@ -61,6 +50,11 @@ On any Debian based distribution:
 $ apt-get install python-yaml
 ```
 
+### Fedora
+
+```bash
+$ yum install PyYAML
+```
 
 Testing
 -------
