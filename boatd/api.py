@@ -30,12 +30,16 @@ class BoatdHTTPServer(HTTPServer):
 
         self.handles = {
             '/': self.boatd_info,
-            '/boat': self.boat_attr
+            '/boat': self.boat_attr,
+            '/active': self.boat_active
         }
 
         self.post_handles = {
             '/': self.boatd_post,
         }
+
+    def boat_active(self):
+        return {'value': self.boat.active}
 
     def boatd_info(self):
         return {'boatd': {'version': 0.1}}
