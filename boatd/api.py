@@ -41,10 +41,10 @@ class BoatdHTTPServer(HTTPServer):
 
     def wind(self):
         try:
-            direction = self.boat.wind_direction()
-        except Exception as e:
-            direction = None
-        return {'direction': direction}
+            return {'direction': self.boat.wind_direction()}
+        except AttributeError as e:
+            logging.log(e, logging.ERROR)
+            raise AttributeError(e)
 
     def boat_active(self):
         return {'value': self.boat.active}
