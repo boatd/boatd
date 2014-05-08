@@ -88,22 +88,22 @@ Boatd drivers are implemented as a simple python module. When a behaviour
 script requires information about the current state of the boat or needs to
 send a command to some hardware, boatd runs one of the functions in the driver.
 
-Drivers should implement the following basic functions:
+Drivers should implement functions decorated by the following:
 
-  - `heading()` - Return the heading of the boat in degrees, relative to the
+  - `@driver.heading` - Return the heading of the boat in degrees, relative to the
     world.
     - Returns: `0`-`360`
-  - `wind()` - Return the direction the wind is blowing, relative to the world.
+  - `@driver.wind` - Return the direction the wind is blowing, relative to the world.
     - Returns: `0`-`360`
-  - `position()` - Return a tuple containing the current latitude and longitude
+  - `@driver.position` - Return a tuple containing the current latitude and longitude
     of the boat, in that order.
     - Returns: (`-90`-`+90`, `-180`-`+180`)
-  - `rudder(angle)` - Set the boat's rudder to `angle`  degrees relative to the
+  - `@driver.rudder` - Set the boat's rudder to `angle`  degrees relative to the
     boat.
     - Arguments:
       - `angle`: Float, `-90`-`+90`
     - Returns: True if successful
-  - `sail(angle)` - Similarly to `rudder`, set the sail to `angle` degrees
+  - `@driver.sail` - Similarly to `rudder`, set the sail to `angle` degrees
     relative to the boat.
     - Arguments:
       - `angle`: Float, `-90`-`+90`
