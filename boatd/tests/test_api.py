@@ -85,6 +85,11 @@ class TestAPI(object):
         d = json.loads(content.decode("utf-8"))
         assert d.get('result') == 'magic'
 
+    def test_request_active(self):
+        content = urlopen(self._url('/active')).read()
+        d = json.loads(content.decode("utf-8"))
+        assert type(d.get('value')) is bool
+
     def test_request_boat(self):
         content = urlopen(self._url('/boat')).read()
         d = json.loads(content.decode("utf-8"))
