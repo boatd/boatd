@@ -31,12 +31,16 @@ class BoatdHTTPServer(HTTPServer):
         self.handles = {
             '/': self.boatd_info,
             '/boat': self.boat_attr,
+            '/wind': self.wind,
             '/active': self.boat_active
         }
 
         self.post_handles = {
             '/': self.boatd_post,
         }
+
+    def wind(self):
+        return {'direction': self.boat.wind_direction()}
 
     def boat_active(self):
         return {'value': self.boat.active}
@@ -47,7 +51,7 @@ class BoatdHTTPServer(HTTPServer):
     def boat_attr(self):
         return {
             'heading': self.boat.heading(),
-            'wind': self.boat.wind(),
+            'wind': self.wind(),
             'position': self.boat.position(),
             'active': self.boat.active
         }

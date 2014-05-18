@@ -7,7 +7,7 @@ some_hardware = {}
 def heading():
     return 2.43
 
-@driver.wind
+@driver.wind_direction
 def get_wind():
     return 8.42
 
