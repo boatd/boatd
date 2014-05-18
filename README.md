@@ -93,19 +93,19 @@ Drivers should implement functions decorated by the following:
   - `@driver.heading` - Return the heading of the boat in degrees, relative to the
     world.
     - Returns: `0`-`360`
-  - `@driver.wind` - Return the direction the wind is blowing, relative to the world.
+  - `@driver.wind_position` - Return the direction the wind is blowing, relative to the world.
     - Returns: `0`-`360`
   - `@driver.position` - Return a tuple containing the current latitude and longitude
     of the boat, in that order.
     - Returns: (`-90`-`+90`, `-180`-`+180`)
   - `@driver.rudder` - Set the boat's rudder to `angle`  degrees relative to the
     boat.
-    - Arguments:
+    - Takes the arguments:
       - `angle`: Float, `-90`-`+90`
     - Returns: True if successful
   - `@driver.sail` - Similarly to `rudder`, set the sail to `angle` degrees
     relative to the boat.
-    - Arguments:
+    - Takes the arguments:
       - `angle`: Float, `-90`-`+90`
     - Returns: True if successful
 
