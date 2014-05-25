@@ -3,7 +3,6 @@ from functools import wraps
 from . import logging
 from .color import color
 
-
 class Driver(object):
     def __init__(self):
         logging.log('Initialising driver')

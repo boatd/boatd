@@ -6,12 +6,10 @@ import sys
 import traceback
 
 from . import logging
-from .api import BoatdHTTPServer, BoatdRequestHandler
+from .api import BoatdHTTPServer, BoatdRequestHandler, VERSION
 from .boat import Boat
 from .config import Config
 from .driver import Driver
-
-VERSION = 0.1
 
 def load_conf(args):
     '''
