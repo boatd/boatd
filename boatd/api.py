@@ -6,6 +6,8 @@ except ImportError:
 from . import logging
 import json
 
+API_VERSION = 1.1
+
 
 def get_deep_attr(obj, path):
     if len(path) > 1:
@@ -50,7 +52,7 @@ class BoatdHTTPServer(HTTPServer):
         return {'value': self.boat.active}
 
     def boatd_info(self):
-        return {'boatd': {'version': 0.1}}
+        return {'boatd': {'version': API_VERSION}}
 
     def boat_attr(self):
         return {
@@ -103,7 +105,7 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
     Handle a single HTTP request. Returns JSON content using data from the rest
     of boatd.
     '''
-    server_version = 'boatd/0.1'
+    server_version = 'boatd/{}'.format(API_VERSION)
 
     def send_json(self, content, code=200):
         self.send_response(code)
