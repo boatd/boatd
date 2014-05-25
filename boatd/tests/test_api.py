@@ -80,6 +80,12 @@ class TestAPI(object):
         d = json.loads(content.decode("utf-8"))
         assert 'boatd' in d
 
+    def test_version(self):
+        content = urlopen(self._url('/')).read()
+        d = json.loads(content.decode("utf-8"))
+        assert d['boatd']['version'] == 1.1
+
+
     def test_request_pony(self):
         content = urlopen(self._url('/pony')).read()
         d = json.loads(content.decode("utf-8"))
