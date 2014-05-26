@@ -10,15 +10,21 @@ class Driver(object):
         self.heading = self.handler('heading')
         self.wind_direction = self.handler('wind_direction')
         self.position = self.handler('position')
-        self.rudder = self.handler('rudder')
+
+        self.rudder = self.handler('rudder',
+                function=lambda name, args:
+                    logging.log('calling {}({})'.format(name, *args)))
+
         self.sail = self.handler('sail')
 
         self.handlers = {}
 
-    def handler(self, name):
+    def handler(self, name, function=None):
         def wrapper(f):
             @wraps(f)
             def dec(*args, **kwargs):
+                if callable(function):
+                    function(f.__name__, args)
                 return f(*args, **kwargs)
             self.handlers[name] = dec
             logging.log('loaded function {} as {}'.format(
