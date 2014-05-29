@@ -8,6 +8,7 @@ import traceback
 from . import logging
 from .api import BoatdHTTPServer, BoatdRequestHandler, VERSION
 from .boat import Boat
+from .color import color
 from .config import Config
 from .driver import Driver
 
@@ -52,6 +53,11 @@ def load_driver(conf):
     try:
         found_module = imp.find_module(module_name, search_dirs)
         driver_module = imp.load_module('driver_module', *found_module)
+
+        _, filename, _ = found_module
+        logging.log('loaded driver from {}'.format(
+                    color(filename, 34)))
+
     except Exception as e:
         logging.log('exception raised in driver module:', logging.WARN)
         print(traceback.format_exc())

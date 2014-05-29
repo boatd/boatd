@@ -5,8 +5,6 @@ from .color import color
 
 class Driver(object):
     def __init__(self):
-        logging.log('Initialising driver')
-
         self.heading = self.handler('heading')
         self.wind_direction = self.handler('wind_direction')
         self.position = self.handler('position')
