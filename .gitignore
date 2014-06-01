@@ -1,3 +1,4 @@
 *.pyc
 *.swp
 boatd/__pycache__
+build/
