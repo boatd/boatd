@@ -42,6 +42,7 @@ def load_driver(conf):
     '''
     expanded_path = os.path.expanduser(conf.scripts.driver)
     directory, name = os.path.split(expanded_path)
+    sys.path.append(os.path.dirname(directory))
 
     if hasattr(conf, 'filename'):
         conf_directory, _ = os.path.split(conf.filename)
