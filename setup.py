@@ -1,8 +1,10 @@
 from distutils.core import setup
 
+import boatd
+
 setup(
     name='boatd',
-    version='0.1.0',
+    version=str(boatd.VERSION) + '.0',
     author='Louis Taylor',
     author_email='kragniz@gmail.com',
     description=('Experimental daemon to control an autonomous sailing robot'),
