@@ -137,3 +137,15 @@ def example_handler():
 ```
 
 This can then be used as any other function in a behaviour client.
+
+License
+-------
+
+Copyright (c) 2013-2014 Louis Taylor <kragniz@gmail.com>
+
+Boatd is free software: you can redistribute it and/or modify it under the
+terms of the GNU Lesser General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+See [COPYING](COPYING) for more information.
