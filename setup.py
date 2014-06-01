@@ -4,7 +4,7 @@ import boatd
 
 setup(
     name='boatd',
-    version=str(boatd.VERSION) + '.0',
+    version=str(boatd.VERSION) + '.1',
     author='Louis Taylor',
     author_email='kragniz@gmail.com',
     description=('Experimental daemon to control an autonomous sailing robot'),
@@ -19,6 +19,7 @@ setup(
         'Environment :: Console',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)',
+        'Operating System :: POSIX :: Linux',
         'Topic :: Scientific/Engineering :: Interface Engine/Protocol Translator',
         'Topic :: Scientific/Engineering',
         'Topic :: Software Development :: Embedded Systems',
