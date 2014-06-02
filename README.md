@@ -36,7 +36,7 @@ Installing
 
 Boatd is tested on Python 2.7, 3.2 and 3.3.
 
-### pip
+### From PyPi (recommended)
 
 ```bash
 $ pip install boatd
@@ -70,10 +70,10 @@ $ pip install nose
 and run `nosetests`. If all the tests pass, the output should be similar to:
 
 ```bash
-$ nosetests 
-..........
+$ nosetests
+..........................................
 ----------------------------------------------------------------------
-Ran 30 tests in 0.118s
+Ran 42 tests in 1.064s
 
 OK
 ```
@@ -94,21 +94,23 @@ Drivers should implement functions decorated by the following:
 
   - `@driver.heading` - Return the heading of the boat in degrees, relative to the
     world.
-    - Returns: `0`-`360`
+    - Returns: 0-360
   - `@driver.wind_position` - Return the direction the wind is blowing, relative to the world.
-    - Returns: `0`-`360`
+    - Returns: 0-360
+  - `@driver.wind_speed` - Return the speed the wind is blowing in knots.
+    - Returns: >= 0
   - `@driver.position` - Return a tuple containing the current latitude and longitude
     of the boat, in that order.
-    - Returns: (`-90`-`+90`, `-180`-`+180`)
+    - Returns: (-90 - +90, -180 - +180)
   - `@driver.rudder` - Set the boat's rudder to `angle`  degrees relative to the
     boat.
     - Takes the arguments:
-      - `angle`: Float, `-90`-`+90`
+      - `angle`: Float, -90 - +90
     - Returns: True if successful
   - `@driver.sail` - Similarly to `rudder`, set the sail to `angle` degrees
     relative to the boat.
     - Takes the arguments:
-      - `angle`: Float, `-90`-`+90`
+      - `angle`: Float, -90 - +90
     - Returns: True if successful
 
 These functions can have any name, but are marked for use and registered with
