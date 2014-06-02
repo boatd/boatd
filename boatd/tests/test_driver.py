@@ -37,6 +37,11 @@ class TestDriver(object):
         heading = driver.handlers.get('heading')
         assert heading() == 2.43
 
+    def test_wind_speed(self):
+        driver = boatd.load_driver(self.mock_config)
+        heading = driver.handlers.get('wind_speed')
+        assert heading() == 25
+
     def test_handler_decorators(self):
         driver = boatd.load_driver(self.mock_config)
 
