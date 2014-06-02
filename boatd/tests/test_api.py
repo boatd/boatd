@@ -85,7 +85,6 @@ class TestAPI(object):
         d = json.loads(content.decode("utf-8"))
         assert d['boatd']['version'] == 1.1
 
-
     def test_request_pony(self):
         content = urlopen(self._url('/pony')).read()
         d = json.loads(content.decode("utf-8"))
@@ -100,6 +99,11 @@ class TestAPI(object):
         content = urlopen(self._url('/boat')).read()
         d = json.loads(content.decode("utf-8"))
         assert all([attr in d for attr in ['heading', 'wind', 'position']])
+
+    def test_request_wind(self):
+        content = urlopen(self._url('/wind')).read()
+        d = json.loads(content.decode("utf-8"))
+        assert all([attr in d for attr in ['direction', 'speed']])
 
     def test_request_nested(self):
         content = urlopen(self._url('/nest/thing')).read()
