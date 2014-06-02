@@ -43,7 +43,13 @@ class BoatdHTTPServer(HTTPServer):
 
     def wind(self):
         try:
-            return {'direction': self.boat.wind_direction()}
+            speed = self.boat.wind_speed()
+        except AttributeError:
+            speed = -1
+
+        try:
+            return {'direction': self.boat.wind_direction(),
+                    'speed': speed}
         except AttributeError as e:
             logging.log(e, logging.ERROR)
             raise AttributeError(e)
