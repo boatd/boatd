@@ -44,7 +44,7 @@ class BoatdHTTPServer(HTTPServer):
     def wind(self):
         try:
             speed = self.boat.wind_speed()
-        except AttributeError:
+        except (AttributeError, TypeError):
             speed = -1
 
         try:
