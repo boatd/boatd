@@ -7,6 +7,10 @@ driver.some_hardware = {}
 def heading():
     return 2.43
 
+@driver.wind_speed
+def speed():
+    return 25
+
 @driver.rudder
 def move_rudder(angle):
     driver.some_hardware['rudder'] = angle

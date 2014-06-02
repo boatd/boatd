@@ -7,6 +7,7 @@ class Driver(object):
     def __init__(self):
         self.heading = self.handler('heading')
         self.wind_direction = self.handler('wind_direction')
+        self.wind_speed = self.handler('wind_speed')
         self.position = self.handler('position')
 
         self.rudder = self.handler('rudder',
