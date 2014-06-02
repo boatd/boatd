@@ -4,7 +4,7 @@ import boatd
 
 setup(
     name='boatd',
-    version=str(boatd.VERSION) + '.1',
+    version=str(boatd.VERSION) + '.2',
     author='Louis Taylor',
     author_email='kragniz@gmail.com',
     description=('Experimental daemon to control an autonomous sailing robot'),
@@ -14,6 +14,9 @@ setup(
     packages=['boatd'],
     scripts=['boatd-start'],
     requires=['PyYAML'],
+    install_requires=[
+        'PyYAML >= 3.11'
+        ],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
