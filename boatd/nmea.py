@@ -7,6 +7,7 @@ def calculate_checksum(line):
     return ('0' if len(s) < 2 else '') + s.upper()
 
 def hdm(heading):
+    '''Return a HDM nmea sentance from a given heading'''
     line = 'HDM,{0:.3g},M'.format(heading)
     checksum = calculate_checksum(line)
     return '$' + line + '*' + checksum
