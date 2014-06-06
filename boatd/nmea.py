@@ -15,7 +15,7 @@ def nmea_line(line):
 def degrees_to_nmea(input_degrees):
     degrees = math.trunc(input_degrees)
     minutes = (input_degrees - degrees) * 60
-    return '{}{:.3g}'.format(degrees, minutes)
+    return '{}{:.3g}'.format(degrees, abs(minutes))
 
 def hdm(heading):
     '''Return a HDM nmea sentance from a given heading'''
