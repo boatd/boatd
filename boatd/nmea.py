@@ -21,3 +21,14 @@ def hdm(heading):
     '''Return a HDM nmea sentance from a given heading'''
     line = 'HDM,{0:.3g},M'.format(heading)
     return nmea_line(line)
+
+def gll(latitude, longitude, utc_datetime):
+    centisecond = str(utc_datetime.microsecond)[:2]
+    t = utc_datetime.strftime('%H%M%S.') + centisecond
+    lat_direction = 'N' if latitude > 0 else 'S'
+    lon_direction = 'E' if longitude > 0 else 'W'
+    line = 'GLL,{lat},N,{lon},W,{time},A'.format(
+            lat=degrees_to_nmea(abs(latitude)),
+            lon=degrees_to_nmea(abs(longitude)),
+            time=t)
+    return nmea_line(line)
