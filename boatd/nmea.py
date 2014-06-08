@@ -23,6 +23,9 @@ def hdm(heading):
     return nmea_line(line)
 
 def gll(latitude, longitude, utc_datetime):
+    '''
+    Return a GLL nmea sentance from a lat, long and date (datetime object).
+    '''
     centisecond = str(utc_datetime.microsecond)[:2]
     t = utc_datetime.strftime('%H%M%S.') + centisecond
     lat_direction = 'N' if latitude > 0 else 'S'
