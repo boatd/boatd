@@ -7,6 +7,7 @@ import traceback
 
 from . import logging
 from . import nmea
+from . import plugin
 from .api import BoatdHTTPServer, BoatdRequestHandler, VERSION
 from .boat import Boat
 from .color import color
