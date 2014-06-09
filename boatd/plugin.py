@@ -18,7 +18,6 @@ def find_plugins(search_directories):
 def load_plugins(*plugins):
     modules = []
     for module_filename in plugins:
-        print module_filename
         with open(module_filename) as f:
             module = imp.load_module(
                 get_module_name(module_filename),
