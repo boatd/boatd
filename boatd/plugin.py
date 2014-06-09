@@ -14,3 +14,18 @@ def find_plugins(search_directories):
                 found_plugins.append(os.path.join(directory, plugin))
 
     return found_plugins
+
+def load_plugins(*plugins):
+    modules = []
+    for module_filename in plugins:
+        print module_filename
+        with open(module_filename) as f:
+            module = imp.load_module(
+                get_module_name(module_filename),
+                f,
+                module_filename,
+                ('.py', 'U', 1)
+            )
+            modules.append(module)
+
+    return modules
