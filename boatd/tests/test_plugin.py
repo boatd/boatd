@@ -13,3 +13,7 @@ def test_find_plugins():
 
 def test_get_module_name():
     assert boatd.plugin.get_module_name(PLUGIN_FILENAME) == 'small_plugin'
+
+def test_load_plugins():
+    modules = boatd.plugin.load_plugins(PLUGIN_FILENAME)
+    assert True in [hasattr(module, 'THING') for module in modules]
