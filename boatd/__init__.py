@@ -70,12 +70,17 @@ def load_driver(conf):
 
     return driver_module.driver
 
+def load_plugins(conf, boat):
+    plugins = plugin.find_plugins([conf.plugins.directory])
+    plugin_modules = plugin.load_plugins(plugins)
+    plugin.start_plugins(plugin_modules, [boat])
 
 def run():
     '''Run the main server.'''
     conf = load_conf(sys.argv)
     driver = load_driver(conf)
     boat = Boat(driver)
+    load_plugins(conf, boat)
 
     httpd = BoatdHTTPServer(boat, ('', conf.boatd.port), BoatdRequestHandler)
     while httpd.running:
