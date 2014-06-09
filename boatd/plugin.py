@@ -1,5 +1,6 @@
-import os
 import imp
+import os
+import threading
 
 def get_module_name(filepath):
     _, name = os.path.split(filepath)
@@ -15,9 +16,9 @@ def find_plugins(search_directories):
 
     return found_plugins
 
-def load_plugins(*plugins):
+def load_plugins(*plugin_names):
     modules = []
-    for module_filename in plugins:
+    for module_filename in plugin_names:
         with open(module_filename) as f:
             module = imp.load_module(
                 get_module_name(module_filename),
@@ -28,3 +29,9 @@ def load_plugins(*plugins):
             modules.append(module)
 
     return modules
+
+def start_plugins(modules, passed_args):
+    for module in modules:
+        thread = threading.Thread(target=module.plugin_main,
+                                  args=tuple(passed_args))
+        thread.start()
