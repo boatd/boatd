@@ -5,6 +5,9 @@ env:
   - TOXENV=py33
   - TOXENV=py34
 
+install:
+  - "pip install tox"
+
 script: tox
 
 sudo: false
