@@ -9,7 +9,8 @@ import boatd
 
 version = Popen(['git', 'describe'],
                 stdout=PIPE).communicate()[0].replace('v', '')
-assert version.startswith(str(boatd.VERSION))
+if not version.startswith(str(boatd.VERSION)):
+    version = boatd.VERSION
 
 setup(
     name='boatd',
