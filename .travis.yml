@@ -7,6 +7,8 @@ env:
 
 script: tox
 
+sudo: false
+
 notifications:
   irc:
     channels:
