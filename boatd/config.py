@@ -30,6 +30,12 @@ class Config(object):
             if isinstance(i, dict):
                 self.__dict__[k] = Config(i)
 
+    def get(self, name, default=None):
+        if hasattr(self, name):
+            return getattr(self, name)
+        else:
+            return default
+
     @classmethod
     def from_json(cls, filename):
         '''Return a Config object from a json file'''

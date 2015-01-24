@@ -27,3 +27,11 @@ class TestConfig(object):
         config = boatd.Config.from_yaml(self.yaml_file)
         config.scripts.driver = 'new_driver.py'
         assert config.scripts.driver == 'new_driver.py'
+
+    def test_get(self):
+        config = boatd.Config.from_yaml(self.yaml_file)
+        assert config.get('boatd') is not None
+
+    def test_get_invalid(self):
+        config = boatd.Config.from_yaml(self.yaml_file)
+        assert config.get('not_a_valid_config_option') is None
