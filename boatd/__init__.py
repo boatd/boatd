@@ -71,9 +71,10 @@ def load_driver(conf):
     return driver_module.driver
 
 def load_plugins(conf, boat):
-    plugins = plugin.find_plugins([conf.plugins.directory])
-    plugin_modules = plugin.load_plugins(plugins)
-    plugin.start_plugins(plugin_modules, [boat])
+    if conf.get('plugins') is not None:
+        plugins = plugin.find_plugins([conf.plugins.directory])
+        plugin_modules = plugin.load_plugins(plugins)
+        plugin.start_plugins(plugin_modules, [boat])
 
 def run():
     '''Run the main server.'''
