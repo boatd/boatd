@@ -8,7 +8,7 @@ from subprocess import Popen, PIPE
 import boatd
 
 version = Popen(['git', 'describe'],
-                stdout=PIPE).communicate()[0].decode('utf8').replace('v', '')
+                stdout=PIPE).communicate()[0].decode('utf8')
 
 if not version.startswith(str(boatd.VERSION)):
     version = boatd.VERSION
