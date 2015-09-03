@@ -3,7 +3,7 @@ boatd - sailing boat daemon
 
 Experimental robotic sailing boat daemon.
 
-[![PyPIVersion](https://pypip.in/v/boatd/badge.png?style=flat)](https://pypi.python.org/pypi/boatd)
+[![PyPIversion](https://badge.fury.io/py/boatd.svg)](http://badge.fury.io/py/boatd)
 [![BuildStatus](https://travis-ci.org/boatd/boatd.png?branch=master)](https://travis-ci.org/boatd/boatd)
 [![CoverageStatus](https://coveralls.io/repos/boatd/boatd/badge.png?branch=master&style=flat)](https://coveralls.io/r/boatd/boatd?branch=master)
 
