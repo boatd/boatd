@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+import argparse
 import imp
 import os
 import sys
@@ -14,15 +15,11 @@ from .color import color
 from .config import Config
 from .driver import Driver
 
-def load_conf(args):
+def load_conf(conf_file):
     '''
     Return the configuration object. Reads from the first argument by default,
     otherwise falls back to 'boatd-config.yaml'.
     '''
-    if len(args) > 1:
-        conf_file = args[1]
-    else:
-        conf_file = ''
 
     _, ext = os.path.splitext(conf_file)
     if ext == '.yaml' or ext == '.yml':
@@ -78,7 +75,19 @@ def load_plugins(conf, boat):
 
 def run():
     '''Run the main server.'''
-    conf = load_conf(sys.argv)
+
+    description = '''\
+Experimental robotic sailing boat daemon.
+'''
+
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument('config', metavar='CONFIG FILE',
+                        default='boatd-config.yaml',
+                        nargs='?',
+                        help='a path to a configuration file')
+    args = parser.parse_args()
+
+    conf = load_conf(args.config)
     driver = load_driver(conf)
     boat = Boat(driver)
     load_plugins(conf, boat)
