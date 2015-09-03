@@ -59,29 +59,6 @@ $ yum install PyYAML
 $ python setup.py install
 ```
 
-Testing
--------
-
-To run tests, install nose
-
-```bash
-$ pip install nose
-```
-
-and run `nosetests`. If all the tests pass, the output should be similar to:
-
-```bash
-$ nosetests
-..........................................
-----------------------------------------------------------------------
-Ran 42 tests in 1.064s
-
-OK
-```
-
-The current test results from the head of the `master` branch can be found
-[here](https://travis-ci.org/boatd/boatd).
-
 Drivers
 -------
 
@@ -142,6 +119,29 @@ def example_handler():
 ```
 
 This can then be used as any other function in a behaviour client.
+
+Testing
+-------
+
+To run tests, install nose
+
+```bash
+$ pip install nose
+```
+
+and run `nosetests`. If all the tests pass, the output should be similar to:
+
+```bash
+$ nosetests
+..........................................
+----------------------------------------------------------------------
+Ran 42 tests in 1.064s
+
+OK
+```
+
+The current test results from the head of the `master` branch can be found
+[here](https://travis-ci.org/boatd/boatd).
 
 License
 -------
