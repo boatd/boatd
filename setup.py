@@ -23,7 +23,7 @@ setup(
     keywords='boat sailing wrapper rest',
     url='https://github.com/boatd/boatd',
     packages=['boatd'],
-    scripts=['boatd-start'],
+    scripts=['bin/boatd'],
     requires=['PyYAML'],
     install_requires=[
         'PyYAML >= 3.11'
