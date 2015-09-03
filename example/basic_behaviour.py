@@ -1,9 +1,15 @@
-import time
+# This uses boatd_client, a python library for interacting with boatd. For more
+# information, see https://github.com/boatd/python-boatd
+# Run with $ python basic_behaviour.py, after boatd is running
+
+from boatd_client import Boat
+
+boat = Boat()
 
 for i in range(5):
-    boat.heading()
-    boat.get_wind()
-    boat.position()
+    boat.heading
+    boat.wind
+    boat.position
     boat.rudder(0)
     boat.rudder(-1)
     boat.rudder(3)
