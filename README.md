@@ -62,6 +62,19 @@ $ python setup.py install
 Running boatd
 -------------
 
+```
+$ boatd --help
+usage: boatd [-h] [CONFIG FILE]
+
+Experimental robotic sailing boat daemon.
+
+positional arguments:
+  CONFIG FILE  a path to a configuration file
+
+  optional arguments:
+    -h, --help   show this help message and exit
+```
+
 After you have installed boat, it can be run with `$ boatd`.
 
 Output will be similar to:
@@ -81,6 +94,9 @@ The original aim was this command would also run your behaviour directly after
 startup, but this functionality is not yet implemented (see [the
 issue](https://github.com/boatd/boatd/issues/1)). After boatd is running, you
 should run your behaviour manually.
+
+If you would like to use a different config file in a different location, pass
+the path as an argument to `boatd`. For example, `$ boatd /etc/boatd/fancy-conf.yaml`.
 
 Drivers
 -------
