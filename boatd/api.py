@@ -3,7 +3,7 @@ try:
 except ImportError:
     from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 
-from . import logging
+from . import logger
 import json
 
 VERSION = 1.1
@@ -51,7 +51,7 @@ class BoatdHTTPServer(HTTPServer):
             return {'direction': self.boat.wind_direction(),
                     'speed': speed}
         except AttributeError as e:
-            logging.log(e, logging.ERROR)
+            logger.log(e, logger.ERROR)
             raise AttributeError(e)
 
     def boat_active(self):
@@ -145,7 +145,7 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
         try:
             data = json.loads(post_body)
         except ValueError:
-            logging.log('Can\'t decode {}'.format(post_body), logging.ERROR)
+            logger.log('Can\'t decode {}'.format(post_body), logger.ERROR)
             self.send_json("400 - bad json syntax", 400)
         else:
             response_data = self.server.boat_post_function(self.path, data)
@@ -153,4 +153,4 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
 
     def log_request(self, code='-', size='-'):
         '''Log the request stdout.'''
-        logging.log('{} requested'.format(self.path), level=logging.VERBOSE)
+        logger.log('{} requested'.format(self.path), level=logger.VERBOSE)

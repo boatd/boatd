@@ -6,7 +6,7 @@ import os
 import sys
 import traceback
 
-from . import logging
+from . import logger
 from . import nmea
 from . import plugin
 from .api import BoatdHTTPServer, BoatdRequestHandler, VERSION
@@ -53,11 +53,11 @@ def load_driver(conf):
         driver_module = imp.load_module('driver_module', *found_module)
 
         _, filename, _ = found_module
-        logging.log('loaded driver from {}'.format(
+        logger.log('loaded driver from {}'.format(
                     color(filename, 34)))
 
     except Exception as e:
-        logging.log('exception raised in driver module:', logging.WARN)
+        logger.log('exception raised in driver module:', logger.WARN)
         print(traceback.format_exc())
         raise e
     finally:
@@ -99,5 +99,5 @@ def run():
         try:
             httpd.handle_request()
         except (KeyboardInterrupt, SystemExit):
-            logging.log('Quitting...')
+            logger.log('Quitting...')
             sys.exit()
