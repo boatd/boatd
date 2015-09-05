@@ -71,9 +71,7 @@ def load_plugins(conf, boat):
         plugin_modules = plugin.load_plugins(plugins)
         plugin.start_plugins(plugin_modules, [boat])
 
-def run():
-    '''Run the main server.'''
-
+def parse_args():
     description = '''\
 Experimental robotic sailing boat daemon.
 '''
@@ -83,7 +81,13 @@ Experimental robotic sailing boat daemon.
                         default='boatd-config.yaml',
                         nargs='?',
                         help='a path to a configuration file')
-    args = parser.parse_args()
+    return parser.parse_args()
+
+
+def run():
+    '''Run the main server.'''
+
+    args = parse_args()
 
     conf = load_conf(args.config)
     driver = load_driver(conf)
