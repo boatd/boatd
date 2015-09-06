@@ -90,6 +90,9 @@ def run():
     args = parse_args()
 
     conf = load_conf(args.config)
+
+    logger.setup_logging()
+
     driver = load_driver(conf)
     boat = Boat(driver)
     load_plugins(conf, boat)

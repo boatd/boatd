@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+import logging
 import os
 import time
 
@@ -18,3 +19,7 @@ def log(message, level=NORMAL):
 
     messages.append(message)
     print(time.strftime('[%H:%M:%S]'), *messages)
+
+def setup_logging():
+    logging.basicConfig(format='[%(asctime)s] %(message)s', level=logging.DEBUG)
+    logging.debug('Logging configured')
