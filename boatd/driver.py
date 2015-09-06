@@ -1,7 +1,10 @@
+import logging
 from functools import wraps
 
-from . import logger
 from .color import color
+
+log = logging.getLogger(__name__)
+
 
 class Driver(object):
     def __init__(self):
@@ -12,7 +15,7 @@ class Driver(object):
 
         self.rudder = self.handler('rudder',
                 function=lambda name, args:
-                    logger.log('calling {}({})'.format(name, *args)))
+                    log.debug('calling {}({})'.format(name, *args)))
 
         self.sail = self.handler('sail')
 
@@ -26,8 +29,8 @@ class Driver(object):
                     function(f.__name__, args)
                 return f(*args, **kwargs)
             self.handlers[name] = dec
-            logger.log('loaded function {} as {}'.format(
-                        color(f.__name__, 32),
-                        color('"{}"'.format(name), 35)))
+            log.info('loaded function {} as {}'.format(
+                     color(f.__name__, 32),
+                     color('"{}"'.format(name), 35)))
             return dec
         return wrapper

@@ -1,3 +1,5 @@
+import logging
+
 try:
     from http.server import HTTPServer, BaseHTTPRequestHandler
 except ImportError:
@@ -7,6 +9,8 @@ from . import logger
 import json
 
 VERSION = 1.1
+
+log = logging.getLogger(__name__)
 
 
 def get_deep_attr(obj, path):
@@ -50,9 +54,9 @@ class BoatdHTTPServer(HTTPServer):
         try:
             return {'direction': self.boat.wind_direction(),
                     'speed': speed}
-        except AttributeError as e:
-            logger.log(e, logger.ERROR)
-            raise AttributeError(e)
+        except AttributeError:
+            log.exception('Error when attempting to read wind direction')
+            raise
 
     def boat_active(self):
         return {'value': self.boat.active}
@@ -145,7 +149,7 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
         try:
             data = json.loads(post_body)
         except ValueError:
-            logger.log('Can\'t decode {}'.format(post_body), logger.ERROR)
+            log.error('Can\'t decode {}'.format(post_body))
             self.send_json("400 - bad json syntax", 400)
         else:
             response_data = self.server.boat_post_function(self.path, data)
@@ -153,4 +157,4 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
 
     def log_request(self, code='-', size='-'):
         '''Log the request stdout.'''
-        logger.log('{} requested'.format(self.path), level=logger.VERBOSE)
+        log.debug('{} requested'.format(self.path))

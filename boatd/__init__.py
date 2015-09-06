@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import argparse
+import logging
 import imp
 import os
 import sys
@@ -14,6 +15,8 @@ from .boat import Boat
 from .color import color
 from .config import Config
 from .driver import Driver
+
+log = logging.getLogger()
 
 def load_conf(conf_file):
     '''
@@ -53,13 +56,11 @@ def load_driver(conf):
         driver_module = imp.load_module('driver_module', *found_module)
 
         _, filename, _ = found_module
-        logger.log('loaded driver from {}'.format(
-                    color(filename, 34)))
+        log.info('Loaded driver from {}'.format(color(filename, 34)))
 
     except Exception as e:
-        logger.log('exception raised in driver module:', logger.WARN)
-        print(traceback.format_exc())
-        raise e
+        log.exception('Exception raised in driver module')
+        raise
     finally:
         found_module[0].close()
 
@@ -102,5 +103,5 @@ def run():
         try:
             httpd.handle_request()
         except (KeyboardInterrupt, SystemExit):
-            logger.log('Quitting...')
+            log.info('Quitting...')
             sys.exit()

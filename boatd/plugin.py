@@ -1,8 +1,12 @@
 import imp
+import logging
 import os
 import threading
 
-from . import logger
+from .color import color
+
+log = logging.getLogger(__name__)
+
 
 def get_module_name(filepath):
     _, name = os.path.split(filepath)
@@ -29,8 +33,8 @@ def load_plugins(plugin_names):
                 ('.py', 'U', 1)
             )
             modules.append(module)
-            logger.log('loaded plugin from {}'.format(
-                       logger.color(module_filename, 35)))
+            log.info('Loaded plugin from {}'.format(
+                     color(module_filename, 35)))
 
     return modules
 
