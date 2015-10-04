@@ -35,7 +35,7 @@ There are two main components of a system written using boatd:
 Installing
 ----------
 
-Boatd is tested on Python 2.7, 3.2 and 3.3.
+Boatd is tested on Python 2.7 and 3.4.
 
 ### From PyPi (recommended)
 
