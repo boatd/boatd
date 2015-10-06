@@ -1,5 +1,5 @@
 THING = True
 
-def plugin_main(boat):
+def main(boat):
     boat.accessed = True
     return True
