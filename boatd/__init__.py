@@ -70,8 +70,8 @@ def load_driver(conf):
 def load_plugins(conf, boat):
     plugin_dirs = [utils.reldir(__file__, 'coreplugins')]
 
-    if conf.get('plugins') is not None:
-        plugin_dirs += [conf.plugins.directory]
+    if conf.get('plugin_directory') is not None:
+        plugin_dirs += [conf.plugin_directory]
 
     plugins = plugin.find_plugins(plugin_dirs)
     plugin_modules = plugin.load_plugins(plugins)

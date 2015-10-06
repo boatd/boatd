@@ -1,10 +1,12 @@
 boatd:
     port: 2222
-    log:
-        gpx:
-            enabled: true
-            period: 10
-            filename: logs/gps_trace
+
+plugin_directory: null
+
+plugins:
+    - logger:
+        period: 10
+        filename: logs/gps_trace
 
 scripts:
     behaviour: example/basic_behaviour.py
