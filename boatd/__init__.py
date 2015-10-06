@@ -68,10 +68,14 @@ def load_driver(conf):
     return driver_module.driver
 
 def load_plugins(conf, boat):
+    plugin_dirs = [utils.reldir(__file__, 'coreplugins')]
+
     if conf.get('plugins') is not None:
-        plugins = plugin.find_plugins([conf.plugins.directory])
-        plugin_modules = plugin.load_plugins(plugins)
-        plugin.start_plugins(plugin_modules, [boat])
+        plugin_dirs += [conf.plugins.directory]
+
+    plugins = plugin.find_plugins(plugin_dirs)
+    plugin_modules = plugin.load_plugins(plugins)
+    plugin.start_plugins(plugin_modules, [boat])
 
 def parse_args():
     description = '''\
