@@ -40,6 +40,6 @@ def load_plugins(plugin_names):
 
 def start_plugins(modules, passed_args):
     for module in modules:
-        thread = threading.Thread(target=module.main,
+        thread = threading.Thread(target=module.init,
                                   args=tuple(passed_args))
         thread.start()
