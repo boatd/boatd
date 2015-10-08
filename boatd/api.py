@@ -5,6 +5,11 @@ try:
 except ImportError:
     from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 
+try:
+    from socketserver import ThreadingMixIn
+except ImportError:
+    from SocketServer import ThreadingMixIn
+
 from . import logger
 import json
 
@@ -21,7 +26,7 @@ def get_deep_attr(obj, path):
         return getattr(obj, path[0])
 
 
-class BoatdHTTPServer(HTTPServer):
+class BoatdHTTPServer(ThreadingMixIn, HTTPServer):
     '''
     The main REST server for boatd. Listens for requests on port server_address
     and handles each request with RequestHandlerClass.
