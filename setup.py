@@ -17,7 +17,7 @@ setup(
     name='boatd',
     version=version,
     author='Louis Taylor',
-    author_email='kragniz@gmail.com',
+    author_email='louis@kragniz.eu',
     description=('Experimental daemon to control an autonomous sailing robot'),
     license='LGPL',
     keywords='boat sailing wrapper rest',
