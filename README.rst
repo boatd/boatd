@@ -30,6 +30,7 @@ There are two main components of a system written using boatd:
   behavour script will work.
 
 .. code::
+
              boatd
                |
           -----------
@@ -109,6 +110,12 @@ run your behaviour manually.
 
 If you would like to use a different config file in a different location, pass
 the path as an argument to ``boatd``. For example, ``$ boatd /etc/boatd/fancy-conf.yaml``.
+
+
+Using the boatd API
+===================
+
+Boatd's main method of interaction is via the JSON API.
 
 Drivers
 =======
