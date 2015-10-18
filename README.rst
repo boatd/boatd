@@ -22,12 +22,12 @@ graceful startup, telemetry, logging and a built in simulator.
 
 There are two main components of a system written using boatd:
 
-  - the __driver__ interfaces with the particular set of hardware in the boat.
+- the __driver__ interfaces with the particular set of hardware in the boat.
 
-  - the __behaviour__ performs a set of actions to make the boat do a
-    particular task. The API available for these scripts is supposed to be
-    declarative, with the idea that for any boat with a driver written, any
-    behavour script will work.
+- the __behaviour__ performs a set of actions to make the boat do a
+  particular task. The API available for these scripts is supposed to be
+  declarative, with the idea that for any boat with a driver written, any
+  behavour script will work.
 
 .. code::
              boatd
@@ -44,7 +44,8 @@ Installing
 
 Boatd is tested on Python 2.7 and 3.4.
 
-### From PyPi (recommended)
+From PyPi (recommended)
+-----------------------
 
 .. code:: bash
 
@@ -121,26 +122,42 @@ send a command to some hardware, boatd runs one of the functions in the driver.
 
 Drivers should implement functions decorated by the following:
 
-  - ``@driver.heading`` - Return the heading of the boat in degrees, relative to the
-    world.
-    - Returns: 0-360
-  - ``@driver.wind_position`` - Return the direction the wind is blowing, relative to the world.
-    - Returns: 0-360
-  - ``@driver.wind_speed`` - Return the speed the wind is blowing in knots.
-    - Returns: >= 0
-  - ``@driver.position`` - Return a tuple containing the current latitude and longitude
-    of the boat, in that order.
-    - Returns: (-90 - +90, -180 - +180)
-  - ``@driver.rudder`` - Set the boat's rudder to ``angle``  degrees relative to the
-    boat.
-    - Takes the arguments:
-      - ``angle``: Float, -90 - +90
-    - Returns: True if successful
-  - ``@driver.sail`` - Similarly to ``rudder``, set the sail to ``angle`` degrees
-    relative to the boat.
-    - Takes the arguments:
-      - ``angle``: Float, -90 - +90
-    - Returns: True if successful
+- ``@driver.heading`` - Return the heading of the boat in degrees, relative to
+  the world.
+
+  - Returns: 0-360
+
+- ``@driver.wind_position`` - Return the direction the wind is blowing,
+  relative to the world.
+
+  - Returns: 0-360
+
+- ``@driver.wind_speed`` - Return the speed the wind is blowing in knots.
+
+  - Returns: >= 0
+
+- ``@driver.position`` - Return a tuple containing the current latitude and
+  longitude of the boat, in that order.
+
+  - Returns: (-90 - +90, -180 - +180)
+
+- ``@driver.rudder`` - Set the boat's rudder to ``angle``  degrees relative to
+  the boat.
+
+  - Takes the arguments:
+
+    - ``angle``: Float, -90 - +90
+
+  - Returns: True if successful
+
+- ``@driver.sail`` - Similarly to ``rudder``, set the sail to ``angle`` degrees
+  relative to the boat.
+
+  - Takes the arguments:
+
+    - ``angle``: Float, -90 - +90
+
+  - Returns: True if successful
 
 These functions can have any name, but are marked for use and registered with
 boatd using decorators.
