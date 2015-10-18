@@ -117,6 +117,21 @@ Using the boatd API
 
 Boatd's main method of interaction is via the JSON API.
 
+``/``
+-----
+
+- ``GET``
+
+  Returns the current status and version of boatd. Example output:
+
+  .. code:: json
+
+      {
+         "boatd": {
+           "version": 1.1
+         }
+      }
+
 Drivers
 =======
 
