@@ -132,6 +132,26 @@ Boatd's main method of interaction is via the JSON API.
          }
       }
 
+
+``/boat``
+---------
+
+- ``GET``
+
+  Returns attributes about the current state of the boat.
+
+  .. code:: json
+
+      {
+        "active": false,
+        "position": [2.343443, null],
+        "heading": 2.43,
+        "wind": {
+          "direction": 8.42,
+          "speed": 25
+        }
+      }
+
 Drivers
 =======
 
