@@ -138,7 +138,7 @@ Boatd's main method of interaction is via the JSON API.
 
 - ``GET``
 
-  Returns attributes about the current state of the boat.
+  Returns attributes about the current state of the boat. Example output:
 
   .. code:: json
 
@@ -151,6 +151,21 @@ Boatd's main method of interaction is via the JSON API.
           "speed": 25
         }
       }
+
+
+``wind``
+--------
+
+- ``GET``
+
+  Returns properties of the wind. Example output:
+
+  .. code:: json
+
+    {
+      "direction": 8.42,
+      "speed": 25
+    }
 
 Drivers
 =======
