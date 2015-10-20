@@ -13,6 +13,7 @@ except ImportError:
 from . import logger
 import json
 
+# reported api version
 VERSION = 1.1
 
 log = logging.getLogger(__name__)
