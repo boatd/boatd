@@ -1,4 +1,5 @@
 import os
+import time
 
 import boatd
 
@@ -24,4 +25,5 @@ def test_start_plugins():
     boat = c()
     modules = boatd.plugin.load_plugins([PLUGIN_FILENAME])
     boatd.plugin.start_plugins(modules, [boat])
+    time.sleep(1)
     assert boat.accessed == True
