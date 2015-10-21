@@ -11,7 +11,7 @@ Experimental robotic sailing boat daemon.
     :target: https://travis-ci.org/boatd/boatd
 
 .. image:: https://img.shields.io/coveralls/jekyll/jekyll/master.svg
-    :target: https://coveralls.io/r/boatd/bocatd?branch=master
+    :target: https://coveralls.io/r/boatd/boatd?branch=master
 
 
 General architecture
