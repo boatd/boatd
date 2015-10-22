@@ -10,7 +10,6 @@ try:
 except ImportError:
     from SocketServer import ThreadingMixIn
 
-from . import logger
 import json
 
 # reported api version

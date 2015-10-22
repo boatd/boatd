@@ -13,9 +13,10 @@ class Driver(object):
         self.wind_speed = self.handler('wind_speed')
         self.position = self.handler('position')
 
-        self.rudder = self.handler('rudder',
-                function=lambda name, args:
-                    log.debug('calling {}({})'.format(name, *args)))
+        self.rudder = self.handler(
+            'rudder',
+            function=lambda name, args:
+            log.debug('calling {}({})'.format(name, *args)))
 
         self.sail = self.handler('sail')
 

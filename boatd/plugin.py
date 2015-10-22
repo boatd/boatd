@@ -13,6 +13,7 @@ def get_module_name(filepath):
     module_name, _ = os.path.splitext(name)
     return module_name
 
+
 def find_plugins(search_directories):
     found_plugins = []
     for directory in search_directories:
@@ -21,6 +22,7 @@ def find_plugins(search_directories):
                 found_plugins.append(os.path.join(directory, plugin))
 
     return found_plugins
+
 
 def load_plugins(plugin_names):
     modules = []
@@ -37,6 +39,7 @@ def load_plugins(plugin_names):
                      color(module_filename, 35)))
 
     return modules
+
 
 def start_plugins(modules, passed_args):
     for module in modules:
