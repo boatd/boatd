@@ -1,5 +1,6 @@
 boatd:
     port: 2222
+    interface: 127.0.0.1
 
 plugin_directory: null
 

@@ -105,7 +105,9 @@ def run():
     boat = Boat(driver)
     load_plugins(conf, boat)
 
-    httpd = BoatdHTTPServer(boat, ('', conf.boatd.port), BoatdRequestHandler)
+    httpd = BoatdHTTPServer(boat,
+                            (conf.boatd.interface, conf.boatd.port),
+                            BoatdRequestHandler)
     while httpd.running:
         try:
             httpd.handle_request()
