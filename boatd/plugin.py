@@ -14,12 +14,14 @@ def get_module_name(filepath):
     return module_name
 
 
-def find_plugins(search_directories):
+def find_plugins(search_directories, enabled_plugins):
     found_plugins = []
-    for directory in search_directories:
-        for plugin in os.listdir(directory):
-            if plugin.endswith('.py'):
-                found_plugins.append(os.path.join(directory, plugin))
+
+    for plugin_name in enabled_plugins:
+        for directory in search_directories:
+            path = os.path.join(directory, plugin_name) + '.py'
+            if os.path.isfile(path):
+                found_plugins.append(path)
 
     return found_plugins
 
@@ -41,8 +43,11 @@ def load_plugins(plugin_names):
     return modules
 
 
-def start_plugins(modules, passed_args):
+def start_plugins(modules, boat):
     for module in modules:
-        thread = threading.Thread(target=module.init,
-                                  args=tuple(passed_args))
-        thread.start()
+        log.info('Starting plugin from {}'.format(
+                 color(module.__file__, 36)))
+        module.init(boat)
+
+def get_plugin_names_from_config(config):
+    return [plugin.keys()[0] for plugin in config.plugins]

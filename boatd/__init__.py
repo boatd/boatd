@@ -74,9 +74,10 @@ def load_plugins(conf, boat):
     if conf.get('plugin_directory') is not None:
         plugin_dirs += [conf.plugin_directory]
 
-    plugins = plugin.find_plugins(plugin_dirs)
+    plugins = plugin.find_plugins(plugin_dirs,
+                                  plugin.get_plugin_names_from_config(conf))
     plugin_modules = plugin.load_plugins(plugins)
-    plugin.start_plugins(plugin_modules, [boat])
+    plugin.start_plugins(plugin_modules, boat)
 
 
 def parse_args():

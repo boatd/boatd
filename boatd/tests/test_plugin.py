@@ -8,7 +8,7 @@ PLUGIN_DIR = os.path.join(d, 'plugin')
 PLUGIN_FILENAME = os.path.join(PLUGIN_DIR, 'small_plugin.py')
 
 def test_find_plugins():
-    plugins = boatd.plugin.find_plugins([PLUGIN_DIR])
+    plugins = boatd.plugin.find_plugins([PLUGIN_DIR], ['small_plugin'])
     path_in = ['boatd/boatd/tests/plugin/small_plugin.py' in p for p in plugins]
     assert True in path_in
 
@@ -24,6 +24,6 @@ def test_start_plugins():
         accessed = False
     boat = c()
     modules = boatd.plugin.load_plugins([PLUGIN_FILENAME])
-    boatd.plugin.start_plugins(modules, [boat])
+    boatd.plugin.start_plugins(modules, boat)
     time.sleep(1)
     assert boat.accessed == True
