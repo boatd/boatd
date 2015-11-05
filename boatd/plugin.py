@@ -1,7 +1,6 @@
 import imp
 import logging
 import os
-import threading
 
 from .color import color
 
@@ -48,6 +47,7 @@ def start_plugins(modules, boat):
         log.info('Starting plugin from {}'.format(
                  color(module.__file__, 36)))
         module.init(boat)
+
 
 def get_plugin_names_from_config(config):
     return [plugin.keys()[0] for plugin in config.plugins]
