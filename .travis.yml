@@ -19,7 +19,7 @@ after_success: coveralls
 notifications:
   irc:
     channels:
-      - "irc.freenode.net#boatd"
+      - "irc.freenode.net#abersailbot"
     template:
       - "%{repository}/%{branch} [%{commit}] %{author}: %{message}"
       - "Build #%{build_number}: %{build_url}"
