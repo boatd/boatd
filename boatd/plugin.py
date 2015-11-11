@@ -37,7 +37,7 @@ def load_plugins(plugin_names):
             )
             modules.append(module)
             log.info('Loaded plugin from {}'.format(
-                     color(module_filename, 35)))
+                     color(module_filename, 37)))
 
     return modules
 
@@ -45,7 +45,7 @@ def load_plugins(plugin_names):
 def start_plugins(modules, boat):
     for module in modules:
         log.info('Starting plugin from {}'.format(
-                 color(module.__file__, 36)))
+                 color(module.__file__, 37)))
         module.init(boat)
 
 
