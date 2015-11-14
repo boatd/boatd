@@ -7,15 +7,9 @@ from subprocess import Popen, PIPE
 
 import boatd
 
-version = Popen(['git', 'describe'],
-                stdout=PIPE).communicate()[0].decode('utf8')
-
-if not version.startswith(str(boatd.api.VERSION)):
-    version = boatd.api.VERSION
-
 setup(
     name='boatd',
-    version=version,
+    version=boatd.VERSION,
     author='Louis Taylor',
     author_email='louis@kragniz.eu',
     description=('Experimental daemon to control an autonomous sailing robot'),

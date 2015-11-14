@@ -18,6 +18,7 @@ from .driver import Driver  # noqa
 
 log = logging.getLogger()
 
+VERSION = "1.1.3"
 
 def load_conf(conf_file):
     '''

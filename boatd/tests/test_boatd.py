@@ -9,9 +9,6 @@ class TestBoatd(unittest.TestCase):
         sys.argv = sys.argv[0:1]
         self.directory, _ = os.path.split(__file__)
 
-    def test_version(self):
-        assert boatd.VERSION == 1.2
-
     def test_load_json_config(self):
         conf_file = os.path.join(self.directory, 'config.json')
         conf = boatd.load_conf(conf_file)
