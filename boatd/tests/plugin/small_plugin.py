@@ -1,5 +1,5 @@
 THING = True
 
-def init(boat):
-    boat.accessed = True
+def init():
+    boatd.boat.accessed = True
     return True

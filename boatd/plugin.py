@@ -7,6 +7,22 @@ from .color import color
 log = logging.getLogger(__name__)
 
 
+class Boatd(object):
+    def __init__(self, boat):
+        self.boat = boat
+
+
+boatd_module = None
+
+
+def get_boatd_module(boat):
+    if boatd_module is None:
+        global boatd_module
+        boatd_module = Boatd(boat)
+
+    return boatd_module
+
+
 def get_module_name(filepath):
     _, name = os.path.split(filepath)
     module_name, _ = os.path.splitext(name)
@@ -46,7 +62,9 @@ def start_plugins(modules, boat):
     for module in modules:
         log.info('Starting plugin from {}'.format(
                  color(module.__file__, 37)))
-        module.init(boat)
+
+        module.boatd = get_boatd_module(boat)
+        module.init()
 
 
 def get_plugin_names_from_config(config):
