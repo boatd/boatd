@@ -16,8 +16,8 @@ boatd_module = None
 
 
 def get_boatd_module(boat):
+    global boatd_module
     if boatd_module is None:
-        global boatd_module
         boatd_module = Boatd(boat)
 
     return boatd_module
