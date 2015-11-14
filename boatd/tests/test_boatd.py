@@ -1,10 +1,11 @@
 import sys
 import os
+import unittest
 
 import boatd
 
-class TestBoatd(object):
-    def __init__(self):
+class TestBoatd(unittest.TestCase):
+    def setUp(self):
         sys.argv = sys.argv[0:1]
         self.directory, _ = os.path.split(__file__)
 

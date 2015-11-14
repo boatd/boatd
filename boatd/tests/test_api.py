@@ -10,6 +10,7 @@ except ImportError:
 import threading
 import socket
 import json
+import unittest
 
 import boatd
 
@@ -32,13 +33,14 @@ class MockBoat(object):
         self.rudder_angle = r
 
 
-class TestAPI(object):
+class TestAPI(unittest.TestCase):
     TEST_PORTS = 20
 
-    def __init__(self):
-        self.port = 2222
+    @classmethod
+    def setUpClass(cls):
+        cls.port = 2222
 
-    def setup(self):
+    def setUp(self):
         self.boat = MockBoat()
         for _ in range(self.TEST_PORTS):
             try:
