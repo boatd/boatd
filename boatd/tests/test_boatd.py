@@ -10,7 +10,7 @@ class TestBoatd(unittest.TestCase):
         self.directory, _ = os.path.split(__file__)
 
     def test_version(self):
-        assert boatd.VERSION == 1.1
+        assert boatd.VERSION == 1.2
 
     def test_load_json_config(self):
         conf_file = os.path.join(self.directory, 'config.json')

@@ -85,7 +85,7 @@ class TestAPI(unittest.TestCase):
     def test_version(self):
         content = urlopen(self._url('/')).read()
         d = json.loads(content.decode("utf-8"))
-        assert d['boatd']['version'] == 1.1
+        assert d['boatd']['version'] == 1.2
 
     def test_request_pony(self):
         content = urlopen(self._url('/pony')).read()
