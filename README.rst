@@ -68,7 +68,7 @@ Fedora
 
 .. code:: bash
 
-    $ yum install PyYAML
+    $ dnf install PyYAML
     $ python setup.py install
 
 
