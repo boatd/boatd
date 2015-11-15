@@ -10,7 +10,7 @@ Experimental robotic sailing boat daemon.
 .. image:: https://img.shields.io/travis/boatd/boatd.svg
     :target: https://travis-ci.org/boatd/boatd
 
-.. image:: https://img.shields.io/coveralls/jekyll/jekyll/master.svg
+.. image:: https://img.shields.io/coveralls/boatd/boatd/master.svg
     :target: https://coveralls.io/r/boatd/boatd?branch=master
 
 
