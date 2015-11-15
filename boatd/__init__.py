@@ -92,6 +92,9 @@ Experimental robotic sailing boat daemon.
                         default='boatd-config.yaml',
                         nargs='?',
                         help='a path to a configuration file')
+    parser.add_argument('--version',
+                        action='version',
+                        version='boatd {}'.format(__version__))
     return parser.parse_args()
 
 
