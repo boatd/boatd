@@ -259,7 +259,7 @@ To run tests, install tox
 
 and run ``tox``. If all the tests pass, the output should be similar to:
 
-.. code:: bash
+.. code::
 
     $ tox
     GLOB sdist-make: /home/louis/git/boatd/setup.py
