@@ -1,3 +1,5 @@
+import unittest
+
 import boatd
 
 class MockDriver(object):
@@ -7,8 +9,8 @@ class MockDriver(object):
             'pony': lambda: 'magic'
         }
 
-class TestBoat(object):
-    def setup(self):
+class TestBoat(unittest.TestCase):
+    def setUp(self):
         self.boat = boatd.Boat(MockDriver())
 
     def test_get_heading(self):
