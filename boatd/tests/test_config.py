@@ -1,8 +1,11 @@
-import boatd
 import os
+import unittest
 
-class TestConfig(object):
-    def setup(self):
+import boatd
+
+
+class TestConfig(unittest.TestCase):
+    def setUp(self):
         self.directory, _ = os.path.split(__file__)
         self.yaml_file = os.path.join(self.directory, 'config.yaml')
         self.json_file = os.path.join(self.directory, 'config.json')
