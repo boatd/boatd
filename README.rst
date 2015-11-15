@@ -285,6 +285,9 @@ and run ``tox``. If all the tests pass, the output should be similar to:
     ====================== 50 passed in 1.39 seconds =======================
     _______________________________ summary ________________________________
       py27: commands succeeded
+      py34: commands succeeded
+      pypy: commands succeeded
+      flake8: commands succeeded
       congratulations :)
 
 This will run all test environments. To run an individual environment, run
