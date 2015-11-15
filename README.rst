@@ -78,15 +78,17 @@ Running boatd
 .. code:: bash
 
     $ boatd --help
-    usage: boatd [-h] [CONFIG FILE]
+    usage: boatd [-h] [--version] [CONFIG FILE]
 
     Experimental robotic sailing boat daemon.
 
     positional arguments:
       CONFIG FILE  a path to a configuration file
 
-      optional arguments:
-        -h, --help   show this help message and exit
+    optional arguments:
+      -h, --help   show this help message and exit
+      --version    show program's version number and exit
+
 
 After you have installed boat, it can be run with ``$ boatd``.
 
