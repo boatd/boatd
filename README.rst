@@ -251,22 +251,45 @@ This can then be used as any other function in a behaviour client.
 Testing
 =======
 
-To run tests, install nose
+To run tests, install tox
 
 .. code:: bash
 
-    $ pip install nose
+    $ pip install tox
 
-and run ``nosetests``. If all the tests pass, the output should be similar to:
+and run ``tox``. If all the tests pass, the output should be similar to:
 
 .. code:: bash
 
-    $ nosetests
-    ..........................................
-    ----------------------------------------------------------------------
-    Ran 53 tests in 1.064s
+    $ tox
+    GLOB sdist-make: /home/louis/git/boatd/setup.py
+    py27 inst-nodeps: /home/louis/git/boatd/.tox/dist/boatd-1.1.3.zip
+    py27 installed: boatd==1.1.3,coverage==4.0.2,coveralls==1.1,docopt==0.6.2,p
+    luggy==0.3.1,py==1.4.30,pytest==2.8.2,pytest-cov==2.2.0,PyYAML==3.11,reques
+    ts==2.8.1,tox==2.2.1,virtualenv==13.1.2,wheel==0.24.0
+    py27 runtests: PYTHONHASHSEED='2985615961'
+    py27 runtests: commands[0] | py.test -v --cov boatd boatd
+    ========================= test session starts ==========================
+    platform linux2 -- Python 2.7.10, pytest-2.8.2, py-1.4.30, pluggy-0.3.1 --
+    /home/louis/git/boatd/.tox/py27/bin/python2.7
+    cachedir: .cache
+    rootdir: /home/louis/git/boatd, inifile: 
+    plugins: cov-2.2.0
+    collected 50 items 
 
-    OK
+    boatd/tests/test_api.py::TestAPI::test_GET PASSED
+    boatd/tests/test_api.py::TestAPI::test_content_type PASSED
+
+    ... snipped
+
+    ====================== 50 passed in 1.39 seconds =======================
+    _______________________________ summary ________________________________
+      py27: commands succeeded
+      congratulations :)
+
+This will run all test environments. To run an individual environment, run
+``tox -e py27``, or more generally ``tox -e <env>``, replacing env with
+``py27``, ``py34``, ``pypy`` or ``flake8`` (style checks).
 
 The current test results from the head of the ``master`` branch can be found
 `here <https://travis-ci.org/boatd/boatd>`_.
