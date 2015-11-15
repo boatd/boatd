@@ -16,7 +16,7 @@ from .color import color
 from .config import Config
 from .driver import Driver  # noqa
 
-VERSION = "1.1.3"
+__version__ = "1.1.3"
 
 log = logging.getLogger()
 

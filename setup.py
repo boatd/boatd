@@ -5,11 +5,11 @@ except ImportError:
 
 from subprocess import Popen, PIPE
 
-import boatd
+from boatd import __version__
 
 setup(
     name='boatd',
-    version=boatd.VERSION,
+    version=__version__,
     author='Louis Taylor',
     author_email='louis@kragniz.eu',
     description=('Experimental daemon to control an autonomous sailing robot'),
