@@ -302,7 +302,7 @@ The current test results from the head of the ``master`` branch can be found
 License
 =======
 
-Copyright (c) 2013-2015 Louis Taylor <louis@kragniz.eu>
+Copyright (c) 2013-2016 Louis Taylor <louis@kragniz.eu>
 
 Boatd is free software: you can redistribute it and/or modify it under the
 terms of the GNU Lesser General Public License as published by the Free
