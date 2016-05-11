@@ -186,7 +186,7 @@ Drivers should implement functions decorated by the following:
 
   - Returns: 0-360
 
-- ``@driver.wind_position`` - Return the direction the wind is blowing,
+- ``@driver.wind_direction`` - Return the direction the wind is blowing,
   relative to the world.
 
   - Returns: 0-360
