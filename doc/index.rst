@@ -20,15 +20,8 @@ There are two main components of a system written using boatd:
   declarative, with the idea that for any boat with a driver written, any
   behavour script will work.
 
-.. code::
-
-             boatd
-               |
-          -----------
-         |           |
-       driver     behaviour
-         |
-    boat hardware
+.. figure:: _static/boatd-arch.png
+   :scale: 50 %
 
 
 Installing

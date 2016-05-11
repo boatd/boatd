@@ -13,7 +13,7 @@ Experimental robotic sailing boat daemon.
 .. image:: https://img.shields.io/coveralls/boatd/boatd/master.svg
     :target: https://coveralls.io/r/boatd/boatd?branch=master
 
- Documentation is located at http://boatd.readthedocs.io/.
+Documentation is located at http://boatd.readthedocs.io/.
 
 License
 =======
