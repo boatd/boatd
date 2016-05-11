@@ -16,6 +16,8 @@
 import sys
 import os
 
+import alabaster
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -31,6 +33,7 @@ import os
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    'alabaster',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -51,17 +54,6 @@ master_doc = 'index'
 project = 'boatd'
 copyright = '2016, Louis Taylor'
 author = 'Louis Taylor'
-
-html_theme_options = {
-        'logo': 'boatd.png',
-        'logo_name': True,
-        'description': 'Experimental robotic sailing boat daemon',
-        'github_user': 'boatd',
-        'github_repo': 'boatd',
-        'github_banner': True,
-        'github_button': True,
-        'show_powered_by': False,
-        }
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -127,21 +119,33 @@ html_theme = 'alabaster'
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-#html_theme_options = {}
+
+html_theme_options = {
+        'logo': 'boatd.png',
+        'logo_text_align': 'center',
+        'logo_name': True,
+        'description': 'Experimental robotic sailing boat daemon',
+        'github_user': 'boatd',
+        'github_repo': 'boatd',
+        'github_banner': True,
+        'github_button': True,
+        'github_type': 'star',
+        'show_powered_by': False,
+        }
 
 # Add any paths that contain custom themes here, relative to this directory.
-#html_theme_path = []
+html_theme_path = [alabaster.get_path()]
 
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #html_title = 'boatd v1.1.3'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
-#html_short_title = None
+html_short_title = 'boatd'
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-#html_logo = None
+# html_logo = '_static/boatd.png'
 
 # The name of an image file (relative to this directory) to use as a favicon of
 # the docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -168,7 +172,11 @@ html_static_path = ['_static']
 #html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
-#html_sidebars = {}
+html_sidebars = {
+    '**': [
+        'about.html',
+        ]
+    }
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
