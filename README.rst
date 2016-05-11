@@ -208,7 +208,7 @@ Drivers should implement functions decorated by the following:
 
   - Returns: 0-360
 
-- ``@driver.wind_position`` - Return the direction the wind is blowing,
+- ``@driver.wind_direction`` - Return the direction the wind is blowing,
   relative to the world.
 
   - Returns: 0-360
@@ -324,7 +324,7 @@ The current test results from the head of the ``master`` branch can be found
 License
 =======
 
-Copyright (c) 2013-2015 Louis Taylor <louis@kragniz.eu>
+Copyright (c) 2013-2016 Louis Taylor <louis@kragniz.eu>
 
 Boatd is free software: you can redistribute it and/or modify it under the
 terms of the GNU Lesser General Public License as published by the Free
