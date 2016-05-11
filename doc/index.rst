@@ -2,9 +2,8 @@
 boatd documentation
 ===================
 
-Contents:
-
 .. contents::
+   :backlinks: none
 
 General architecture
 ====================
@@ -312,9 +311,3 @@ This will run all test environments. To run an individual environment, run
 
 The current test results from the head of the ``master`` branch can be found
 `here <https://travis-ci.org/boatd/boatd>`_.
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
