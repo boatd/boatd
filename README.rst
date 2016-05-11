@@ -90,7 +90,29 @@ Running boatd
       --version    show program's version number and exit
 
 
-After you have installed boat, it can be run with ``$ boatd``.
+After you have installed boatd, it can be run with ``$ boatd``.
+
+You will need to create a configuration file. It should look something like:
+
+.. code:: yaml
+
+	boatd:
+		port: 2222
+		interface: 127.0.0.1
+
+	plugin_directory: null
+
+	plugins:
+		- logger:
+			period: 10
+			filename: logs/gps_trace
+
+	scripts:
+		behaviour: example/basic_behaviour.py
+		driver: example/basic_driver.py
+
+The example config file (``boatd-config.yaml.example``) can be modified for
+your boat.
 
 Output will be similar to:
 
