@@ -144,7 +144,6 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
             code = 200
         except AttributeError:
             log.exception('could not find attribute')
-            log.warning('could not find "{}" - returning 404'.format(self.path))
             func_response = "404 - attribute not found"
             code = 404
 
