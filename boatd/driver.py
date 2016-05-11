@@ -1,3 +1,4 @@
+from abc import ABCMeta, abstractmethod
 import logging
 import threading
 from functools import wraps
@@ -5,6 +6,34 @@ from functools import wraps
 from .color import color
 
 log = logging.getLogger(__name__)
+
+
+class DriverABC(object):
+    __metaclass__ = ABCMeta
+
+    @abstractmethod
+    def heading(self):
+        pass
+
+    @abstractmethod
+    def wind_speed(self):
+        pass
+
+    @abstractmethod
+    def wind_direction(self):
+        pass
+
+    @abstractmethod
+    def position(self):
+        pass
+
+    @abstractmethod
+    def rudder(self, angle):
+        pass
+
+    @abstractmethod
+    def sail(self, angle):
+        pass
 
 
 class Driver(object):
