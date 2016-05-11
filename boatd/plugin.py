@@ -68,4 +68,4 @@ def start_plugins(modules, boat):
 
 
 def get_plugin_names_from_config(config):
-    return [plugin.keys()[0] for plugin in config.plugins]
+    return [list(plugin.keys())[0] for plugin in config.plugins]

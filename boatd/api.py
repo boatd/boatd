@@ -133,14 +133,18 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self, *args, **kwargs):
         '''Handle a GET request to the server.'''
         if self.path in self.server.handles:
+            # get the function that self.server.handles maps to this path
             handler_func = self.server.boat_function
         else:
+            # try handling by poking the driver with a stick
             handler_func = self.server.driver_function
 
         try:
             func_response = handler_func(self.path)
             code = 200
         except AttributeError:
+            log.exception('could not find attribute')
+            log.warning('could not find "{}" - returning 404'.format(self.path))
             func_response = "404 - attribute not found"
             code = 404
 
