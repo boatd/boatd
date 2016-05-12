@@ -15,4 +15,8 @@ class BasePlugin(object):
 
     @abstractmethod
     def main(self):
+        '''
+        The main method for a plugin. This should contain a loop if the plugin
+        is intended to be long-running.
+        '''
         pass

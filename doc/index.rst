@@ -5,8 +5,8 @@ boatd documentation
 .. contents::
    :backlinks: none
 
-General architecture
-====================
+Introduction
+============
 
 Boatd is designed to be the manager for a boat control system, granting
 graceful startup, telemetry, logging and a built in simulator.
@@ -250,6 +250,47 @@ absolute. boatd will also expand ``~`` to your home directory:
 
     scripts:
         driver: ~/git/sails-boatd-driver/driver.py
+
+
+Plugins
+=======
+
+Plugins are loadable python modules that run in a seperate thread inside boatd.
+They have access to the current data about the boat.
+
+To implement a plugin, a class must be implemented that conforms to a certain
+interface (similar to how drivers are defined). The interface is simple:
+
+.. autoclass:: boatd.BasePlugin
+   :members:
+
+An example implementation would be:
+
+.. code:: python
+
+    from boatd import BasePlugin
+
+    class ExamplePlugin(BasePlugin):
+        def main(self):
+            while self.running:
+                position = self.boatd.boat.position()
+                print('logging some stuff ', position)
+
+    plugin = LoggerPlugin
+
+
+Some things to note:
+
+- You automatically get access to an object called ``self.boatd``. This
+  contains a ``boat`` attribute which you can use to interact with the live
+  boat.
+- ``self.running`` can be used to check if the plugin should end. When the
+  plugin is started by boatd, this will be set to ``True``. When boatd is about
+  to quit or plugins need to be stopped for some other reason, it will be set
+  to ``False``.
+
+TODO: document core plugins.
+
 
 Testing
 =======
