@@ -34,4 +34,4 @@ class TestBoatd(unittest.TestCase):
         mock_config = boatd.Config(configuration)
         mock_config.filename = os.path.join(self.directory, 'c.yaml')
         driver = boatd.load_driver(mock_config)
-        assert driver.handlers.get('pony')() == 'magic'
+        assert driver.heading() == 2.43

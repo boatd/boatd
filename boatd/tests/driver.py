@@ -1,20 +1,25 @@
 import boatd
-driver = boatd.Driver()
 
-driver.some_hardware = {}
+class TestDriver(boatd.BaseBoatdDriver):
+    def __init__(self):
+        self.some_hardware = {}
 
-@driver.heading
-def heading():
-    return 2.43
+    def heading(self):
+        return 2.43
 
-@driver.wind_speed
-def speed():
-    return 25
+    def wind_speed(self):
+        return 25
 
-@driver.rudder
-def move_rudder(angle):
-    driver.some_hardware['rudder'] = angle
+    def rudder(self, angle):
+        self.some_hardware['rudder'] = angle
 
-@driver.handler('pony')
-def horse():
-    return 'magic'
+    def position(self):
+        pass
+
+    def sail(self):
+        pass
+
+    def wind_direction(self):
+        pass
+
+driver = TestDriver()
