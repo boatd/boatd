@@ -1,29 +1,21 @@
 language: python
-
 sudo: false
-
 env:
-  - TOXENV=py27
-  - TOXENV=py34
-  - TOXENV=pypy
-  - TOXENV=flake8
-
+- TOXENV=py27
+- TOXENV=py34
+- TOXENV=pypy
+- TOXENV=flake8
 install:
-  - "pip install tox"
-  - "pip install coveralls"
-
+- pip install tox
+- pip install coveralls
 script: tox
-
 after_success: coveralls
-
-notifications:
-  irc:
-    channels:
-      - "irc.freenode.net#abersailbot"
-    template:
-      - "%{repository}/%{branch} [%{commit}] %{author}: %{message}"
-      - "Build #%{build_number}: %{build_url}"
-    on_success: always
-    on_failure: always
-    use_notice: true
-    skip_join: true
+deploy:
+  provider: pypi
+  user: kragniz
+  password:
+    secure: E8SrBVjlFs9Vi5Cd59hCX3ravzLJKgxCq732JHAavUVw3IC2PPU+7lz4GhxSUEMu0yclK9t756LS/drQCGdw955s4eC0A6h8AYwWE4NRtwnRlOsQ/MieT3aAwl/dlY2F3OjNMHkpEQPF6YqcDhrUsIXfyJ318q+Hepb7Q1BGVuI=
+  on:
+    tags: true
+    distributions: sdist bdist_wheel
+    repo: boatd/boatd
