@@ -30,6 +30,9 @@ class Config(object):
             if isinstance(i, dict):
                 self.__dict__[k] = Config(i)
 
+    def __str__(self):
+        return str(self.__dict__)
+
     def get(self, name, default=None):
         if hasattr(self, name):
             return getattr(self, name)
