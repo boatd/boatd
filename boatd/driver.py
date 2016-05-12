@@ -15,6 +15,8 @@ class BaseBoatdDriver(object):
     def heading(self):
         '''
         Must return the heading of the boat in degrees, relative to the world.
+
+        :rtype: float between 0 and 360
         '''
         pass
 
@@ -23,6 +25,8 @@ class BaseBoatdDriver(object):
         '''
         Must return the direction the wind is blowing in degrees, relative to
         the world.
+
+        :rtype: float
         '''
         pass
 
@@ -30,6 +34,8 @@ class BaseBoatdDriver(object):
     def wind_direction(self):
         '''
         Must return the speed the wind is blowing in knots.
+
+        :rtype: float between 0 and 360
         '''
         pass
 
@@ -38,13 +44,18 @@ class BaseBoatdDriver(object):
         '''
         Must return a tuple containing the current latitude and longitude of
         the boat, in that order.
+
+        :rtype: tuple of two floats - ``(float, float)``
         '''
         pass
 
     @abstractmethod
     def rudder(self, angle):
         '''
-        Set the boat's rudder to ``angle``  degrees relative to the boat.
+        Set the boat's rudder to ``angle`` degrees relative to the boat.
+
+        :param angle: target number of degrees
+        :type angle: float between -90 and 90
         '''
         pass
 
@@ -52,6 +63,9 @@ class BaseBoatdDriver(object):
     def sail(self, angle):
         '''
         Set the sail to ``angle`` degrees relative to the boat.
+
+        :param angle: target number of degrees
+        :type angle: float between -90 and 90
         '''
         pass
 
