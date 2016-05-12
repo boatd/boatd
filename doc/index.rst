@@ -181,80 +181,75 @@ Drivers
 Driver basics
 -------------
 
-Boatd drivers are implemented as a simple python module. When a behaviour
-script requires information about the current state of the boat or needs to
-send a command to some hardware, boatd runs one of the functions in the driver.
+Boatd drivers are implemented as a simple user defined class in a loadable
+python module.  When a behaviour script requires information about the current
+state of the boat or needs to send a command to some hardware, boatd runs one
+of the methods in the driver.
 
-Drivers should implement functions decorated by the following:
+To write a driver, a python module should be created that contains an object
+named ``driver``. This object must be an instance of a class inheriting from
+and implementing the interface defined in ``BaseBoatdDriver``:
 
-- ``@driver.heading`` - Return the heading of the boat in degrees, relative to
-  the world.
+.. autoclass:: boatd.BaseBoatdDriver
+   :members:
 
-  - Returns: 0-360
+Note that the driver instance **must** be named ``driver``, otherwise boatd
+won't know where to find it.
 
-- ``@driver.wind_direction`` - Return the direction the wind is blowing,
-  relative to the world.
+Example driver
+--------------
 
-  - Returns: 0-360
-
-- ``@driver.wind_speed`` - Return the speed the wind is blowing in knots.
-
-  - Returns: >= 0
-
-- ``@driver.position`` - Return a tuple containing the current latitude and
-  longitude of the boat, in that order.
-
-  - Returns: (-90 - +90, -180 - +180)
-
-- ``@driver.rudder`` - Set the boat's rudder to ``angle``  degrees relative to
-  the boat.
-
-  - Takes the arguments:
-
-    - ``angle``: Float, -90 - +90
-
-  - Returns: True if successful
-
-- ``@driver.sail`` - Similarly to ``rudder``, set the sail to ``angle`` degrees
-  relative to the boat.
-
-  - Takes the arguments:
-
-    - ``angle``: Float, -90 - +90
-
-  - Returns: True if successful
-
-These functions can have any name, but are marked for use and registered with
-boatd using decorators.
-
-Example, only implementing ``heading``:
+An example:
 
 .. code:: python
 
     import boatd
-    driver = boatd.Driver()
 
-    @driver.heading
-    def get_heading():
-        return some_compass.bearing()
+    class MyFancyBoatDriver(boatd.BaseBoatdDriver):
+        def __init__(self):
+            # initialize some things here
+            pass
+
+        def heading(self):
+            return 30.0
+
+        def wind_direction(self):
+            return 45.0
+
+        def wind_speed(self):
+            return 4.0
+
+        def position(self):
+            return (0, 0)
+
+        def rudder(self, angle):
+            print('moving rudder to', angle)
+
+        def sail(self, angle):
+            print('moving sail to', angle)
+
+    # create an instance of the driver class
+    driver = MyFancyBoatDriver()
 
 
-Custom handlers
----------------
+Configuring boatd to use a driver
+---------------------------------
 
-If the behaviour script needs to run some other function in the driver, a
-handler can be registered using ``driver.handler(name)``
+Once you've written a driver, you can tell boatd to load it as the active
+driver by setting ``scripts.driver`` in your configuration file. Eg:
 
-For example:
+.. code:: yaml
 
-.. code:: python
+    scripts:
+        driver: example/driver.py
 
-    @driver.handler('pony')
-    def example_handler():
-        return something
+This can be a relative path, as with the example above. It can also be
+absolute. boatd will also expand ``~`` to your home directory:
 
-This can then be used as any other function in a behaviour client.
+.. code:: yaml
 
+    scripts:
+        driver: ~/git/sails-boatd-driver/driver.py
 
 Testing
 =======
