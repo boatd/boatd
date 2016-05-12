@@ -74,18 +74,6 @@ def load_driver(conf):
     return driver_module.driver
 
 
-def load_plugins(conf, boat):
-    plugin_dirs = [utils.reldir(__file__, 'coreplugins')]
-
-    if conf.get('plugin_directory') is not None:
-        plugin_dirs += [conf.plugin_directory]
-
-    plugins = plugin.find_plugins(plugin_dirs,
-                                  plugin.get_plugin_names_from_config(conf))
-    plugin_modules = plugin.load_plugins(plugins)
-    plugin.start_plugins(plugin_modules, boat)
-
-
 def parse_args():
     description = '''\
 Experimental robotic sailing boat daemon.
@@ -113,7 +101,7 @@ def run():
 
     driver = load_driver(conf)
     boat = Boat(driver)
-    load_plugins(conf, boat)
+    plugins = plugin.load_plugins(conf, boat)
 
     httpd = BoatdHTTPServer(boat,
                             (conf.boatd.interface, conf.boatd.port),
@@ -122,5 +110,7 @@ def run():
         try:
             httpd.handle_request()
         except (KeyboardInterrupt, SystemExit):
-            log.info('Quitting...')
+            log.info('Quitting and requesting plugins end...')
+            for p in plugins:
+                p.running = False
             sys.exit()

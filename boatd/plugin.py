@@ -1,8 +1,11 @@
 import imp
 import logging
 import os
+import threading
 
 from .color import color
+from . import utils
+from .config import Config
 
 log = logging.getLogger(__name__)
 
@@ -33,17 +36,47 @@ def find_plugins(search_directories, enabled_plugins):
     found_plugins = []
 
     for plugin_name in enabled_plugins:
+        found = False
         for directory in search_directories:
             path = os.path.join(directory, plugin_name) + '.py'
             if os.path.isfile(path):
-                found_plugins.append(path)
+                found = True
+                found_plugins.append((plugin_name, path))
+
+        if found is not True:
+            log.warning('Could not find an appropriate module for plugin '
+                        '\'{}\''.format(color(plugin_name, 31)))
 
     return found_plugins
 
 
-def load_plugins(plugin_names):
-    modules = []
-    for module_filename in plugin_names:
+def start_plugin(module, conf, boat):
+    log.info('Starting plugin {} with config \'{}\''.format(
+             color(module.plugin.__name__, 37),
+             color(str(conf), 36)))
+    print(conf)
+
+    boatd = get_boatd_module(boat)
+    plugin = module.plugin(conf, boatd)
+
+    t = threading.Thread(target=plugin.start)
+    t.start()
+
+    return plugin
+
+
+def load_plugins(conf, boat):
+    plugin_dirs = [utils.reldir(__file__, 'coreplugins')]
+
+    if conf.get('plugin_directory') is not None:
+        plugin_dirs += [conf.plugin_directory]
+
+    plugin_names = get_plugin_names_from_config(conf)
+
+    found_plugins = find_plugins(plugin_dirs, plugin_names)
+
+    plugins = []
+    for (name, module_filename) in found_plugins:
         with open(module_filename) as f:
             module = imp.load_module(
                 get_module_name(module_filename),
@@ -51,22 +84,21 @@ def load_plugins(plugin_names):
                 module_filename,
                 ('.py', 'U', 1)
             )
-            modules.append(module)
             log.info('Loaded plugin from {}'.format(
                      color(module_filename, 37)))
 
-    return modules
+            plugin_conf = get_config_for_plugin(conf, name)
+            plugins.append(start_plugin(module, plugin_conf, boat))
 
-
-def start_plugins(modules, boat):
-    for module in modules:
-        log.info('Starting plugin from {}'.format(
-                 color(module.__file__, 37)))
-
-        boatd = get_boatd_module(boat)
-        plugin = module.plugin({}, boatd)
-        plugin.start()
+    return plugins
 
 
 def get_plugin_names_from_config(config):
     return [list(plugin.keys())[0] for plugin in config.plugins]
+
+
+def get_config_for_plugin(config, plugin_name):
+    for plugin in config.plugins:
+        name = list(plugin)[0]
+        conf = plugin.get(plugin_name)
+        return Config(conf)
