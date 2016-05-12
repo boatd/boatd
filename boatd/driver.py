@@ -8,7 +8,7 @@ from .color import color
 log = logging.getLogger(__name__)
 
 
-class DriverABC(object):
+class BaseBoatdDriver(object):
     __metaclass__ = ABCMeta
 
     @abstractmethod

@@ -14,7 +14,7 @@ from .api import BoatdHTTPServer, BoatdRequestHandler
 from .boat import Boat
 from .color import color
 from .config import Config
-from .driver import DriverABC  # noqa
+from .driver import BaseBoatdDriver  # noqa
 
 __version__ = "1.1.3"
 
