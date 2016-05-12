@@ -16,7 +16,7 @@ from .color import color
 from .config import Config
 from .driver import BaseBoatdDriver  # noqa
 
-__version__ = "1.1.3"
+__version__ = '2.0.0'
 
 log = logging.getLogger()
 
