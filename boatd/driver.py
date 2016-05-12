@@ -13,26 +13,46 @@ class DriverABC(object):
 
     @abstractmethod
     def heading(self):
+        '''
+        Must return the heading of the boat in degrees, relative to the world.
+        '''
         pass
 
     @abstractmethod
     def wind_speed(self):
+        '''
+        Must return the direction the wind is blowing in degrees, relative to
+        the world.
+        '''
         pass
 
     @abstractmethod
     def wind_direction(self):
+        '''
+        Must return the speed the wind is blowing in knots.
+        '''
         pass
 
     @abstractmethod
     def position(self):
+        '''
+        Must return a tuple containing the current latitude and longitude of
+        the boat, in that order.
+        '''
         pass
 
     @abstractmethod
     def rudder(self, angle):
+        '''
+        Set the boat's rudder to ``angle``  degrees relative to the boat.
+        '''
         pass
 
     @abstractmethod
     def sail(self, angle):
+        '''
+        Set the sail to ``angle`` degrees relative to the boat.
+        '''
         pass
 
 
