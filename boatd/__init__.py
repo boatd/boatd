@@ -56,10 +56,13 @@ def load_driver(conf):
     module_name = os.path.splitext(name)[0]
     try:
         found_module = imp.find_module(module_name, search_dirs)
-        driver_module = imp.load_module('driver_module', *found_module)
 
         _, filename, _ = found_module
-        log.info('Loaded driver from {}'.format(color(filename, 34)))
+        log.info('Loading driver from {}'.format(color(filename, 34)))
+
+        driver_module = imp.load_module('driver_module', *found_module)
+        log.info('Using \'{}\' as driver'.format(
+            color(type(driver_module.driver).__name__, 33)))
 
     except Exception:
         log.exception('Exception raised in driver module')
