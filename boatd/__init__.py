@@ -58,14 +58,14 @@ def load_driver(conf):
         found_module = imp.find_module(module_name, search_dirs)
 
         _, filename, _ = found_module
-        log.info('Loading driver from {}'.format(color(filename, 34)))
+        log.info('Loading boat driver from {}'.format(color(filename, 34)))
 
         driver_module = imp.load_module('driver_module', *found_module)
-        log.info('Using \'{}\' as driver'.format(
+        log.info('Using \'{}\' as boat driver'.format(
             color(type(driver_module.driver).__name__, 33)))
 
     except Exception:
-        log.exception('Exception raised in driver module')
+        log.exception('Exception raised in boat driver module')
         raise
     finally:
         found_module[0].close()
