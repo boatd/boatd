@@ -63,8 +63,9 @@ def start_plugins(modules, boat):
         log.info('Starting plugin from {}'.format(
                  color(module.__file__, 37)))
 
-        module.boatd = get_boatd_module(boat)
-        module.init()
+        boatd = get_boatd_module(boat)
+        plugin = module.plugin({}, boatd)
+        plugin.start()
 
 
 def get_plugin_names_from_config(config):

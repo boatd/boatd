@@ -15,6 +15,7 @@ from .boat import Boat
 from .color import color
 from .config import Config
 from .driver import BaseBoatdDriver  # noqa
+from .base_plugin import BasePlugin  # noqa
 
 __version__ = '2.0.0'
 
