@@ -54,7 +54,6 @@ def start_plugin(module, conf, boat):
     log.info('Starting plugin {} with config \'{}\''.format(
              color(module.plugin.__name__, 37),
              color(str(conf), 36)))
-    print(conf)
 
     boatd = get_boatd_module(boat)
     plugin = module.plugin(conf, boatd)
