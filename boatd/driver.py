@@ -23,8 +23,7 @@ class BaseBoatdDriver(object):
     @abstractmethod
     def wind_speed(self):
         '''
-        Must return the direction the wind is blowing in degrees, relative to
-        the world.
+        Must return the speed the wind is blowing in knots.
 
         :rtype: float
         '''
@@ -33,7 +32,8 @@ class BaseBoatdDriver(object):
     @abstractmethod
     def wind_direction(self):
         '''
-        Must return the speed the wind is blowing in knots.
+        Must return the direction the wind is blowing in degrees, relative to
+        the world.
 
         :rtype: float between 0 and 360
         '''
