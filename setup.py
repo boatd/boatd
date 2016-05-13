@@ -16,9 +16,13 @@ setup(
     url='https://github.com/boatd/boatd',
     packages=['boatd'],
     scripts=['bin/boatd'],
-    requires=['PyYAML'],
+    requires=[
+        'PyYAML',
+        'six'
+        ],
     install_requires=[
-        'PyYAML >= 3.11'
+        'PyYAML >= 3.11',
+        'six'
         ],
     classifiers=[
         'Development Status :: 4 - Beta',
