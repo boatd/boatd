@@ -1,9 +1,5 @@
 from abc import ABCMeta, abstractmethod
 import logging
-import threading
-from functools import wraps
-
-from .color import color
 
 log = logging.getLogger(__name__)
 
