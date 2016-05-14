@@ -11,21 +11,26 @@ PLUGIN_FILENAME = os.path.join(PLUGIN_DIR, 'small_plugin.py')
 class TestPlugin(unittest.TestCase):
     def test_find_plugins(self):
         plugins = boatd.plugin.find_plugins([PLUGIN_DIR], ['small_plugin'])
-        path_in = ['boatd/boatd/tests/plugin/small_plugin.py' in p for p in plugins]
+        print(plugins)
+        path_in = ['boatd/boatd/tests/plugin/small_plugin.py' in p for _, p in plugins]
         assert True in path_in
 
     def test_get_module_name(self):
         assert boatd.plugin.get_module_name(PLUGIN_FILENAME) == 'small_plugin'
 
     def test_load_plugins(self):
-        modules = boatd.plugin.load_plugins([PLUGIN_FILENAME])
-        assert True in [hasattr(module, 'THING') for module in modules]
+        conf = {
+            'plugin_directory': PLUGIN_DIR,
+            'plugins': [
+                {
+                    'small_plugin': {
+                        'thing': True
+                    }
+                }
+            ]
+        }
 
-    def test_start_plugins(self):
-        class c(object):
-            accessed = False
-        boat = c()
-        modules = boatd.plugin.load_plugins([PLUGIN_FILENAME])
-        boatd.plugin.start_plugins(modules, boat)
-        time.sleep(1)
-        assert boat.accessed == True
+        print(conf)
+
+        modules = boatd.plugin.load_plugins(boatd.config.Config(conf), object())
+        assert True in [hasattr(module, 'accessed') for module in modules]

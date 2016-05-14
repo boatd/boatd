@@ -51,3 +51,7 @@ class Config(object):
         import yaml
         with open(filename) as f:
             return cls(yaml.load(f))
+
+    def __iter__(self):
+        for d in self.__dict__:
+            yield d

@@ -1,5 +1,11 @@
-THING = True
+import boatd
 
-def init():
-    boatd.boat.accessed = True
-    return True
+class TestPlugin(boatd.BasePlugin):
+    def __init__(self, conf, boatd):
+        self.accessed = False
+        self.boat = boatd
+
+    def main(self):
+        self.boat.accessed = True
+
+plugin = TestPlugin
