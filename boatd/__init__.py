@@ -8,7 +8,6 @@ import sys
 
 from . import logger
 from . import plugin
-from . import utils
 from . import nmea  # noqa
 from .api import BoatdHTTPServer, BoatdRequestHandler
 from .boat import Boat
