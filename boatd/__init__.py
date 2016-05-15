@@ -61,7 +61,7 @@ def load_driver(conf):
         found_module = imp.find_module(module_name, search_dirs)
 
         _, filename, _ = found_module
-        log.info('Loading boat driver from {}'.format(color(filename, 34)))
+        log.info('Loading boat driver from {}'.format(color(filename, 37)))
 
         driver_module = imp.load_module('driver_module', *found_module)
         log.info('Using \'{}\' as boat driver'.format(

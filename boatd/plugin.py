@@ -52,7 +52,7 @@ def find_plugins(search_directories, enabled_plugins):
 
 def start_plugin(module, conf, boat):
     log.info('Starting plugin {} with config \'{}\''.format(
-             color(module.plugin.__name__, 37),
+             color(module.plugin.__name__, 34),
              color(str(conf), 36)))
 
     boatd = get_boatd_module(boat)

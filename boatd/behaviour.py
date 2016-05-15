@@ -3,6 +3,8 @@ import os
 import subprocess
 import threading
 
+from .color import color
+
 
 log = logging.getLogger(__name__)
 
@@ -39,8 +41,9 @@ class Behaviour(object):
         self.logpipe = None
 
     def start(self):
-        log.info('starting behaviour {} from {}'.format(self.name,
-                                                        self.filename))
+        log.info('starting behaviour {} from {}'.format(
+            color(self.name, 34),
+            color(self.filename, 37)))
 
         self.logpipe = LogPipe(logging.INFO, self.name)
         self.process = subprocess.Popen([self.filename],
