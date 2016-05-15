@@ -34,7 +34,7 @@ class MockBoat(object):
 
 
 class TestAPI(unittest.TestCase):
-    TEST_PORTS = 20
+    TEST_PORTS = 50
 
     @classmethod
     def setUpClass(cls):
@@ -47,7 +47,9 @@ class TestAPI(unittest.TestCase):
                 self.httpd = boatd.BoatdHTTPServer(self.boat, ('', self.port),
                                                    boatd.BoatdRequestHandler)
                 break
-            except socket.error:
+            except socket.error as e:
+                print('socket {} didn\'t work, trying a higher one '
+                      '({})'.format(self.port, e))
                 self.port += 1
 
         self.http_thread = threading.Thread(target=self.httpd.handle_request)
