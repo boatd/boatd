@@ -52,6 +52,7 @@ class BoatdHTTPServer(ThreadingMixIn, HTTPServer):
 
         self.post_handles = {
             '/': self.boatd_post,
+            '/behaviours': self.behaviours_post,
         }
 
     def behaviours(self):
@@ -68,6 +69,15 @@ class BoatdHTTPServer(ThreadingMixIn, HTTPServer):
             'behaviours': b,
             'current': self.behaviour_manager.active_behaviour
         }
+
+    def behaviours_post(self, content):
+        if 'current' in content:
+            behaviour = content.get('current')
+            self.behaviour_manager.stop()
+            if behaviour is not None:
+                self.behaviour_manager.start_behaviour_by_name(behaviour)
+
+        return self.behaviours()
 
     def wind(self):
         try:

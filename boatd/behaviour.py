@@ -79,3 +79,9 @@ class BehaviourManager(object):
             if behaviour.name == name:
                 behaviour.start()
                 self.active_behaviour = behaviour.name
+
+    def stop(self):
+        for behaviour in self.behaviours:
+            if behaviour.running:
+                behaviour.end()
+                self.active_behaviour = None
