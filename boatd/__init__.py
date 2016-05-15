@@ -10,11 +10,14 @@ from . import logger
 from . import plugin
 from . import nmea  # noqa
 from .api import BoatdHTTPServer, BoatdRequestHandler
+from .behaviour import Behaviour
+from .behaviour import BehaviourManager
 from .boat import Boat
 from .color import color
 from .config import Config
 from .driver import BaseBoatdDriver  # noqa
 from .base_plugin import BasePlugin  # noqa
+
 
 __version__ = '2.0.0'
 
@@ -106,7 +109,13 @@ def run():
     boat = Boat(driver)
     plugins = plugin.load_plugins(conf, boat)
 
-    httpd = BoatdHTTPServer(boat,
+    behaviour_manager = BehaviourManager()
+
+    b = Behaviour('testing', '/home/kragniz/git/boatd/boatd/tests/mock_behaviour')
+    #b.start()
+    behaviour_manager.add(b)
+
+    httpd = BoatdHTTPServer(boat, behaviour_manager,
                             (conf.boatd.interface, conf.boatd.port),
                             BoatdRequestHandler)
     while httpd.running:
@@ -116,4 +125,5 @@ def run():
             log.info('Quitting and requesting plugins end...')
             for p in plugins:
                 p.running = False
+            b.end()
             sys.exit()

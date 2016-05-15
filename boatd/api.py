@@ -31,7 +31,7 @@ class BoatdHTTPServer(ThreadingMixIn, HTTPServer):
     The main REST server for boatd. Listens for requests on port server_address
     and handles each request with RequestHandlerClass.
     '''
-    def __init__(self, boat,
+    def __init__(self, boat, behaviour_manager,
                  server_address, RequestHandlerClass, bind_and_activate=True):
 
         HTTPServer.__init__(self, server_address, RequestHandlerClass,
@@ -39,17 +39,34 @@ class BoatdHTTPServer(ThreadingMixIn, HTTPServer):
         log.info('boatd api listening on %s:%s', *server_address)
 
         self.boat = boat
+        self.behaviour_manager = behaviour_manager
         self.running = True
 
         self.handles = {
             '/': self.boatd_info,
             '/boat': self.boat_attr,
             '/wind': self.wind,
-            '/active': self.boat_active
+            '/active': self.boat_active,
+            '/behaviours': self.behaviours,
         }
 
         self.post_handles = {
             '/': self.boatd_post,
+        }
+
+    def behaviours(self):
+        b = {
+                behaviour.name: {
+                    'running': behaviour.running,
+                     'filename': behaviour.filename
+                }
+             for behaviour in
+         self.behaviour_manager.behaviours
+        }
+
+        return {
+            'behaviours': b,
+            'current': self.behaviour_manager.active_behaviour
         }
 
     def wind(self):
