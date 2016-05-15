@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -x
+
+touch /tmp/mock_file
+
+while :
+do
+    echo "sleeping"
+    sleep 1
+done
