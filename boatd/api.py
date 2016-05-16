@@ -42,6 +42,7 @@ class BoatdHTTPServer(ThreadingMixIn, HTTPServer):
         self.behaviour_manager = behaviour_manager
         self.running = True
 
+        # set API endpoints
         self.handles = {
             '/': self.boatd_info,
             '/boat': self.boat_attr,
@@ -107,6 +108,7 @@ class BoatdHTTPServer(ThreadingMixIn, HTTPServer):
         }
 
     def boatd_post(self, content):
+        # posting only supports shutting down the server and quitting boatd
         response = {}
         if 'quit' in content:
             if content.get('quit'):
@@ -177,6 +179,7 @@ class BoatdRequestHandler(BaseHTTPRequestHandler):
         if func_response is not None:
             self.send_json(json.dumps(func_response), code)
         else:
+            # if the handler runs, but doesn't return anything, 404
             self.send_json("404", code)
 
     def do_POST(self):
