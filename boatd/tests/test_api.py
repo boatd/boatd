@@ -44,7 +44,8 @@ class TestAPI(unittest.TestCase):
         self.boat = MockBoat()
         for _ in range(self.TEST_PORTS):
             try:
-                self.httpd = boatd.BoatdHTTPServer(self.boat, ('', self.port),
+                self.httpd = boatd.BoatdHTTPServer(self.boat, object,
+                                                   ('', self.port),
                                                    boatd.BoatdRequestHandler)
                 break
             except socket.error as e:

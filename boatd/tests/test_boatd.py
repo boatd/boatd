@@ -27,8 +27,8 @@ class TestBoatd(unittest.TestCase):
 
     def test_load_driver(self):
         configuration = {
-            'scripts': {
-                'driver': 'driver.py'
+            'driver': {
+                'file': 'driver.py'
             }
         }
         mock_config = boatd.Config(configuration)

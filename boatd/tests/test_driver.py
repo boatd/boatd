@@ -9,14 +9,15 @@ class TestDriver(unittest.TestCase):
         self.directory, _ = os.path.split(__file__)
 
         configuration = {
-            'scripts': {
-                'driver': os.path.join(self.directory, 'driver.py')
+            'driver': {
+                'file': os.path.join(self.directory, 'driver.py')
             }
         }
         self.mock_config = boatd.Config(configuration)
+        print(self.mock_config.driver)
 
         self.driver_file = os.path.join(self.directory,
-            self.mock_config.scripts.driver)
+            self.mock_config.driver.file)
 
     def test_driver_file(self):
         assert os.path.isfile(self.driver_file)
@@ -39,8 +40,8 @@ class TestDriver(unittest.TestCase):
         assert len(driver.some_hardware) == 0
 
     def test_bad_driver(self):
-        self.mock_config.scripts.driver = os.path.join(self.directory,
-                                                       'bad_driver.py')
+        self.mock_config.driver.file = os.path.join(self.directory,
+                                                    'bad_driver.py')
         try:
             driver = boatd.load_driver(self.mock_config)
         except SyntaxError:

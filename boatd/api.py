@@ -61,10 +61,10 @@ class BoatdHTTPServer(ThreadingMixIn, HTTPServer):
         b = {
                 behaviour.name: {
                     'running': behaviour.running,
-                     'filename': behaviour.filename
+                    'filename': behaviour.filename
                 }
-             for behaviour in
-         self.behaviour_manager.behaviours
+                for behaviour in
+                self.behaviour_manager.behaviours
         }
 
         return {
