@@ -165,8 +165,8 @@ Boatd's main method of interaction is via the JSON API.
       }
 
 
-``wind``
---------
+``/wind``
+---------
 
 - ``GET``
 
@@ -178,6 +178,46 @@ Boatd's main method of interaction is via the JSON API.
       "direction": 8.42,
       "speed": 25
     }
+
+``/behaviours``
+---------------
+
+- ``GET``
+
+  Returns data about available and current behaviours. Example output:
+
+  .. code:: json
+
+    {
+      "current": null,
+      "behaviours": {
+        "basic": {
+          "filename": "example/basic_behaviour.py",
+          "running": false
+        }
+      }
+    }
+
+- ``POST``
+
+  Change the currently running behaviour. Setting the current behaviour to
+  ``null`` will cause no behaviour to be run.
+
+  Examples:
+
+  .. code:: json
+
+       {
+         "current": null
+       }
+
+
+  .. code:: json
+
+       {
+         "current": "basic"
+       }
+
 
 Drivers
 =======
