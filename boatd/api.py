@@ -1,14 +1,7 @@
 import logging
 
-try:
-    from http.server import HTTPServer, BaseHTTPRequestHandler
-except ImportError:
-    from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
-
-try:
-    from socketserver import ThreadingMixIn
-except ImportError:
-    from SocketServer import ThreadingMixIn
+from six.moves.BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
+from six.moves.socketserver import ThreadingMixIn
 
 import json
 
