@@ -84,7 +84,7 @@ def load_behaviours(conf):
     behaviour_manager = BehaviourManager()
 
     for behaviour in conf.behaviours:
-        name = behaviour.keys()[0]
+        name = list(behaviour.keys())[0]
         behaviour_conf = behaviour.get(name)
         filename = behaviour_conf.get('file')
 
