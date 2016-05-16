@@ -336,6 +336,17 @@ Some things to note:
 TODO: document core plugins.
 
 
+python-boatdclient
+==================
+
+Boatd has a client library written for python. It contains a python wrapper
+module and a command line client.
+
+You can install python-boatdclient from PyPi by running::
+
+    $ pip install python-boatdclient
+
+
 Testing
 =======
 
