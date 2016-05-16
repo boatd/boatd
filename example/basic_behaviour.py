@@ -1,8 +1,9 @@
+#!/usr/bin/env python
 # This uses boatd_client, a python library for interacting with boatd. For more
 # information, see https://github.com/boatd/python-boatd
 # Run with $ python basic_behaviour.py, after boatd is running
 
-from boatd_client import Boat
+from boatdclient import Boat
 
 boat = Boat()
 

@@ -46,7 +46,7 @@ def load_driver(conf):
     Return the driver module from the filename specified in the configuration
     file with key configuration.scripts.driver.
     '''
-    expanded_path = os.path.expanduser(conf.scripts.driver)
+    expanded_path = os.path.expanduser(conf.driver.file)
     directory, name = os.path.split(expanded_path)
     sys.path.append(os.path.dirname(directory))
 
@@ -80,6 +80,20 @@ def load_driver(conf):
     return driver_module.driver
 
 
+def load_behaviours(conf):
+    behaviour_manager = BehaviourManager()
+
+    for behaviour in conf.behaviours:
+        name = behaviour.keys()[0]
+        behaviour_conf = behaviour.get(name)
+        filename = behaviour_conf.get('file')
+
+        b = Behaviour(name, filename)
+        behaviour_manager.add(b)
+
+    return behaviour_manager
+
+
 def parse_args():
     description = '''\
 Experimental robotic sailing boat daemon.
@@ -109,11 +123,7 @@ def run():
     boat = Boat(driver)
     plugins = plugin.load_plugins(conf, boat)
 
-    behaviour_manager = BehaviourManager()
-
-    b = Behaviour('testing', '/home/kragniz/git/boatd/boatd/tests/mock_behaviour')
-    #b.start()
-    behaviour_manager.add(b)
+    behaviour_manager = load_behaviours(conf)
 
     httpd = BoatdHTTPServer(boat, behaviour_manager,
                             (conf.boatd.interface, conf.boatd.port),
@@ -123,7 +133,7 @@ def run():
             httpd.handle_request()
         except (KeyboardInterrupt, SystemExit):
             log.info('Quitting and requesting plugins end...')
+            behaviour_manager.stop()
             for p in plugins:
                 p.running = False
-            b.end()
             sys.exit()
