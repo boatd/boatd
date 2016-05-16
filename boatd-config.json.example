@@ -1,19 +1,25 @@
 {
-    "boatd": {
-        "port": 2222,
-        "interface": "127.0.0.1"
-    },
-    "plugin_directory": null,
-    "plugins": [
-        {
-            "logger": {
-                "filename": "logs/gps_trace",
-                "period": 10
-            }
-        }
-    ],
-    "scripts": {
-        "behaviour": "example/basic_behaviour.py",
-        "driver": "example/basic_driver.py"
+  "boatd": {
+    "port": 2222,
+    "interface": "127.0.0.1"
+  },
+  "plugin_directory": null,
+  "plugins": [
+    {
+      "logger": {
+        "period": 10,
+        "filename": "logs/gps_trace"
+      }
     }
+  ],
+  "driver": {
+    "file": "example/basic_driver.py"
+  },
+  "behaviours": [
+    {
+      "example": {
+        "file": "example/basic_behaviour.py"
+      }
+    }
+  ]
 }

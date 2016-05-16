@@ -91,9 +91,13 @@ You will need to create a configuration file. It should look something like:
         period: 10
         filename: logs/gps_trace
 
-    scripts:
-      behaviour: example/basic_behaviour.py
-      driver: example/basic_driver.py
+	driver:
+		file: example/basic_driver.py
+
+	behaviours:
+		- example:
+			file: example/basic_behaviour.py
+
 
 The example config file (``boatd-config.yaml.example``) can be modified for
 your boat.
