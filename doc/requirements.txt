@@ -1,0 +1,1 @@
+-e git://github.com/boatd/python-boatd#egg=boatdclient

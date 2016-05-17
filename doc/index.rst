@@ -27,34 +27,74 @@ There are two main components of a system written using boatd:
 Installing
 ==========
 
-Boatd is tested on Python 2.7 and 3.4.
+Boatd is currently tested and supported on Python 2.7 and 3.4. Support for
+python 2 may be dropped in the near future.
 
-From PyPi (recommended)
------------------------
+Installing in a virtualenv from PyPi (recommended)
+--------------------------------------------------
 
-.. code:: bash
+This installs boatd in a `virtualenv
+<http://docs.python-guide.org/en/latest/dev/virtualenvs/>`_, keeping it
+seperate from the rest of the system.
+
+First, create a new virtualenv::
+
+    $ virtualenv env
+
+Activate this virtualenv::
+
+    $ source env/bin/activate
+
+Install boatd and its dependancies from the latest published stable release::
 
     $ pip install boatd
 
 
-Debian
-------
+Installing for development
+--------------------------
 
-On any Debian based distribution:
+First, clone the repository and change to the directory::
+
+    $ git clone https://github.com/boatd/boatd.git
+    $ cd boatd
+
+Create a new virtualenv::
+
+    $ virtualenv boatd-dev-env
+
+Activate this virtualenv::
+
+    $ source boatd-dev-env/bin/activate
+
+Install boatd in editable mode from the local copy::
+
+    $ pip install --editable .
+
+Installing when you don't care and live life on the edge (system wide installation)
+-----------------------------------------------------------------------------------
+
+First install dependencies:
+
+On any Debian based distribution (Debian, Ubuntu, Mint etc):
 
 .. code:: bash
 
     $ apt-get install python-yaml
-    $ python setup.py install
 
-Fedora
-------
+On Red Hat systems (Fedora, CentOS, etc):
 
 .. code:: bash
 
     $ dnf install PyYAML
-    $ python setup.py install
 
+Then clone the repository and change to the directory::
+
+    $ git clone https://github.com/boatd/boatd.git
+    $ cd boatd
+
+Run the installer::
+
+    $ sudo python setup.py install
 
 Running boatd
 =============
@@ -345,6 +385,14 @@ module and a command line client.
 You can install python-boatdclient from PyPi by running::
 
     $ pip install python-boatdclient
+
+Boatdclient includes the following user facing classes:
+
+.. autoclass:: boatdclient.Boat
+   :members:
+
+.. autoclass:: boatdclient.Behaviour
+   :members:
 
 
 Testing
