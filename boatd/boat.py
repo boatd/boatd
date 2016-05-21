@@ -1,3 +1,8 @@
+import logging
+
+log = logging.getLogger(__name__)
+
+
 class Boat(object):
     '''The boat itself. Most of the work is done by the active driver'''
     def __init__(self, driver):
@@ -21,7 +26,9 @@ class Boat(object):
         return self.driver.position()
 
     def rudder(self, angle):
+        log.debug('setting rudder angle to {}'.format(angle))
         return self.driver.rudder(angle)
 
     def sail(self, angle):
+        log.debug('setting sail angle to {}'.format(angle))
         return self.driver.sail(angle)
