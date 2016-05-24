@@ -4,6 +4,23 @@ import datetime
 import time
 
 
+log_format = 'time={time} '
+             'bhead={head} '
+             'wind={wind} '
+             'lat={pos.lat} '
+             'lon={pos.long} '
+             'nwlat={wpn} '
+             'nwlon={wpe} '
+             'nwn={num} '
+             'spos={sail} '
+             'rpos={rudder} '
+             'whead={waypoint_heading} '
+             'distance={waypoint_distance} '
+             'speed={speed} '
+             'thead={target_heading} '
+             'tdist={target_distance}\n\r'
+
+
 class LoggerPlugin(BasePlugin):
     def main(self):
         period = self.config.period
@@ -14,6 +31,7 @@ class LoggerPlugin(BasePlugin):
 
             ts = time.time()
 
+            # FIXME: use the log_format string defined above
             log_line = '{} lat:{} long:{}\n'.format(
                     datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),
                     lat,
