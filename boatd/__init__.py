@@ -15,6 +15,7 @@ from .behaviour import BehaviourManager
 from .boat import Boat
 from .color import color
 from .config import Config
+from .waypoints import WaypointManager
 from .driver import BaseBoatdDriver  # noqa
 from .base_plugin import BasePlugin  # noqa
 
@@ -124,8 +125,9 @@ def run():
     plugins = plugin.load_plugins(conf, boat)
 
     behaviour_manager = load_behaviours(conf)
+    waypoint_manager = WaypointManager()
 
-    httpd = BoatdHTTPServer(boat, behaviour_manager,
+    httpd = BoatdHTTPServer(boat, behaviour_manager, waypoint_manager,
                             (conf.boatd.interface, conf.boatd.port),
                             BoatdRequestHandler)
     while httpd.running:
