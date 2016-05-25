@@ -4,21 +4,22 @@ import datetime
 import time
 
 
-log_format = 'time={time} '
+log_format = (
+             'time={time} '
              'bhead={head} '
              'wind={wind} '
              'lat={lat} '
              'lon={long} '
-             'nwlat={wpn} '
-             'nwlon={wpe} '
-             'nwn={num} '
-             'spos={sail} '
-             'rpos={rudder} '
-             'whead={waypoint_heading} '
-             'distance={waypoint_distance} '
-             'speed={speed} '
-             'thead={target_heading} '
-             'tdist={target_distance}\n\r'
+             #'nwlat={wpn} '
+             #'nwlon={wpe} '
+             #'nwn={num} '
+             #'spos={sail} '
+             #'rpos={rudder} '
+             #'whead={waypoint_heading} '
+             #'distance={waypoint_distance} '
+             #'speed={speed} '
+             '\n\r'
+             )
 
 
 class LoggerPlugin(BasePlugin):
@@ -27,13 +28,16 @@ class LoggerPlugin(BasePlugin):
         filename = self.config.filename
 
         while self.running:
+            heading = self.boatd.boat.heading()
+            wind_direction = self.boatd.boat.wind_direction()
             lat, lon = self.boatd.boat.position()
 
             ts = time.time()
 
-            # FIXME: use the log_format string defined above
             log_line = log_format.format(
-                    time=datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),
+                    time=time.time(),
+                    head=heading,
+                    wind=wind_direction,
                     lat=lat,
                     long=lon,
             )

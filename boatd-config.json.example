@@ -8,7 +8,7 @@
     {
       "logger": {
         "period": 10,
-        "filename": "logs/gps_trace"
+        "filename": "logs/log_trace"
       }
     }
   ],
