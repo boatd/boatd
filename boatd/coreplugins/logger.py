@@ -7,8 +7,8 @@ import time
 log_format = 'time={time} '
              'bhead={head} '
              'wind={wind} '
-             'lat={pos.lat} '
-             'lon={pos.long} '
+             'lat={lat} '
+             'lon={long} '
              'nwlat={wpn} '
              'nwlon={wpe} '
              'nwn={num} '
@@ -32,10 +32,10 @@ class LoggerPlugin(BasePlugin):
             ts = time.time()
 
             # FIXME: use the log_format string defined above
-            log_line = '{} lat:{} long:{}\n'.format(
-                    datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),
-                    lat,
-                    lon
+            log_line = log_format.format(
+                    time=datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),
+                    lat=lat,
+                    long=lon,
             )
 
             with open(filename, 'a') as f:
