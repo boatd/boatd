@@ -7,7 +7,7 @@ plugin_directory: null
 plugins:
     - logger:
         period: 10
-        filename: logs/gps_trace
+        filename: logs/log_trace
 
 driver:
     file: example/basic_driver.py
