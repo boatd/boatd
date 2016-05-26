@@ -78,7 +78,7 @@ def load_plugins(conf, boat):
     for (name, module_filename) in found_plugins:
         with open(module_filename) as f:
             plugin_conf = get_config_for_plugin(conf, name)
-            if plugin_conf.enabled is False:
+            if plugin_conf.get('enabled', False):
                 module = imp.load_module(
                     get_module_name(module_filename),
                     f,
@@ -90,8 +90,8 @@ def load_plugins(conf, boat):
 
                 plugins.append(start_plugin(module, plugin_conf, boat))
             else:
-                log.info('Ignored disabled plugin {}'.format(
-                    color(module_filename, 37)))
+                log.info('Ignored plugin {}, since `enabled: true` is not '
+                         'set in plugin config'.format(color(name, 36)))
 
     return plugins
 

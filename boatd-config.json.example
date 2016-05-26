@@ -7,12 +7,14 @@
   "plugins": [
     {
       "logger": {
+        "enabled": false,
         "period": 10,
         "filename": "logs/log_trace"
       }
     },
     {
       "mavlink": {
+        "enabled": false,
         "device": "/dev/ttyUSB0",
         "baud": 115200
       }
