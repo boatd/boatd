@@ -7,7 +7,7 @@ from subprocess import Popen, PIPE
 
 setup(
     name='boatd',
-    version='2.1.0',
+    version='3.0.0',
     author='Louis Taylor',
     author_email='louis@kragniz.eu',
     description=('Experimental daemon to control an autonomous sailing robot'),
