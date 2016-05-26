@@ -1,4 +1,4 @@
-import json
+import yaml
 
 
 class Config(object):
@@ -41,15 +41,8 @@ class Config(object):
             return default
 
     @classmethod
-    def from_json(cls, filename):
-        '''Return a Config object from a json file'''
-        with open(filename) as f:
-            return cls(json.load(f))
-
-    @classmethod
     def from_yaml(cls, filename):
         '''Return a Config object from a yaml file'''
-        import yaml
         with open(filename) as f:
             return cls(yaml.load(f))
 

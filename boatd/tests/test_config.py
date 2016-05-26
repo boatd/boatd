@@ -15,7 +15,7 @@ class TestConfig(unittest.TestCase):
         assert config.boatd
 
     def test_load_json(self):
-        config = boatd.Config.from_json(self.json_file)
+        config = boatd.Config.from_yaml(self.json_file)
         assert config.boatd
 
     def test_port(self):

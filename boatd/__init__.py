@@ -30,12 +30,7 @@ def load_conf(conf_file):
     otherwise falls back to 'boatd-config.yaml'.
     '''
 
-    _, ext = os.path.splitext(conf_file)
-    if ext == '.json':
-        conf = Config.from_json(conf_file)
-    else:
-        conf = Config.from_yaml(conf_file)
-
+    conf = Config.from_yaml(conf_file)
     conf.filename = conf_file
 
     return conf
