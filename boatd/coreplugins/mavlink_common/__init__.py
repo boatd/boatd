@@ -1,1 +1,1 @@
-from mavlink_common import *
+from boatd.coreplugins.mavlink_common.mavlink_common import *
