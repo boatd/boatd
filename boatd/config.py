@@ -25,10 +25,11 @@ class Config(object):
     '''
 
     def __init__(self, d):
-        self.__dict__.update(d)
-        for k, i in self.__dict__.items():
-            if isinstance(i, dict):
-                self.__dict__[k] = Config(i)
+        if d:
+            self.__dict__.update(d)
+            for k, i in self.__dict__.items():
+                if isinstance(i, dict):
+                    self.__dict__[k] = Config(i)
 
     def __str__(self):
         return str(self.__dict__)
