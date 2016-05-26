@@ -9,6 +9,10 @@ plugins:
         period: 10
         filename: logs/log_trace
 
+    - mavlink:
+        device: /dev/ttyUSB0
+        baud: 115200
+
 driver:
     file: example/basic_driver.py
 
