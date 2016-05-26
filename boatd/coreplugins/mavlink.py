@@ -68,11 +68,11 @@ class MavlinkPlugin(BasePlugin):
             self.send_param(name, value, 0)
 
     def main(self):
-        #period = self.config.period
-        #filename = self.config.filename
+        device = self.config.get('device', '/dev/ttyUSB0')
+        baud = self.config.get('baud', 115200)
 
         # FIXME: make serial port name and baud rate configurable
-        self.ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.1)
+        self.ser = serial.Serial(device, baud, timeout=0.1)
         self.ml = mv.MAVLink(self.ser)
 
         self.params = [(b'RUDDER', 0.5)]
