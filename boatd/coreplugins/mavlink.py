@@ -71,13 +71,10 @@ class MavlinkPlugin(BasePlugin):
         device = self.config.get('device', '/dev/ttyUSB0')
         baud = self.config.get('baud', 115200)
 
-        # FIXME: make serial port name and baud rate configurable
         self.ser = serial.Serial(device, baud, timeout=0.1)
         self.ml = mv.MAVLink(self.ser)
 
         self.params = [(b'RUDDER', 0.5)]
-
-        i = 0
 
         while self.running:
             lat, lon = self.boatd.boat.position()
@@ -92,11 +89,8 @@ class MavlinkPlugin(BasePlugin):
             if messages:
                 for message in messages:
                     name = message.get_type()
-                    print(name)
                     if name == 'PARAM_REQUEST_LIST':
                         self.send_params()
-
-            time.sleep(0.01) 
 
 
 plugin = MavlinkPlugin
