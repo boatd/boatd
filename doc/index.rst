@@ -18,7 +18,7 @@ There are two main components of a system written using boatd:
 - the *behaviour* performs a set of actions to make the boat do a
   particular task. The API available for these scripts is supposed to be
   declarative, with the idea that for any boat with a driver written, any
-  behavour script will work.
+  behaviour script will work.
 
 .. figure:: _static/boatd-arch.png
    :scale: 50 %
@@ -34,9 +34,7 @@ Installing in a virtualenv from PyPi (recommended)
 --------------------------------------------------
 
 This installs boatd in a `virtualenv
-<http://docs.python-guide.org/en/latest/dev/virtualenvs/>`_, keeping it
-seperate from the rest of the system.
-
+<http://docs.python-guide.org/en/latest/dev/virtualenvs/>`_, keeping it separate from the rest of the system.
 First, create a new virtualenv::
 
     $ virtualenv env
@@ -45,7 +43,7 @@ Activate this virtualenv::
 
     $ source env/bin/activate
 
-Install boatd and its dependancies from the latest published stable release::
+Install boatd and its dependencies from the latest published stable release::
 
     $ pip install boatd
 
@@ -339,7 +337,7 @@ absolute. boatd will also expand ``~`` to your home directory:
 Plugins
 =======
 
-Plugins are loadable python modules that run in a seperate thread inside boatd.
+Plugins are loadable python modules that run in a separate thread inside boatd.
 They have access to the current data about the boat.
 
 To implement a plugin, a class must be implemented that conforms to a certain
@@ -420,9 +418,9 @@ and run ``tox``. If all the tests pass, the output should be similar to:
     platform linux2 -- Python 2.7.10, pytest-2.8.2, py-1.4.30, pluggy-0.3.1 --
     /home/louis/git/boatd/.tox/py27/bin/python2.7
     cachedir: .cache
-    rootdir: /home/louis/git/boatd, inifile: 
+    rootdir: /home/louis/git/boatd, inifile:
     plugins: cov-2.2.0
-    collected 50 items 
+    collected 50 items
 
     boatd/tests/test_api.py::TestAPI::test_GET PASSED
     boatd/tests/test_api.py::TestAPI::test_content_type PASSED
