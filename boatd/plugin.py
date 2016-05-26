@@ -77,17 +77,21 @@ def load_plugins(conf, boat):
     plugins = []
     for (name, module_filename) in found_plugins:
         with open(module_filename) as f:
-            module = imp.load_module(
-                get_module_name(module_filename),
-                f,
-                module_filename,
-                ('.py', 'U', 1)
-            )
-            log.info('Loaded plugin from {}'.format(
-                     color(module_filename, 37)))
-
             plugin_conf = get_config_for_plugin(conf, name)
-            plugins.append(start_plugin(module, plugin_conf, boat))
+            if plugin_conf.enabled is False:
+                module = imp.load_module(
+                    get_module_name(module_filename),
+                    f,
+                    module_filename,
+                    ('.py', 'U', 1)
+                )
+                log.info('Loaded plugin from {}'.format(
+                        color(module_filename, 37)))
+
+                plugins.append(start_plugin(module, plugin_conf, boat))
+            else:
+                log.info('Ignored disabled plugin {}'.format(
+                    color(module_filename, 37)))
 
     return plugins
 
