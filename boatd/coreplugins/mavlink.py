@@ -17,11 +17,11 @@ class MavlinkPlugin(BasePlugin):
             3
         )
 
-    def send_position(self):
+    def send_position(self, lat, lon):
         self.ml.global_position_int_send(
             int(time.time()),
-            int(52.41389 * 1e7),
-            int(-4.09098 * 1e7),
+            int(lat * 1e7),
+            int(lon * 1e7),
             25000,
             25000,
             1,1,1,180*100)
@@ -29,8 +29,8 @@ class MavlinkPlugin(BasePlugin):
         self.ml.gps_raw_int_send(
             int(time.time()*100),
             3,
-            int(52.41389 * 1e7),
-            int(-4.09098 * 1e7),
+            int(lat * 1e7),
+            int(lon * 1e7),
             25000,
             0xFFFF,
             0xFFFF,
@@ -40,7 +40,10 @@ class MavlinkPlugin(BasePlugin):
         )
 
     def send_heading(self, heading):
-        heading = (heading % 360) - 180
+        heading = heading % 360
+        if heading > 180:
+            heading = heading - 360
+
         self.ml.vfr_hud_send(
             0,  # airspeed
             10,  # groundspeed
@@ -77,13 +80,12 @@ class MavlinkPlugin(BasePlugin):
         i = 0
 
         while self.running:
-            self.send_heartbeat()
-            self.send_position()
-            i += 1
-            print('heading:', i)
-            self.send_heading(i)
-
             lat, lon = self.boatd.boat.position()
+            heading = self.boatd.boat.heading()
+
+            self.send_heartbeat()
+            self.send_position(lat, lon)
+            self.send_heading(int(heading))
 
             buf = self.ser.read(18)
             messages = self.ml.parse_buffer(buf)
