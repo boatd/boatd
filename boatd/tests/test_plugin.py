@@ -24,6 +24,7 @@ class TestPlugin(unittest.TestCase):
             'plugins': [
                 {
                     'small_plugin': {
+                        'enabled': True,
                         'thing': True
                     }
                 }
