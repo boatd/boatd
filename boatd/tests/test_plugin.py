@@ -35,3 +35,21 @@ class TestPlugin(unittest.TestCase):
 
         modules = boatd.plugin.load_plugins(boatd.config.Config(conf), object())
         assert True in [hasattr(module, 'accessed') for module in modules]
+
+    def test_disabled_plugins(self):
+        conf = {
+            'plugin_directory': PLUGIN_DIR,
+            'plugins': [
+                {
+                    'small_plugin': {
+                        'enabled': False,
+                        'thing': True
+                    }
+                }
+            ]
+        }
+
+        print(conf)
+
+        modules = boatd.plugin.load_plugins(boatd.config.Config(conf), object())
+        assert modules == []
