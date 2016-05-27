@@ -6,7 +6,7 @@ from six.moves.socketserver import ThreadingMixIn
 import json
 
 # reported api version
-VERSION = 1.2
+VERSION = 1.3
 
 log = logging.getLogger(__name__)
 
@@ -62,12 +62,12 @@ class BoatdHTTPServer(ThreadingMixIn, HTTPServer):
 
         return {
             'behaviours': b,
-            'current': self.behaviour_manager.active_behaviour
+            'active': self.behaviour_manager.active_behaviour
         }
 
     def behaviours_post(self, content):
-        if 'current' in content:
-            behaviour = content.get('current')
+        if 'active' in content:
+            behaviour = content.get('active')
             self.behaviour_manager.stop()
             if behaviour is not None:
                 self.behaviour_manager.start_behaviour_by_name(behaviour)
