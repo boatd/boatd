@@ -392,6 +392,15 @@ Boatdclient includes the following user facing classes:
 .. autoclass:: boatdclient.Behaviour
    :members:
 
+``Boat`` returns and uses special classes for bearings and latitude longitude
+points. These contain some common functionality.
+
+.. autoclass:: boatdclient.Point
+   :members:
+
+.. autoclass:: boatdclient.Bearing
+   :members:
+
 
 Testing
 =======
