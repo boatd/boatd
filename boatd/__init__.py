@@ -46,6 +46,19 @@ def load_driver(conf):
     Return the driver module from the filename specified in the configuration
     file with key configuration.scripts.driver.
     '''
+
+    driver_file = conf.driver.get('file', None)
+    driver_module_name = conf.driver.get('module', None)
+
+    if driver_file and driver_module_name:
+        log.error('you should only specify one of file and module for driver '
+                  'configuration')
+        exit(1)
+
+    if driver_module_name is not None:
+        driver_module = __import__(driver_module_name)
+        return driver_module.driver
+
     expanded_path = os.path.expanduser(conf.driver.file)
     directory, name = os.path.split(expanded_path)
     sys.path.append(os.path.dirname(directory))
