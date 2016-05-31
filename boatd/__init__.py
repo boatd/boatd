@@ -114,7 +114,7 @@ Experimental robotic sailing boat daemon.
 
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('config', metavar='CONFIG FILE',
-                        default='boatd-config.yaml',
+                        default='/etc/boatd-config.yaml',
                         nargs='?',
                         help='a path to a configuration file')
     parser.add_argument('--version',
