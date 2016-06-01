@@ -11,17 +11,18 @@ log = logging.getLogger(__name__)
 
 
 class Boatd(object):
-    def __init__(self, boat):
+    def __init__(self, boat, waypoint_manager):
         self.boat = boat
+        self.waypoint_manager = waypoint_manager
 
 
 boatd_module = None
 
 
-def get_boatd_module(boat):
+def get_boatd_module(boat, waypoint_manager):
     global boatd_module
     if boatd_module is None:
-        boatd_module = Boatd(boat)
+        boatd_module = Boatd(boat, waypoint_manager)
 
     return boatd_module
 
@@ -50,12 +51,12 @@ def find_plugins(search_directories, enabled_plugins):
     return found_plugins
 
 
-def start_plugin(module, conf, boat):
+def start_plugin(module, conf, boat, waypoint_manager):
     log.info('Starting plugin {} with config \'{}\''.format(
              color(module.plugin.__name__, 34),
              color(str(conf), 36)))
 
-    boatd = get_boatd_module(boat)
+    boatd = get_boatd_module(boat, waypoint_manager)
     plugin = module.plugin(conf, boatd)
 
     t = threading.Thread(target=plugin.start)
@@ -64,7 +65,7 @@ def start_plugin(module, conf, boat):
     return plugin
 
 
-def load_plugins(conf, boat):
+def load_plugins(conf, boat, waypoint_manager):
     plugin_dirs = [utils.reldir(__file__, 'coreplugins')]
 
     if conf.get('plugin_directory') is not None:
@@ -88,7 +89,10 @@ def load_plugins(conf, boat):
                 log.info('Loaded plugin from {}'.format(
                         color(module_filename, 37)))
 
-                plugins.append(start_plugin(module, plugin_conf, boat))
+                plugins.append(start_plugin(module,
+                                            plugin_conf,
+                                            boat,
+                                            waypoint_manager))
             else:
                 log.info('Ignored plugin {}, since `enabled: true` is not '
                          'set in plugin config'.format(color(name, 36)))

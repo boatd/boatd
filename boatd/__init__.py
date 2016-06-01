@@ -135,10 +135,11 @@ def run():
 
     driver = load_driver(conf)
     boat = Boat(driver)
-    plugins = plugin.load_plugins(conf, boat)
 
     behaviour_manager = load_behaviours(conf)
     waypoint_manager = WaypointManager()
+
+    plugins = plugin.load_plugins(conf, boat, waypoint_manager)
 
     httpd = BoatdHTTPServer(boat, behaviour_manager, waypoint_manager,
                             (conf.boatd.interface, conf.boatd.port),
