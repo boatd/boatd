@@ -134,6 +134,7 @@ class MavlinkPlugin(BasePlugin):
                         self.waypoints[message.seq-1] = (message.x, message.y)
                         if message.seq >= self.waypoint_count-1:
                             self.send_ack()
+                            self.boatd.waypoint_manager.add_waypoints(self.waypoints)
                         else:
                             self.get_next_waypoint()
 
