@@ -67,12 +67,43 @@ class MavlinkPlugin(BasePlugin):
             name, value = param
             self.send_param(name, value, 0)
 
+    def get_next_waypoint(self):
+        if self.waypoint_count > 0:
+            self.ml.mission_request_send(0, 0, self.last_sent_waypoint)
+            self.last_sent_waypoint += 1
+
+    def send_ack(self):
+        self.ml.mission_ack_send(0, 0, mv.MAV_MISSION_ACCEPTED)
+
+    def send_mission_list(self):
+        self.ml.mission_count_send(0, 0, len(self.waypoints))
+
+    def send_mission_item(self, seq):
+        x, y = self.waypoints[seq-1]
+        self.ml.mission_item_send(
+            0,
+            0,
+            seq,
+            mv.MAV_FRAME_GLOBAL,
+            mv.MAV_CMD_NAV_WAYPOINT,
+            1,  # is current waypoint
+            True,
+            0, 0, 0, 0,  # params
+            x,
+            y,
+            0
+        )
+
     def main(self):
         device = self.config.get('device', '/dev/ttyUSB0')
         baud = self.config.get('baud', 115200)
 
         self.ser = serial.Serial(device, baud, timeout=0.1)
         self.ml = mv.MAVLink(self.ser)
+
+        self.waypoint_count = 0
+        self.waypoints = []
+        self.last_sent_waypoint = 0
 
         self.params = [(b'RUDDER', 0.5)]
 
@@ -84,13 +115,33 @@ class MavlinkPlugin(BasePlugin):
             self.send_position(lat, lon)
             self.send_heading(int(heading))
 
-            buf = self.ser.read(18)
+            buf = self.ser.read(32)
             messages = self.ml.parse_buffer(buf)
             if messages:
                 for message in messages:
                     name = message.get_type()
                     if name == 'PARAM_REQUEST_LIST':
                         self.send_params()
+
+                    if name == 'MISSION_COUNT':
+                        self.waypoint_count = message.count
+                        self.waypoints = [None for i in
+                                          range(self.waypoint_count)]
+                        self.last_sent_waypoint = 0
+                        self.get_next_waypoint()
+
+                    if name == 'MISSION_ITEM':
+                        self.waypoints[message.seq-1] = (message.x, message.y)
+                        if message.seq >= self.waypoint_count-1:
+                            self.send_ack()
+                        else:
+                            self.get_next_waypoint()
+
+                    if name == 'MISSION_REQUEST':
+                        self.send_mission_item(message.seq)
+
+                    if name == 'MISSION_REQUEST_LIST':
+                        self.send_mission_list()
 
 
 plugin = MavlinkPlugin
