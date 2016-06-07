@@ -2,8 +2,9 @@ from . import exceptions
 
 
 class WaypointManager(object):
-    def __init__(self):
-        self.waypoints = []
+    def __init__(self, initial_waypoints=None):
+        if initial_waypoints is None:
+            self.waypoints = []
         self.current = None
 
     def add_waypoint(self, waypoint):
