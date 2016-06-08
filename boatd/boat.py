@@ -19,9 +19,11 @@ class Boat(object):
         self._cached_rudder_position = 0
         self._cached_sail_position = 0
 
-        self.s = 0
-        self.c = 0
-        self.r = 250
+        # wind sensor averaging values (see the paper 'Technologies for
+        # Autonomous Sailing: Wings and Wind Sensors')
+        self.s = 0  # average sine value
+        self.c = 0  # average cosine value
+        self.r = 250  # rate of change
 
         self._update_thread = threading.Thread(target=self.update_cached_values)
         self._update_thread.start()
