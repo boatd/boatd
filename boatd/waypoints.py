@@ -1,4 +1,8 @@
+import logging
+
 from . import exceptions
+
+log = logging.getLogger(__name__)
 
 
 class WaypointManager(object):
@@ -21,6 +25,7 @@ class WaypointManager(object):
                                                     'of two floats')
 
     def add_waypoints(self, waypoints):
+        log.info('Loaded waypoints: {}'.format(waypoints))
         for point in waypoints:
             self.add_waypoint(point)
 
