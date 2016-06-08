@@ -1,4 +1,5 @@
 import logging
+import math
 import threading
 import time
 
@@ -18,6 +19,10 @@ class Boat(object):
         self._cached_rudder_position = 0
         self._cached_sail_position = 0
 
+        self.s = 0
+        self.c = 0
+        self.r = 250
+
         self._update_thread = threading.Thread(target=self.update_cached_values)
         self._update_thread.start()
 
@@ -27,7 +32,8 @@ class Boat(object):
             try:
                 self._cached_heading = self.driver.heading()
                 self._cached_wind_speed = self.driver.wind_speed()
-                self._cached_wind_direction = self.driver.wind_direction()
+                self._cached_wind_direction = \
+                    self._get_wind_average(self.driver.wind_direction())
                 self._cached_position = self.driver.position()
             except Exception as e:
                 log.error('Got error when trying to update sensor values: '
@@ -57,3 +63,12 @@ class Boat(object):
     def sail(self, angle):
         log.debug('setting sail angle to {}'.format(angle))
         return self.driver.sail(angle)
+
+    def _get_wind_average(self, wind_direction):
+        self.s += (math.sin(math.radians(wind_direction)) - self.s) / self.r
+        self.c += (math.cos(math.radians(wind_direction)) - self.c) / self.r
+        a = int(math.degrees(math.atan2(self.s, self.c)))
+        if a < 0:
+            return a + 360
+        else:
+            return a
