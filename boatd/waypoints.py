@@ -1,3 +1,5 @@
+import logging
+
 from . import exceptions
 
 log = logging.getLogger(__name__)

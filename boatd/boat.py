@@ -25,8 +25,9 @@ class Boat(object):
         self.c = 0  # average cosine value
         self.r = 150  # rate of change
 
-        self._update_thread = threading.Thread(target=self.update_cached_values)
-        self._update_thread.start()
+        self.update_thread = threading.Thread(target=self.update_cached_values)
+        self.update_thread.daemon = True
+        self.update_thread.start()
 
     def update_cached_values(self):
         '''Run in background and periodically update sensor values.'''
