@@ -137,6 +137,16 @@ def run():
     boat = Boat(driver)
 
     behaviour_manager = load_behaviours(conf)
+
+    waypoints_file = conf.get('waypoint_file', None)
+    waypoints = []
+    if waypoints_file is not None:
+        with open(waypoints_file) as f:
+            lines = f.readlines()
+            for point in lines:
+                lat, lon = point.split()
+                waypoints.append((lat, lon))
+
     waypoint_manager = WaypointManager()
 
     plugins = plugin.load_plugins(conf, boat, waypoint_manager)
