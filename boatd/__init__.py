@@ -145,7 +145,7 @@ def run():
             lines = f.readlines()
             for point in lines:
                 lat, lon = point.split()
-                waypoints.append((float(lat), float(lon)))'''
+                waypoints.append((float(lat), float(lon)))
 
     waypoint_manager = WaypointManager()
 
