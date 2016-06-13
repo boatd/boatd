@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # This file is part of boatd, the Robotic Sailing Boat Daemon.
 #
 # Copyright (C) 2013-2016 Louis Taylor <louis@kragniz.eu>
@@ -15,12 +16,17 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
+
 from . import exceptions
+
+log = logging.getLogger(__name__)
 
 
 class WaypointManager(object):
-    def __init__(self):
-        self.waypoints = []
+    def __init__(self, initial_waypoints=None):
+        if initial_waypoints is None:
+            self.waypoints = []
         self.current = None
 
     def add_waypoint(self, waypoint):
@@ -37,6 +43,7 @@ class WaypointManager(object):
                                                     'of two floats')
 
     def add_waypoints(self, waypoints):
+        log.info('Loaded waypoints: {}'.format(waypoints))
         for point in waypoints:
             self.add_waypoint(point)
 

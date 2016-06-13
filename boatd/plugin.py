@@ -123,5 +123,7 @@ def get_plugin_names_from_config(config):
 
 def get_config_for_plugin(config, plugin_name):
     for plugin in config.plugins:
-        conf = plugin.get(plugin_name)
-        return Config(conf)
+        conf = plugin.get(plugin_name, None)
+        if conf is not None:
+            return Config(conf)
+    return Config({})

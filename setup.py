@@ -14,7 +14,12 @@ setup(
     license='LGPL',
     keywords='boat sailing wrapper rest',
     url='https://github.com/boatd/boatd',
-    packages=['boatd'],
+    package_dir = {
+        'boatd': 'boatd',
+        'boatd.coreplugins': 'boatd/coreplugins',
+        'boatd.coreplugins.mavlink_common': 'boatd/coreplugins/mavlink_common',
+    },
+    packages=['boatd', 'boatd.coreplugins', 'boatd.coreplugins.mavlink_common'],
     scripts=['bin/boatd'],
     install_requires=[
         'PyYAML',

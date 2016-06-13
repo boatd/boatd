@@ -35,26 +35,27 @@ class MavlinkPlugin(BasePlugin):
         )
 
     def send_position(self, lat, lon):
-        self.ml.global_position_int_send(
-            int(time.time()),
-            int(lat * 1e7),
-            int(lon * 1e7),
-            25000,
-            25000,
-            1,1,1,180*100)
+        if lat is not None and lon is not None:
+            self.ml.global_position_int_send(
+                int(time.time()),
+                int(lat * 1e7),
+                int(lon * 1e7),
+                25000,
+                25000,
+                1,1,1,180*100)
 
-        self.ml.gps_raw_int_send(
-            int(time.time()*100),
-            3,
-            int(lat * 1e7),
-            int(lon * 1e7),
-            25000,
-            0xFFFF,
-            0xFFFF,
-            0xFFFF,
-            0xFFFF,
-            5
-        )
+            self.ml.gps_raw_int_send(
+                int(time.time()*100),
+                3,
+                int(lat * 1e7),
+                int(lon * 1e7),
+                25000,
+                0xFFFF,
+                0xFFFF,
+                0xFFFF,
+                0xFFFF,
+                5
+            )
 
     def send_heading(self, heading):
         heading = heading % 360
@@ -112,6 +113,7 @@ class MavlinkPlugin(BasePlugin):
         )
 
     def main(self):
+        time.sleep(5)
         device = self.config.get('device', '/dev/ttyUSB0')
         baud = self.config.get('baud', 115200)
 
@@ -133,7 +135,11 @@ class MavlinkPlugin(BasePlugin):
             self.send_heading(int(heading))
 
             buf = self.ser.read(32)
-            messages = self.ml.parse_buffer(buf)
+            try:
+                messages = self.ml.parse_buffer(buf)
+            except Exception as e:
+                print('got mavlink error "{}"'.format(e))
+                messages = None
             if messages:
                 for message in messages:
                     name = message.get_type()
@@ -146,6 +152,7 @@ class MavlinkPlugin(BasePlugin):
                                           range(self.waypoint_count)]
                         self.last_sent_waypoint = 0
                         self.get_next_waypoint()
+                        print self.waypoints
 
                     if name == 'MISSION_ITEM':
                         self.waypoints[message.seq-1] = (message.x, message.y)
