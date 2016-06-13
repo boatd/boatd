@@ -1,8 +1,6 @@
-===========================
-boatd - sailing boat daemon 
-===========================
-
-Experimental robotic sailing boat daemon.
+=======================================
+boatd - the robotic sailing boat daemon 
+=======================================
 
 .. image:: https://img.shields.io/pypi/v/boatd.svg
     :target: https://pypi.python.org/pypi/boatd
