@@ -75,6 +75,7 @@ class BoatdHTTPServer(ThreadingMixIn, HTTPServer):
     def waypoints(self):
         return {
             'waypoints': self.waypoint_manager.waypoints,
+            'home': self.waypoint_manager.home_position,
             'current': self.waypoint_manager.current,
         }
 

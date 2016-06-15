@@ -164,7 +164,9 @@ def run():
                 lat, lon = point.split()
                 waypoints.append((float(lat), float(lon)))
 
-    waypoint_manager = WaypointManager()
+    home_position = conf.get('home_position', None)
+
+    waypoint_manager = WaypointManager(home_position=home_position)
     waypoint_manager.add_waypoints(waypoints)
 
     plugins = plugin.load_plugins(conf, boat, waypoint_manager)

@@ -21,3 +21,6 @@ driver:
 behaviours:
     - example:
         file: example/basic_behaviour.py
+
+waypoint_file: null
+home_position: (52.417318, -4.087246)

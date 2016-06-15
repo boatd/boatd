@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # This file is part of boatd, the Robotic Sailing Boat Daemon.
 #
 # Copyright (C) 2013-2016 Louis Taylor <louis@kragniz.eu>
@@ -24,10 +23,11 @@ log = logging.getLogger(__name__)
 
 
 class WaypointManager(object):
-    def __init__(self, initial_waypoints=None):
+    def __init__(self, initial_waypoints=None, home_position=None):
         if initial_waypoints is None:
             self.waypoints = []
         self.current = None
+        self.home_position = home_position
 
     def add_waypoint(self, waypoint):
         if len(waypoint) == 2:
