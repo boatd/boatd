@@ -22,11 +22,11 @@ import time
 
 
 log_format = (
-             'time={time} '
-             'bhead={head} '
-             'wind={wind} '
-             'lat={lat} '
-             'lon={long} '
+             '{time}, '
+             #'bhead={head} '
+             #'wind={wind} '
+             '{lat}, '
+             '{long}, '
              #'nwlat={wpn} '
              #'nwlon={wpe} '
              #'nwn={num} '
@@ -35,7 +35,7 @@ log_format = (
              #'whead={waypoint_heading} '
              #'distance={waypoint_distance} '
              #'speed={speed} '
-             '\n\r'
+             '\n'
              )
 
 
@@ -52,11 +52,11 @@ class LoggerPlugin(BasePlugin):
             ts = time.time()
 
             log_line = log_format.format(
-                    time=time.time(),
-                    head=heading,
-                    wind=wind_direction,
-                    lat=lat,
-                    long=lon,
+                    time=time.strftime("%H%M%S%d"),
+                    #head=heading,
+                    #wind=wind_direction,
+                    lat=str(lat*(10**7)).split(".",1)[0],
+                    long=str(lon*(10**7)).split(".",1)[0],
             )
 
             with open(filename, 'a') as f:
