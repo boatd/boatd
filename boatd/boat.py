@@ -40,7 +40,7 @@ class Boat(object):
         # Autonomous Sailing: Wings and Wind Sensors')
         self.s = 0  # average sine value
         self.c = 0  # average cosine value
-        self.r = 150  # rate of change
+        self.r = 75  # rate of change
 
         self.update_thread = threading.Thread(target=self.update_cached_values)
         self.update_thread.daemon = True
