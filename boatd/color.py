@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 def color(message, text_color, text_style=0):
     '''Return the message wrapped in ansi color code'''
     return '\033[{};{}m{}\033[0m'.format(text_style, text_color, message)
