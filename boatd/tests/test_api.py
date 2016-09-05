@@ -45,6 +45,7 @@ class TestAPI(unittest.TestCase):
         for _ in range(self.TEST_PORTS):
             try:
                 self.httpd = boatd.BoatdHTTPServer(self.boat, object,
+                                                   object,
                                                    ('', self.port),
                                                    boatd.BoatdRequestHandler)
                 break
