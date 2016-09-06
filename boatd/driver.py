@@ -81,3 +81,13 @@ class BaseBoatdDriver(object):
         :type angle: float between -90 and 90
         '''
         pass
+
+    @abstractmethod
+    def reconnect(self):
+        '''
+        Reconnect the driver to boat devices. It is recommended that initial
+        connections are made using this function by calling it in the
+        ``__init__`` method. If the driver does not require any persistent
+        connections, this method may be empty.
+        '''
+        pass
