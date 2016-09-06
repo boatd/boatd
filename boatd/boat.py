@@ -54,12 +54,14 @@ class Boat(object):
             except Exception as e:
                 log.error('Got error when trying to update heading: '
                           '{}'.format(e))
+                self.driver.reconnect()
 
             try:
                 self._cached_wind_speed = self.driver.wind_speed()
             except Exception as e:
                 log.error('Got error when trying to update wind speed: '
                           '{}'.format(e))
+                self.driver.reconnect()
 
             try:
                 self._cached_wind_direction = \
@@ -67,12 +69,14 @@ class Boat(object):
             except Exception as e:
                 log.error('Got error when trying to update wind direction: '
                           '{}'.format(e))
+                self.driver.reconnect()
 
             try:
                 self._cached_position = self.driver.position()
             except Exception as e:
                 log.error('Got error when trying to update position: '
                           '{}'.format(e))
+                self.driver.reconnect()
 
             time.sleep(0.2)
 
