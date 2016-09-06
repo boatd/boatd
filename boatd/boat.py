@@ -51,13 +51,29 @@ class Boat(object):
         while True:
             try:
                 self._cached_heading = self.driver.heading()
+            except Exception as e:
+                log.error('Got error when trying to update heading: '
+                          '{}'.format(e))
+
+            try:
                 self._cached_wind_speed = self.driver.wind_speed()
+            except Exception as e:
+                log.error('Got error when trying to update wind speed: '
+                          '{}'.format(e))
+
+            try:
                 self._cached_wind_direction = \
                     self._get_wind_average(self.driver.wind_direction())
+            except Exception as e:
+                log.error('Got error when trying to update wind direction: '
+                          '{}'.format(e))
+
+            try:
                 self._cached_position = self.driver.position()
             except Exception as e:
-                log.error('Got error when trying to update sensor values: '
+                log.error('Got error when trying to update position: '
                           '{}'.format(e))
+
             time.sleep(0.2)
 
     def __getattr__(self, name):
