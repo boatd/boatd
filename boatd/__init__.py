@@ -151,7 +151,7 @@ def run():
     logger.setup_logging()
 
     driver = load_driver(conf)
-    boat = Boat(driver)
+    boat = Boat(driver, config=conf)
 
     behaviour_manager = load_behaviours(conf)
 
