@@ -22,5 +22,9 @@ behaviours:
     - example:
         file: example/basic_behaviour.py
 
+wind_filtering:
+    enabled: false
+    rate_of_change: 75
+
 waypoint_file: null
 home_position: [52.417318, -4.087246]
