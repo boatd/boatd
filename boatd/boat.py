@@ -25,9 +25,11 @@ log = logging.getLogger(__name__)
 
 class Boat(object):
     '''The boat itself. Most of the work is done by the active driver'''
-    def __init__(self, driver):
+    def __init__(self, driver, config=None):
         self.driver = driver
         self.active = False
+
+        self.config = config if config else {}
 
         self._cached_heading = 0
         self._cached_wind_speed = 0
@@ -40,7 +42,12 @@ class Boat(object):
         # Autonomous Sailing: Wings and Wind Sensors')
         self.s = 0  # average sine value
         self.c = 0  # average cosine value
-        self.r = 75  # rate of change
+        # rate of change
+        self.r = self.config.get('wind_filtering', {'rate_of_change': 75}).\
+                             get('rate_of_change', 75)
+        self.wind_filtering_enabled = self.config.get('wind_filtering',
+                                                      {'enabled': True}).\
+                                                      get('enabled', True)
 
         self.update_thread = threading.Thread(target=self.update_cached_values)
         self.update_thread.daemon = True
@@ -64,8 +71,11 @@ class Boat(object):
                 self.driver.reconnect()
 
             try:
-                self._cached_wind_direction = \
-                    self._get_wind_average(self.driver.wind_direction())
+                if self.wind_filtering_enabled:
+                    self._cached_wind_direction = \
+                        self._get_wind_average(self.driver.wind_direction())
+                else:
+                    self._cached_wind_direction = self.driver.wind_direction()
             except Exception as e:
                 log.error('Got error when trying to update wind direction: '
                           '{}'.format(e))
