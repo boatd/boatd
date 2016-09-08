@@ -35,8 +35,11 @@ class Boat(object):
         self._cached_wind_speed = 0
         self._cached_wind_direction = 0
         self._cached_position = (0, 0)
-        self._cached_rudder_position = 0
-        self._cached_sail_position = 0
+        self._cached_rudder_angle = 0
+        self._cached_sail_angle = 0
+
+        self.target_rudder_angle = 0
+        self.target_sail_angle = 0
 
         # wind sensor averaging values (see the paper 'Technologies for
         # Autonomous Sailing: Wings and Wind Sensors')
@@ -52,6 +55,16 @@ class Boat(object):
         self.update_thread = threading.Thread(target=self.update_cached_values)
         self.update_thread.daemon = True
         self.update_thread.start()
+
+        self.rudder_thread = threading.Thread(
+            target=self.rudder_setting_loop)
+        self.rudder_thread.daemon = True
+        self.rudder_thread.start()
+
+        self.sail_thread = threading.Thread(
+            target=self.sail_setting_loop)
+        self.sail_thread.daemon = True
+        self.sail_thread.start()
 
     def update_cached_values(self):
         '''Run in background and periodically update sensor values.'''
@@ -90,6 +103,28 @@ class Boat(object):
 
             time.sleep(0.2)
 
+    def rudder_setting_loop(self):
+        while True:
+            if abs(self.target_rudder_angle - self._cached_rudder_angle) > 1:
+                self._cached_rudder_angle = self.target_rudder_angle
+                self.driver.rudder(self.target_rudder_angle)
+            time.sleep(0.1)
+
+    def sail_setting_loop(self):
+        while True:
+            if abs(self.target_sail_angle - self._cached_sail_angle) > 1:
+                self._cached_sail_angle = self.target_sail_angle
+                self.driver.sail(self.target_sail_angle)
+            time.sleep(0.2)
+
+    def rudder(self, angle):
+        log.debug('setting rudder angle to {}'.format(angle))
+        self.target_rudder_angle = angle
+
+    def sail(self, angle):
+        log.debug('setting sail angle to {}'.format(angle))
+        self.target_sail_angle = angle
+
     def __getattr__(self, name):
         '''Return the requested attribute from the currently loaded driver'''
         return self.driver.handlers.get(name)
@@ -105,14 +140,6 @@ class Boat(object):
 
     def position(self):
         return self._cached_position
-
-    def rudder(self, angle):
-        log.debug('setting rudder angle to {}'.format(angle))
-        return self.driver.rudder(angle)
-
-    def sail(self, angle):
-        log.debug('setting sail angle to {}'.format(angle))
-        return self.driver.sail(angle)
 
     def _get_wind_average(self, wind_direction):
         self.s += (math.sin(math.radians(wind_direction)) - self.s) / self.r
