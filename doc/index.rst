@@ -310,6 +310,8 @@ An example:
         def sail(self, angle):
             print('moving sail to', angle)
 
+        def reconnect(self):
+                pass
     # create an instance of the driver class
     driver = MyFancyBoatDriver()
 
