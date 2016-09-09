@@ -23,7 +23,7 @@ behaviours:
         file: example/basic_behaviour.py
 
 wind_filtering:
-    enabled: false
+    enabled: true
     rate_of_change: 75
 
 waypoint_file: null
