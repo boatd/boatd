@@ -380,6 +380,27 @@ Boatd comes with a few plugins preinstalled. These are:
             period: 10
             filename: logs/log_trace
 
+- ``gpx_logger``
+
+  This logs data about the current state of the boat to a GPX formatted file periodically.
+
+  Configuration parameters:
+
+    - ``period`` - the time in seconds between each logged line
+
+    - ``filename`` - the path to the file logs will be written to, the filename
+    will be appended with a timestamp
+
+    Example:
+
+    .. code-block:: yaml
+
+        plugins:
+          - gpx_logger:
+            enabled: true
+            period: 1
+            filename: logs/gpx_log
+
 - ``mavlink``
 
   This allows boatd to communicate using a subset of the mavlink protocol.
