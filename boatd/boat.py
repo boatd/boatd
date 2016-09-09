@@ -101,14 +101,14 @@ class Boat(object):
                           '{}'.format(e))
                 self.driver.reconnect()
 
-            time.sleep(0.2)
+            time.sleep(0.05)
 
     def rudder_setting_loop(self):
         while True:
-            if abs(self.target_rudder_angle - self._cached_rudder_angle) > 0.5:
+            if abs(self.target_rudder_angle - self._cached_rudder_angle) > 0.2:
                 self._cached_rudder_angle = self.target_rudder_angle
                 self.driver.rudder(self.target_rudder_angle)
-            time.sleep(0.1)
+            time.sleep(0.01)
 
     def sail_setting_loop(self):
         while True:
