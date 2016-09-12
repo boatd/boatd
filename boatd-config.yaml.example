@@ -15,6 +15,11 @@ plugins:
         device: /dev/ttyUSB0
         baud: 115200
 
+    - gpx_logger:
+        enabled: false
+        period: 1
+        filename: logs/gpx_log
+
 driver:
     file: example/basic_driver.py
 
