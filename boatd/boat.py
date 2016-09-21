@@ -46,11 +46,13 @@ class Boat(object):
         self.s = 0  # average sine value
         self.c = 0  # average cosine value
         # rate of change
-        self.r = self.config.get('wind_filtering', {'rate_of_change': 75}).\
-                             get('rate_of_change', 75)
-        self.wind_filtering_enabled = self.config.get('wind_filtering',
-                                                      {'enabled': True}).\
-                                                      get('enabled', True)
+        self.r = self.config.get(
+            'wind_filtering', {'rate_of_change': 75}).\
+            get('rate_of_change', 75)
+        self.wind_filtering_enabled = self.config.get(
+            'wind_filtering',
+            {'enabled': True}).\
+            get('enabled', True)
 
         self._update_thread_running = True
         self.update_thread = threading.Thread(
