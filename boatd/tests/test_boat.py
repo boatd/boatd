@@ -2,13 +2,12 @@ import unittest
 
 import boatd
 
-class MockDriver(object):
-    def heading(self):
-        return 2.43
+from .driver import TestDriver
+
 
 class TestBoat(unittest.TestCase):
     def setUp(self):
-        self.boat = boatd.Boat(MockDriver())
+        self.boat = boatd.Boat(TestDriver())
         self.boat.update_cached_values()
 
     def test_get_heading(self):
