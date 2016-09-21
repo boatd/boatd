@@ -52,7 +52,10 @@ class Boat(object):
                                                       {'enabled': True}).\
                                                       get('enabled', True)
 
-        self.update_thread = threading.Thread(target=self.update_cached_values)
+        self._update_thread_running = True
+        self.update_thread = threading.Thread(
+            target=self.update_cached_values_loop
+        )
         self.update_thread.daemon = True
         self.update_thread.start()
 
@@ -67,40 +70,45 @@ class Boat(object):
         self.sail_thread.start()
 
     def update_cached_values(self):
+        '''Update cached sensor values.'''
+        try:
+            self._cached_heading = self.driver.heading()
+        except Exception as e:
+            log.error('Got error when trying to update heading: '
+                      '{}'.format(e))
+            self.driver.reconnect()
+
+        try:
+            self._cached_wind_speed = self.driver.wind_speed()
+        except Exception as e:
+            log.error('Got error when trying to update wind speed: '
+                      '{}'.format(e))
+            self.driver.reconnect()
+
+        try:
+            if self.wind_filtering_enabled:
+                self._cached_wind_direction = \
+                    self._get_wind_average(self.driver.wind_direction())
+            else:
+                self._cached_wind_direction = self.driver.wind_direction()
+        except Exception as e:
+            log.error('Got error when trying to update wind direction: '
+                      '{}'.format(e))
+            self.driver.reconnect()
+
+        try:
+            self._cached_position = self.driver.position()
+        except Exception as e:
+            log.error('Got error when trying to update position: '
+                      '{}'.format(e))
+            self.driver.reconnect()
+
+    def update_cached_values_loop(self):
         '''Run in background and periodically update sensor values.'''
+
+        # run until _update_thread_running is false
         while True:
-            try:
-                self._cached_heading = self.driver.heading()
-            except Exception as e:
-                log.error('Got error when trying to update heading: '
-                          '{}'.format(e))
-                self.driver.reconnect()
-
-            try:
-                self._cached_wind_speed = self.driver.wind_speed()
-            except Exception as e:
-                log.error('Got error when trying to update wind speed: '
-                          '{}'.format(e))
-                self.driver.reconnect()
-
-            try:
-                if self.wind_filtering_enabled:
-                    self._cached_wind_direction = \
-                        self._get_wind_average(self.driver.wind_direction())
-                else:
-                    self._cached_wind_direction = self.driver.wind_direction()
-            except Exception as e:
-                log.error('Got error when trying to update wind direction: '
-                          '{}'.format(e))
-                self.driver.reconnect()
-
-            try:
-                self._cached_position = self.driver.position()
-            except Exception as e:
-                log.error('Got error when trying to update position: '
-                          '{}'.format(e))
-                self.driver.reconnect()
-
+            self.update_cached_values()
             time.sleep(0.05)
 
     def rudder_setting_loop(self):
