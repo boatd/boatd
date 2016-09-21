@@ -4,6 +4,9 @@ class TestDriver(boatd.BaseBoatdDriver):
     def __init__(self):
         self.some_hardware = {}
 
+    def reconnect(self):
+        pass
+
     def heading(self):
         return 2.43
 
