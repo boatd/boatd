@@ -120,7 +120,7 @@ class BoatdHTTPServer(ThreadingMixIn, HTTPServer):
             speed = -1
 
         try:
-            return {'direction': self.boat.wind_direction(),
+            return {'direction': self.boat.wind_apparent(),
                     'speed': speed}
         except AttributeError:
             log.exception('Error when attempting to read wind direction')
