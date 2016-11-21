@@ -89,10 +89,11 @@ class Boat(object):
 
         try:
             if self.wind_filtering_enabled:
-                self._cached_wind_direction = \
-                    self._get_wind_average(self.driver.wind_direction())
+                wind_dir = self.driver.absolute_wind_direction()
+                self._cached_wind_direction = self._get_wind_average(wind_dir)
             else:
-                self._cached_wind_direction = self.driver.wind_direction()
+                self._cached_wind_direction = \
+                    self.driver.absolute_wind_direction()
         except Exception as e:
             log.error('Got error when trying to update wind direction: '
                       '{}'.format(e))
