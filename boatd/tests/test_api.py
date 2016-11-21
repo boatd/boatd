@@ -24,7 +24,8 @@ class MockBoat(object):
         self.active = False
         self.nest = self.NestedClass()
         self.heading = lambda: 45
-        self.wind_direction = lambda: 23.12
+        self.wind_apparent = lambda: 23.12
+        self.wind_absolute = lambda: 180.3
         self.position = lambda: (2.2312, -23.2323)
         self.pony = lambda: 'magic'
         self.rudder_angle = 20
