@@ -1,4 +1,4 @@
 tox>=1.8.0
-pytest
+pytest==3.0.4
 pytest-cov
 coveralls
