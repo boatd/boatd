@@ -110,7 +110,7 @@ class TestAPI(unittest.TestCase):
     def test_request_wind(self):
         content = urlopen(self._url('/wind')).read()
         d = json.loads(content.decode("utf-8"))
-        assert all([attr in d for attr in ['direction', 'speed']])
+        assert all([attr in d for attr in ['absolute', 'apparent', 'speed']])
 
     def test_request_nested(self):
         content = urlopen(self._url('/nest/thing')).read()
