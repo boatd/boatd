@@ -43,7 +43,7 @@ class BaseBoatdDriver(object):
         pass
 
     @abstractmethod
-    def wind_direction(self):
+    def absolute_wind_direction(self):
         '''
         Must return the direction the wind is blowing in degrees, relative to
         the world.

@@ -22,7 +22,7 @@ class TestDriver(boatd.BaseBoatdDriver):
     def sail(self):
         pass
 
-    def wind_direction(self):
+    def absolute_wind_direction(self):
         return 1
 
 driver = TestDriver()

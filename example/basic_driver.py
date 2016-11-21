@@ -8,7 +8,7 @@ class MyFancyBoatDriver(boatd.BaseBoatdDriver):
     def heading(self):
         return 30.0
 
-    def wind_direction(self):
+    def absolute_wind_direction(self):
         return 45.0
 
     def wind_speed(self):
