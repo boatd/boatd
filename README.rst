@@ -16,11 +16,11 @@ Documentation is located at http://boatd.readthedocs.io/.
 License
 =======
 
-Copyright (c) 2013-2016 Louis Taylor <louis@kragniz.eu>
+Copyright (c) 2013-2017 Louis Taylor <louis@kragniz.eu>
 
 Boatd is free software: you can redistribute it and/or modify it under the
 terms of the GNU Lesser General Public License as published by the Free
 Software Foundation, either version 3 of the License, or (at your option) any
 later version.
 
-See [COPYING](COPYING) for more information.
+See COPYING for more information.
