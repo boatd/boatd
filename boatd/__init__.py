@@ -120,6 +120,19 @@ def load_behaviours(conf):
     return behaviour_manager
 
 
+def load_waypoints(conf):
+    waypoints_file = conf.get('waypoint_file', None)
+    waypoints = []
+    if waypoints_file is not None:
+        with open(waypoints_file) as f:
+            lines = f.readlines()
+            for point in lines:
+                lat, lon = point.split()
+                waypoints.append((float(lat), float(lon)))
+
+    return waypoints
+
+
 def parse_args():
     description = '''\
 Experimental robotic sailing boat daemon.
@@ -150,15 +163,7 @@ def run():
 
     behaviour_manager = load_behaviours(conf)
 
-    waypoints_file = conf.get('waypoint_file', None)
-    waypoints = []
-    if waypoints_file is not None:
-        with open(waypoints_file) as f:
-            lines = f.readlines()
-            for point in lines:
-                lat, lon = point.split()
-                waypoints.append((float(lat), float(lon)))
-
+    waypoints = load_waypoints(conf)
     home_position = conf.get('home_position', None)
 
     waypoint_manager = WaypointManager(home_position=home_position)
