@@ -126,9 +126,12 @@ def load_waypoints(conf):
     if waypoints_file is not None:
         with open(waypoints_file) as f:
             lines = f.readlines()
-            for point in lines:
-                lat, lon = point.split()
-                waypoints.append((float(lat), float(lon)))
+            for line in lines:
+                # trim comments and skip empty lines
+                point = line.split('#')[0].strip()
+                if point:
+                    lat, lon = point.split()
+                    waypoints.append((float(lat), float(lon)))
 
     return waypoints
 
