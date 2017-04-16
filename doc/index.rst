@@ -217,6 +217,42 @@ Boatd's main method of interaction is via the JSON API.
       "speed": 25
     }
 
+
+``/waypoints``
+--------------
+
+- ``GET``
+
+  Returns the active set of waypoints
+
+  .. code:: json
+
+    {
+      "current": [1.0, 1.0],
+      "home": [0.0, 0.0],
+      "waypoints": [
+        [0.0, 0.0],
+        [1.0, 1.0],
+        [2.0, 2.0]
+      ]
+    }
+
+
+- ``POST``
+
+  Add to the current set of waypoints
+
+  .. code:: json
+
+    {
+      "waypoints": [
+        [0.0, 0.0],
+        [1.0, 1.0],
+        [2.0, 2.0]
+      ]
+    }
+
+
 ``/behaviours``
 ---------------
 
