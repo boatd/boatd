@@ -25,7 +25,6 @@ import sys
 
 from . import logger
 from . import plugin
-from . import nmea  # noqa
 from .api import BoatdHTTPServer, BoatdRequestHandler
 from .behaviour import Behaviour
 from .behaviour import BehaviourManager
