@@ -153,11 +153,6 @@ Output will be similar to:
     [15:43:55] loaded function sail as "sail"
     [15:43:55] loaded driver from example/basic_driver.py
 
-The original aim was this command would also run your behaviour directly after
-startup, but this functionality is not yet implemented (see `the issue
-<https://github.com/boatd/boatd/issues/1>`_). After boatd is running, you should
-run your behaviour manually.
-
 If you would like to use a different config file in a different location, pass
 the path as an argument to ``boatd``. For example, ``$ boatd /etc/boatd/fancy-conf.yaml``.
 
