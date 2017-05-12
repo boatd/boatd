@@ -1,6 +1,6 @@
 # This file is part of boatd, the Robotic Sailing Boat Daemon.
 #
-# Copyright (C) 2013-2016 Louis Taylor <louis@kragniz.eu>
+# Copyright (C) 2013-2017 Louis Taylor <louis@kragniz.eu>
 #
 # boatd is free software: you can redistribute it and/or modify it under
 # the terms of the GNU Lesser General Public License as published by the Free
