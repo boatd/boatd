@@ -138,7 +138,9 @@ class BoatdHTTPServer(ThreadingMixIn, HTTPServer):
             'heading': self.boat.heading(),
             'wind': self.wind(),
             'position': self.boat.position(),
-            'active': self.boat.active
+            'active': self.boat.active,
+            'rudder_angle': '{0:.4g}'.format(self.boat.target_rudder_angle),
+            'sail_angle': '{0:.4g}'.format(self.boat.target_sail_angle),
         }
 
     def boatd_post(self, content):
