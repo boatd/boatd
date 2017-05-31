@@ -186,7 +186,9 @@ class WaypointHandler(tornado.web.RequestHandler):
 class BoatdAPI(object):
     def __init__(self, boat, behaviour_manager, waypoint_manager,
                  server_address):
-        log.info('boatd api listening on %s:%s', *server_address)
+        self.host = server_address[0]
+        self.port = server_address[1]
+        log.info('boatd api listening on %s:%s', self.host, self.port)
 
         self.boat = boat
         self.behaviour_manager = behaviour_manager
@@ -216,5 +218,5 @@ class BoatdAPI(object):
         ])
 
     def run(self):
-        self.app.listen(2222)
+        self.app.listen(self.port, address=self.host)
         tornado.ioloop.IOLoop.instance().start()
