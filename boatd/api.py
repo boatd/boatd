@@ -33,9 +33,40 @@ VERSION = 1.3
 log = logging.getLogger(__name__)
 
 
+def get_wind_dict(boat):
+    try:
+        speed = boat.wind_speed()
+    except (AttributeError, TypeError):
+        speed = -1
+
+    try:
+        return {'apparent': boat.wind_apparent(),
+                'absolute': boat.wind_absolute(),
+                'speed': speed}
+    except AttributeError:
+        log.exception('Error when attempting to read wind direction')
+        raise
+
+
 class VersionHandler(tornado.web.RequestHandler):
     def get(self):
         response = {'boatd': {'version': VERSION}}
+        self.write(response)
+
+
+class BoatHandler(tornado.web.RequestHandler):
+    def initialize(self, boat):
+        self.boat = boat
+
+    def get(self):
+        response = {
+            'heading': self.boat.heading(),
+            'wind': get_wind_dict(self.boat),
+            'position': self.boat.position(),
+            'active': self.boat.active,
+            'rudder_angle': '{0:.4g}'.format(self.boat.target_rudder_angle),
+            'sail_angle': '{0:.4g}'.format(self.boat.target_sail_angle),
+        }
         self.write(response)
 
 
@@ -51,6 +82,7 @@ class BoatdAPI(object):
 
         self.app = tornado.web.Application([
             (r'/', VersionHandler),
+            (r'/boat', BoatHandler, {'boat' : self.boat}),
         ])
 
     def run(self):
@@ -141,19 +173,6 @@ class BoatdHTTPServer(ThreadingMixIn, HTTPServer):
 
         return self.behaviours()
 
-    def wind(self):
-        try:
-            speed = self.boat.wind_speed()
-        except (AttributeError, TypeError):
-            speed = -1
-
-        try:
-            return {'apparent': self.boat.wind_apparent(),
-                    'absolute': self.boat.wind_absolute(),
-                    'speed': speed}
-        except AttributeError:
-            log.exception('Error when attempting to read wind direction')
-            raise
 
     def boat_active(self):
         return {'value': self.boat.active}
