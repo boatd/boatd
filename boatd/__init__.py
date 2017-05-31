@@ -25,7 +25,7 @@ import sys
 
 from . import logger
 from . import plugin
-from .api import BoatdHTTPServer, BoatdRequestHandler
+from .api import BoatdAPI
 from .behaviour import Behaviour
 from .behaviour import BehaviourManager
 from .boat import Boat
@@ -173,15 +173,14 @@ def run():
 
     plugins = plugin.load_plugins(conf, boat, waypoint_manager)
 
-    httpd = BoatdHTTPServer(boat, behaviour_manager, waypoint_manager,
-                            (conf.boatd.interface, conf.boatd.port),
-                            BoatdRequestHandler)
-    while httpd.running:
-        try:
-            httpd.handle_request()
-        except (KeyboardInterrupt, SystemExit):
-            log.info('Quitting and requesting plugins end...')
-            behaviour_manager.stop()
-            for p in plugins:
-                p.running = False
-            sys.exit()
+    api = BoatdAPI(boat, behaviour_manager, waypoint_manager,
+                   (conf.boatd.interface, conf.boatd.port))
+
+    try:
+        api.run()
+    except (KeyboardInterrupt, SystemExit):
+        log.info('Quitting and requesting plugins end...')
+        behaviour_manager.stop()
+        for p in plugins:
+            p.running = False
+        sys.exit()

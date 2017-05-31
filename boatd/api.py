@@ -22,12 +22,40 @@ from six.moves.socketserver import ThreadingMixIn
 
 import json
 
+import tornado.ioloop
+import tornado.web
+
 from . import exceptions
 
 # reported api version
 VERSION = 1.3
 
 log = logging.getLogger(__name__)
+
+
+class VersionHandler(tornado.web.RequestHandler):
+    def get(self):
+        response = {'boatd': {'version': VERSION}}
+        self.write(response)
+
+
+class BoatdAPI(object):
+    def __init__(self, boat, behaviour_manager, waypoint_manager,
+                 server_address):
+        log.info('boatd api listening on %s:%s', *server_address)
+
+        self.boat = boat
+        self.behaviour_manager = behaviour_manager
+        self.waypoint_manager = waypoint_manager
+        self.running = True
+
+        self.app = tornado.web.Application([
+            (r'/', VersionHandler),
+        ])
+
+    def run(self):
+        self.app.listen(2222)
+        tornado.ioloop.IOLoop.instance().start()
 
 
 def get_deep_attr(obj, path):
