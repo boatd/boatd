@@ -74,8 +74,8 @@ class BoatHandler(tornado.web.RequestHandler):
             'wind': get_wind_dict(self.boat),
             'position': self.boat.position(),
             'active': self.boat.active,
-            'rudder_angle': '{0:.4g}'.format(self.boat.target_rudder_angle),
-            'sail_angle': '{0:.4g}'.format(self.boat.target_sail_angle),
+            'rudder_angle': self.boat.target_rudder_angle,
+            'sail_angle': self.boat.target_sail_angle,
         }
         self.write(response)
 
@@ -102,6 +102,23 @@ class BehaviourHandler(tornado.web.RequestHandler):
         self.write(response)
 
 
+class RudderHandler(tornado.web.RequestHandler):
+    def initialize(self, boat):
+        self.boat = boat
+
+    def get(self):
+        response = {'value': self.boat.target_rudder_angle}
+        self.write(response)
+
+    def post(self):
+        data = tornado.escape.json_decode(self.request.body)
+
+        value = data.get('value')
+        if value:
+            self.boat.rudder(value)
+
+        self.write({'value': value})
+
 
 class BoatdAPI(object):
     def __init__(self, boat, behaviour_manager, waypoint_manager,
@@ -117,6 +134,9 @@ class BoatdAPI(object):
             (r'/', BoatdHandler),
 
             (r'/boat', BoatHandler,
+                {'boat': self.boat}),
+
+            (r'/rudder', RudderHandler,
                 {'boat': self.boat}),
 
             (r'/behaviours', BehaviourHandler,
