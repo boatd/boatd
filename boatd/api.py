@@ -70,6 +70,29 @@ class BoatHandler(tornado.web.RequestHandler):
         self.write(response)
 
 
+class BehaviourHandler(tornado.web.RequestHandler):
+    def initialize(self, behaviour_manager):
+        self.behaviour_manager = behaviour_manager
+
+    def get(self):
+        b = {
+                behaviour.name: {
+                    'running': behaviour.running,
+                    'filename': behaviour.filename
+                }
+                for behaviour in
+                self.behaviour_manager.behaviours
+        }
+
+        response = {
+            'behaviours': b,
+            'active': self.behaviour_manager.active_behaviour
+        }
+
+        self.write(response)
+
+
+
 class BoatdAPI(object):
     def __init__(self, boat, behaviour_manager, waypoint_manager,
                  server_address):
@@ -82,7 +105,12 @@ class BoatdAPI(object):
 
         self.app = tornado.web.Application([
             (r'/', VersionHandler),
-            (r'/boat', BoatHandler, {'boat' : self.boat}),
+
+            (r'/boat', BoatHandler,
+                {'boat': self.boat}),
+
+            (r'/behaviours', BehaviourHandler,
+                {'behaviour_manager': self.behaviour_manager}),
         ])
 
     def run(self):
@@ -176,19 +204,6 @@ class BoatdHTTPServer(ThreadingMixIn, HTTPServer):
 
     def boat_active(self):
         return {'value': self.boat.active}
-
-    def boatd_info(self):
-        return {'boatd': {'version': VERSION}}
-
-    def boat_attr(self):
-        return {
-            'heading': self.boat.heading(),
-            'wind': self.wind(),
-            'position': self.boat.position(),
-            'active': self.boat.active,
-            'rudder_angle': '{0:.4g}'.format(self.boat.target_rudder_angle),
-            'sail_angle': '{0:.4g}'.format(self.boat.target_sail_angle),
-        }
 
     def boatd_post(self, content):
         # posting only supports shutting down the server and quitting boatd
