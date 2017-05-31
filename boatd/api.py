@@ -48,9 +48,19 @@ def get_wind_dict(boat):
         raise
 
 
-class VersionHandler(tornado.web.RequestHandler):
+class BoatdHandler(tornado.web.RequestHandler):
     def get(self):
         response = {'boatd': {'version': VERSION}}
+        self.write(response)
+
+    def post(self):
+        data = tornado.escape.json_decode(self.request.body)
+        response = {}
+        if data.get('quit'):
+            # FIXME: doesn't actually quit the server
+            self.running = False
+            response['quit'] = True
+
         self.write(response)
 
 
@@ -104,7 +114,7 @@ class BoatdAPI(object):
         self.running = True
 
         self.app = tornado.web.Application([
-            (r'/', VersionHandler),
+            (r'/', BoatdHandler),
 
             (r'/boat', BoatHandler,
                 {'boat': self.boat}),
