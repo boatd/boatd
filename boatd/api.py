@@ -84,7 +84,7 @@ class BehaviourHandler(tornado.web.RequestHandler):
     def initialize(self, behaviour_manager):
         self.behaviour_manager = behaviour_manager
 
-    def get(self):
+    def behaviours(self):
         b = {
                 behaviour.name: {
                     'running': behaviour.running,
@@ -98,8 +98,20 @@ class BehaviourHandler(tornado.web.RequestHandler):
             'behaviours': b,
             'active': self.behaviour_manager.active_behaviour
         }
+        return response
 
-        self.write(response)
+    def get(self):
+        self.write(self.behaviours())
+
+    def post(self):
+        data = tornado.escape.json_decode(self.request.body)
+        if 'active' in data:
+            behaviour = data.get('active')
+            self.behaviour_manager.stop()
+            if behaviour is not None:
+                self.behaviour_manager.start_behaviour_by_name(behaviour)
+
+        self.write(self.behaviours())
 
 
 class RudderHandler(tornado.web.RequestHandler):
@@ -255,14 +267,6 @@ class BoatdHTTPServer(ThreadingMixIn, HTTPServer):
             'active': self.behaviour_manager.active_behaviour
         }
 
-    def behaviours_post(self, content):
-        if 'active' in content:
-            behaviour = content.get('active')
-            self.behaviour_manager.stop()
-            if behaviour is not None:
-                self.behaviour_manager.start_behaviour_by_name(behaviour)
-
-        return self.behaviours()
 
 
     def boat_active(self):
