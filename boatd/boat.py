@@ -136,10 +136,6 @@ class Boat(object):
         log.debug('setting sail angle to {}'.format(angle))
         self.target_sail_angle = angle
 
-    def __getattr__(self, name):
-        '''Return the requested attribute from the currently loaded driver'''
-        return self.driver.handlers.get(name)
-
     def heading(self):
         return self._cached_heading
 
