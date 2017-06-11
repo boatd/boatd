@@ -25,6 +25,7 @@ setup(
         'PyYAML',
         'six',
         'pyserial',
+        'tornado',
         ],
     classifiers=[
         'Development Status :: 4 - Beta',
