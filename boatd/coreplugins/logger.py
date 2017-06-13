@@ -46,7 +46,7 @@ class LoggerPlugin(BasePlugin):
 
         while self.running:
             heading = self.boatd.boat.heading()
-            wind_direction = self.boatd.boat.wind_direction()
+            wind_direction = self.boatd.boat.wind_absolute()
             lat, lon = self.boatd.boat.position()
 
             ts = time.time()
