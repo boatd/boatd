@@ -143,7 +143,7 @@ class Boat(object):
         return self._cached_wind_speed
 
     def wind_apparent(self):
-        return self._cached_wind_direction - self._cached_heading
+        return (self._cached_wind_direction - self._cached_heading) % 360
 
     def wind_absolute(self):
         return self._cached_wind_direction
