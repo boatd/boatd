@@ -155,6 +155,12 @@ class Boat(object):
     def position(self):
         return self._cached_position
 
+    def get_rudder(self):
+        return self._cached_rudder_angle
+
+    def get_sail(self):
+        return self._cached_sail_angle
+
     def _get_wind_average(self, wind_direction):
         self.s += (math.sin(math.radians(wind_direction)) - self.s) / self.r
         self.c += (math.cos(math.radians(wind_direction)) - self.c) / self.r
