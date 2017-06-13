@@ -54,8 +54,8 @@ class GPXLoggerPlugin(BasePlugin):
                 boat_heading = self.boatd.boat.heading()
                 boat_wind_direction = self.boatd.boat.wind_absolute()
                 boat_lat, boat_lon = self.boatd.boat.position()
-                boat_sail = 0 #self.boatd.boat.sail() TODO: Get sail position from boatd
-                boat_rudder = 0 #self.boatd.boat.rudder() TODO: Get rudder position from boatd
+                boat_sail = self.boatd.boat.get_sail()
+                boat_rudder = self.boatd.boat.get_rudder()
                 boat_datetime = datetime.datetime.now().isoformat()
 
                 log_line = gpx_trkpt_format.format(
