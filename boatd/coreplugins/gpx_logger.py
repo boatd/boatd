@@ -52,7 +52,7 @@ class GPXLoggerPlugin(BasePlugin):
         
             while self.running:
                 boat_heading = self.boatd.boat.heading()
-                boat_wind_direction = self.boatd.boat.wind_direction()
+                boat_wind_direction = self.boatd.boat.wind_absolute()
                 boat_lat, boat_lon = self.boatd.boat.position()
                 boat_sail = 0 #self.boatd.boat.sail() TODO: Get sail position from boatd
                 boat_rudder = 0 #self.boatd.boat.rudder() TODO: Get rudder position from boatd
