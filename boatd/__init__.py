@@ -22,6 +22,7 @@ import logging
 import imp
 import os
 import sys
+import signal
 
 from . import logger
 from . import plugin
@@ -39,6 +40,14 @@ from .base_plugin import BasePlugin  # noqa
 __version__ = '2.0.0'
 
 log = logging.getLogger()
+
+
+def shutdown(behaviour_manager, plugins):
+    log.info('Quitting and requesting plugins end...')
+    behaviour_manager.stop()
+    for p in plugins:
+        p.running = False
+    sys.exit()
 
 
 def load_conf(conf_file):
@@ -173,14 +182,15 @@ def run():
 
     plugins = plugin.load_plugins(conf, boat, waypoint_manager)
 
+    def shutdown_handler(signum, frame):
+        shutdown(behaviour_manager, plugins)
+
+    signal.signal(signal.SIGTERM, shutdown_handler)
+
     api = BoatdAPI(boat, behaviour_manager, waypoint_manager,
                    (conf.boatd.interface, conf.boatd.port))
 
     try:
         api.run()
-    except (KeyboardInterrupt, SystemExit):
-        log.info('Quitting and requesting plugins end...')
-        behaviour_manager.stop()
-        for p in plugins:
-            p.running = False
-        sys.exit()
+    except (KeyboardInterrupt):
+        shutdown(behaviour_manager, plugins)
