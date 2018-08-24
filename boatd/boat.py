@@ -33,7 +33,8 @@ class Boat(object):
 
         self._cached_heading = 0
         self._cached_wind_speed = 0
-        self._cached_wind_direction = 0
+        self._cached_apparent_wind_direction = 0
+        self._cached_absolute_wind_direction = 0
         self._cached_position = (0, 0)
         self._cached_rudder_angle = 0
         self._cached_sail_angle = 0
@@ -90,12 +91,21 @@ class Boat(object):
         try:
             if self.wind_filtering_enabled:
                 wind_dir = self.driver.absolute_wind_direction()
-                self._cached_wind_direction = self._get_wind_average(wind_dir)
+                self._cached_absolute_wind_direction = self._get_wind_average(wind_dir)
             else:
-                self._cached_wind_direction = \
+                self._cached_absolute_wind_direction = \
                     self.driver.absolute_wind_direction()
         except Exception as e:
-            log.error('Got error when trying to update wind direction: '
+            log.error('Got error when trying to update absolute wind direction: '
+                      '{}'.format(e))
+            self.driver.reconnect()
+
+
+        try:
+            self._cached_apparent_wind_direction = \
+                    self.driver.apparent_wind_direction()
+        except Exception as e:
+            log.error('Got error when trying to update apparent wind direction: '
                       '{}'.format(e))
             self.driver.reconnect()
 
@@ -136,6 +146,10 @@ class Boat(object):
         log.debug('setting sail angle to {}'.format(angle))
         self.target_sail_angle = angle
 
+    def __getattr__(self, name):
+        '''Return the requested attribute from the currently loaded driver'''
+        return self.driver.handlers.get(name)
+
     def heading(self):
         return self._cached_heading
 
@@ -143,19 +157,13 @@ class Boat(object):
         return self._cached_wind_speed
 
     def wind_apparent(self):
-        return (self._cached_wind_direction - self._cached_heading) % 360
+        return self._cached_apparent_wind_direction
 
     def wind_absolute(self):
-        return self._cached_wind_direction
+        return self._cached_absolute_wind_direction
 
     def position(self):
         return self._cached_position
-
-    def get_rudder(self):
-        return self._cached_rudder_angle
-
-    def get_sail(self):
-        return self._cached_sail_angle
 
     def _get_wind_average(self, wind_direction):
         self.s += (math.sin(math.radians(wind_direction)) - self.s) / self.r
