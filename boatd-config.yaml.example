@@ -2,7 +2,7 @@ boatd:
     port: 2222
     interface: 127.0.0.1
 
-plugin_directory: null
+plugin_directory: /opt/boatd/plugins
 
 plugins:
     - logger:
@@ -21,11 +21,11 @@ plugins:
         filename: logs/gpx_log
 
 driver:
-    file: example/basic_driver.py
+    file: /opt/boatd/drivers/basic_driver.py
 
 behaviours:
     - example:
-        file: example/basic_behaviour.py
+        file: /opt/boatd/behaviours/basic_behaviour.py
 
 wind_filtering:
     enabled: true
