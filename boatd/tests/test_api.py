@@ -7,12 +7,10 @@ except ImportError:
     from urllib2 import HTTPError
     from urllib2 import Request
 
-import threading
-import socket
 import json
+import time
+import threading
 import unittest
-
-import tornado.ioloop
 
 import boatd
 
@@ -39,6 +37,7 @@ class MockBoat(object):
 
 
 class TestAPI(unittest.TestCase):
+
     @classmethod
     def setUpClass(cls):
         cls.port = 2222
@@ -51,6 +50,10 @@ class TestAPI(unittest.TestCase):
         cls.http_thread = threading.Thread(target=cls.api.run)
         cls.http_thread.daemon = True
         cls.http_thread.start()
+
+        # Block main thread while server starts
+        time.sleep(3)
+
 
     def _base_url(self):
         return 'http://localhost:{}'.format(self.port)
@@ -67,7 +70,7 @@ class TestAPI(unittest.TestCase):
         post_data = string.encode('utf-8')
         headers = {'Content-Type': 'application/json'}
         request = Request(url, post_data, headers)
-        return urlopen(request)
+        return urlopen(request, timeout=1)
 
     def test_thread(self):
         assert self.http_thread.is_alive()
@@ -104,17 +107,11 @@ class TestAPI(unittest.TestCase):
 
     def test_content_type(self):
         m = urlopen(self._url('/sail')).info()
-        assert m['content-type'] == 'application/JSON'
+        assert m['content-type'] == 'application/json; charset=UTF-8'
 
     def test_response_code(self):
         code = urlopen(self._url('/sail')).getcode()
         assert code == 200
-
-    def test_quit(self):
-        status_json = self._post_string(json.dumps({'quit': True})).read()
-        status = json.loads(status_json.decode("utf-8"))
-        assert status['quit'] == True
-        assert self.api.running == False
 
     def test_set_rudder(self):
         assert self.boat.rudder_angle == 20
