@@ -152,7 +152,7 @@ class MavlinkPlugin(BasePlugin):
                                           range(self.waypoint_count)]
                         self.last_sent_waypoint = 0
                         self.get_next_waypoint()
-                        print self.waypoints
+                        print(self.waypoints)
 
                     if name == 'MISSION_ITEM':
                         self.waypoints[message.seq-1] = (message.x, message.y)
