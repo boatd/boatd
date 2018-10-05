@@ -13,7 +13,12 @@ COPY ./bin/boatd /usr/local/bin/
 RUN sed -i.bak 's/127\.0\.0\.1/0\.0\.0\.0/' /opt/boatd/config/boatd-config.yaml && \
     rm /opt/boatd/config/boatd-config.yaml.bak
 
-RUN pip3 install -r requirements.txt && \
+RUN apk update && \
+    apk add git && \
+    pip3 install -r requirements.txt && \
+    python3 setup.py install && \
+    git clone https://github.com/boatd/python-boatd.git && \
+    cd python-boatd && \
     python3 setup.py install && \
     rm -rf /build
 
