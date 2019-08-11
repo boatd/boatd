@@ -17,8 +17,6 @@
 
 import logging
 
-import json
-
 import tornado.ioloop
 import tornado.web
 
@@ -50,16 +48,6 @@ class BoatdHandler(tornado.web.RequestHandler):
         response = {'boatd': {'version': VERSION}}
         self.write(response)
 
-    def post(self):
-        data = tornado.escape.json_decode(self.request.body)
-        response = {}
-        if data.get('quit'):
-            # FIXME: doesn't actually quit the server
-            self.running = False
-            response['quit'] = True
-
-        self.write(response)
-
 
 class BoatHandler(tornado.web.RequestHandler):
     def initialize(self, boat):
@@ -86,13 +74,17 @@ class RudderHandler(tornado.web.RequestHandler):
         self.write(response)
 
     def post(self):
-        data = tornado.escape.json_decode(self.request.body)
+        try:
+            data = tornado.escape.json_decode(self.request.body)
 
-        value = data.get('value')
-        if value:
-            self.boat.rudder(value)
+            value = data.get('value')
+            if value:
+                self.boat.rudder(value)
 
-        self.write({'value': value})
+            self.write({'value': value})
+        except ValueError:
+            self.set_status(400)
+            self.finish()
 
 
 class SailHandler(tornado.web.RequestHandler):
@@ -104,13 +96,17 @@ class SailHandler(tornado.web.RequestHandler):
         self.write(response)
 
     def post(self):
-        data = tornado.escape.json_decode(self.request.body)
+        try:
+            data = tornado.escape.json_decode(self.request.body)
 
-        value = data.get('value')
-        if value:
-            self.boat.sail(value)
+            value = data.get('value')
+            if value:
+                self.boat.sail(value)
 
-        self.write({'value': value})
+            self.write({'value': value})
+        except ValueError:
+            self.set_status(400)
+            self.finish()
 
 
 class WindHandler(tornado.web.RequestHandler):
@@ -128,12 +124,12 @@ class BehaviourHandler(tornado.web.RequestHandler):
 
     def behaviours(self):
         b = {
-                behaviour.name: {
-                    'running': behaviour.running,
-                    'filename': behaviour.filename
-                }
-                for behaviour in
-                self.behaviour_manager.behaviours
+            behaviour.name: {
+                'running': behaviour.running,
+                'filename': behaviour.filename
+            }
+            for behaviour in
+            self.behaviour_manager.behaviours
         }
 
         response = {
@@ -146,14 +142,18 @@ class BehaviourHandler(tornado.web.RequestHandler):
         self.write(self.behaviours())
 
     def post(self):
-        data = tornado.escape.json_decode(self.request.body)
-        if 'active' in data:
-            behaviour = data.get('active')
-            self.behaviour_manager.stop()
-            if behaviour is not None:
-                self.behaviour_manager.start_behaviour_by_name(behaviour)
+        try:
+            data = tornado.escape.json_decode(self.request.body)
+            if 'active' in data:
+                behaviour = data.get('active')
+                self.behaviour_manager.stop()
+                if behaviour is not None:
+                    self.behaviour_manager.start_behaviour_by_name(behaviour)
 
-        self.write(self.behaviours())
+            self.write(self.behaviours())
+        except ValueError:
+            self.set_status(400)
+            self.finish()
 
 
 class WaypointHandler(tornado.web.RequestHandler):
@@ -171,16 +171,20 @@ class WaypointHandler(tornado.web.RequestHandler):
         self.write(self.waypoints())
 
     def post(self):
-        data = tornado.escape.json_decode(self.request.body)
-
-        waypoints = data.get('waypoints', None)
-
         try:
-            self.waypoint_manager.add_waypoints(waypoints)
-        except exceptions.WaypointMalformedError:
-            self.write({'error': 'bad waypoint values'})
+            data = tornado.escape.json_decode(self.request.body)
 
-        self.write(self.waypoints())
+            waypoints = data.get('waypoints', None)
+
+            try:
+                self.waypoint_manager.add_waypoints(waypoints)
+            except exceptions.WaypointMalformedError:
+                self.write({'error': 'bad waypoint values'})
+
+            self.write(self.waypoints())
+        except ValueError:
+            self.set_status(400)
+            self.finish()
 
 
 class BoatdAPI(object):
@@ -199,22 +203,22 @@ class BoatdAPI(object):
             (r'/', BoatdHandler),
 
             (r'/boat', BoatHandler,
-                {'boat': self.boat}),
+             {'boat': self.boat}),
 
             (r'/rudder', RudderHandler,
-                {'boat': self.boat}),
+             {'boat': self.boat}),
 
             (r'/sail', SailHandler,
-                {'boat': self.boat}),
+             {'boat': self.boat}),
 
             (r'/wind', WindHandler,
-                {'boat': self.boat}),
+             {'boat': self.boat}),
 
             (r'/behaviours', BehaviourHandler,
-                {'behaviour_manager': self.behaviour_manager}),
+             {'behaviour_manager': self.behaviour_manager}),
 
             (r'/waypoints', WaypointHandler,
-                {'waypoint_manager': self.waypoint_manager}),
+             {'waypoint_manager': self.waypoint_manager}),
         ])
 
     def run(self):
