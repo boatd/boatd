@@ -6,6 +6,8 @@ import time
 #import argparse
 import serial
 
+import socket
+
 from boatd import BasePlugin
 
 class OpencpnPlugin(BasePlugin):
@@ -179,6 +181,9 @@ class OpencpnPlugin(BasePlugin):
         message = message + u"\r\n"
         sock.sendto(message.encode("utf-8"), dest)
 
+    def send_udp_packet(self, message, sock):
+        print("sending UDP packet",message)
+        sock.sendto(message, ('255.255.255.255',10000))
 
     def main(self):
         time.sleep(5)
@@ -194,6 +199,10 @@ class OpencpnPlugin(BasePlugin):
 
         old_lat, old_lon = self.boatd.boat.position()
         old_time = time.time() 
+
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
         while self.running:
             lat, lon = self.boatd.boat.position()
@@ -221,6 +230,7 @@ class OpencpnPlugin(BasePlugin):
             for m in messages:
                 message = m + "\r\n"
                 self.ser.write(str.encode(message))
+                self.send_udp_packet(str.encode(message),sock)
 
             time.sleep(delay)
 
