@@ -182,7 +182,6 @@ class OpencpnPlugin(BasePlugin):
         sock.sendto(message.encode("utf-8"), dest)
 
     def send_udp_packet(self, message, sock):
-        print("sending UDP packet",message)
         sock.sendto(message, ('255.255.255.255',10000))
 
     def main(self):
@@ -203,6 +202,10 @@ class OpencpnPlugin(BasePlugin):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+
+        #save the time we last transmitted waypoints
+        #save this as 30 seconds ago so we get a message on first loop
+        last_waypoint_transmit = time.time()-30
 
         while self.running:
             lat, lon = self.boatd.boat.position()
@@ -226,6 +229,15 @@ class OpencpnPlugin(BasePlugin):
             old_lat = lat
             old_lon = lon
             old_time = time.time()
+
+            #send waypoints every 30 seconds
+            if (last_waypoint_transmit + 30) < time.time():
+                last_waypoint_transmit = time.time()
+                wp_count = 0
+                #loop through all the waypoints boatd holds
+                for wp in self.boatd.waypoint_manager.waypoints:
+                    messages.append(self.wpt(wp[0],wp[1],wp_count))
+                    wp_count = wp_count + 1
 
             for m in messages:
                 message = m + "\r\n"
