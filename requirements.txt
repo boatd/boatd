@@ -1,4 +1,4 @@
-PyYAML==3.12
+PyYAML==5.4
 six==1.10.0
 pyserial==3.3
 tornado==4.5.1
